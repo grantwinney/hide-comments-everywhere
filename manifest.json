@@ -38,5 +38,13 @@
                 "*://*.twitch.tv/*"
             ]
         }
-    ]
+    ],
+
+    "icons": {
+        "16": "images/hide-comments-16.png",
+        "32": "images/hide-comments-32.png",
+        "48": "images/hide-comments-48.png",
+        "64": "images/hide-comments-64.png",
+        "128": "images/hide-comments-128.png"
+    }
 }
