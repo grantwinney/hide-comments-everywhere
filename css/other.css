@@ -1,0 +1,29 @@
+/* Facebook */
+.fb-comments, fb:comments-count {
+    display: none !important
+}
+
+/* Disqus */
+#disqus_thread {
+    display: none !important
+}
+
+/* Automattic o2 */
+.o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls {
+    display: none !important
+}
+
+/* Twitch Chat */
+.chat-container {
+    display: none !important
+}
+
+/* Livefyre */
+#comments, .commentlist {
+    display: none !important
+}
+
+/* WordPress (and others) */
+#comments, #respond {
+    display: none !important
+}
