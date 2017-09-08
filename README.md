@@ -26,6 +26,10 @@ It's all CSS right now. For those who know how CSS works, I've simply applied "d
 
 I intend to add one other feature where you could maintain a list of sites for which comments *should **not*** be hidden.
 
+### Permissions
+
+It will notify you that it needs access to all your tabs / pages. Since I have no idea if the site you're viewing has comments on it ahead of time, I just apply a few CSS styles to every page in order to hide anything that might be there.
+
 ## Need help? Have a request?
 
 [Open a new issue](https://github.com/grantwinney/chrome-extension-block-comments/issues/new) with as many details as possible. The more you let me know upfront, the less I'll have to ask later!
