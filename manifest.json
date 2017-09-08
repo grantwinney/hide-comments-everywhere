@@ -20,13 +20,22 @@
         },
         {
             "css": [
+                "css/twitch.css"
+            ],
+            "matches": [
+                "*://*.twitch.com/*"
+            ]
+        },
+        {
+            "css": [
                 "css/other.css"
             ],
             "matches": [
                 "<all_urls>"
             ],
             "exclude_matches": [
-                "*://*.youtube.com/*"
+                "*://*.youtube.com/*",
+                "*://*.twitch.com/*"
             ]
         }
     ]

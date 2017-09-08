@@ -13,11 +13,6 @@
     display: none !important
 }
 
-/* Twitch Chat */
-.chat-container {
-    display: none !important
-}
-
 /* Livefyre */
 #comments, .commentlist {
     display: none !important
