@@ -23,7 +23,7 @@
                 "css/twitch.css"
             ],
             "matches": [
-                "*://*.twitch.com/*"
+                "*://*.twitch.tv/*"
             ]
         },
         {
@@ -35,7 +35,7 @@
             ],
             "exclude_matches": [
                 "*://*.youtube.com/*",
-                "*://*.twitch.com/*"
+                "*://*.twitch.tv/*"
             ]
         }
     ]
