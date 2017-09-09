@@ -16,7 +16,6 @@ Well, here it is anyway - a Chrome extension to hide a few popular commenting sy
 
 **What else?**
 
-* Twitch chat window (because I find it annoying - ymmv)
 * YouTube comments (they're the worst)
 * Any other comment system where someone happened to assign the ID "comments" or "respond". Hopefully this doesn't hide anything unexpected, like some site that assigned the "comments" ID to the main content of their posts... [let me know](https://github.com/grantwinney/chrome-extension-block-comments/issues/new) if it does!
 
