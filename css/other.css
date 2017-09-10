@@ -1,24 +1,24 @@
 /* Facebook */
 .fb-comments, fb:comments-count {
-    display: none !important
+    display: none
 }
 
 /* Disqus */
 #disqus_thread {
-    display: none !important
+    display: none
 }
 
 /* Automattic o2 */
 .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls {
-    display: none !important
+    display: none
 }
 
 /* Livefyre */
 #comments, .commentlist {
-    display: none !important
+    display: none
 }
 
 /* WordPress (and others) */
 #comments, #respond {
-    display: none !important
+    display: none
 }

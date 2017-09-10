@@ -12,11 +12,12 @@
     "options_page": "options.html",
 
     "permissions": [
-        "storage"
+        "storage",
+        "<all_urls>"
     ],
 
     "browser_action": {
-        "default_icon": "images/hide-comments-32.png"
+        "icon": "images/hide-comments-32.png"
     },
 
     "background": {
@@ -25,16 +26,22 @@
 
     "content_scripts": [
         {
-            "css": [
-                "css/youtube.css"
+
+            "js": [
+                "js/arrive.min.js",
+                "js/jquery-3.1.1.js",
+                "js/youtube.js"
             ],
             "matches": [
                 "*://*.youtube.com/*"
             ]
         },
         {
-            "css": [
-                "css/other.css"
+            
+            "js": [
+                "js/arrive.min.js",
+                "js/jquery-3.1.1.js",
+                "js/content.js"
             ],
             "matches": [
                 "<all_urls>"
