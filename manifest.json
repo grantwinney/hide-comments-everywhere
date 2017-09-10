@@ -21,15 +21,17 @@
     },
 
     "background": {
-        "scripts": ["js/background.js"]
+        "scripts": [
+            "js/shared.js",
+            "js/background.js"
+        ]
     },
 
     "content_scripts": [
         {
-
             "js": [
                 "js/arrive.min.js",
-                "js/jquery-3.1.1.js",
+                "js/shared.js",
                 "js/youtube.js"
             ],
             "matches": [
@@ -37,11 +39,10 @@
             ]
         },
         {
-            
             "js": [
                 "js/arrive.min.js",
-                "js/jquery-3.1.1.js",
-                "js/content.js"
+                "js/shared.js",
+                "js/others.js"
             ],
             "matches": [
                 "<all_urls>"
