@@ -4,7 +4,7 @@ I thought about doing this awhile back, when I was reading major news outlets an
 
 Ironically, now that I got around to making this, many sites are dumping their comment systems. It's just too costly to monitor the flood of comments on these huge sites, so they tend to devolve into a cess pool.
 
-## What's this block/hide?
+## What does this hide?
 
 Well, here it is anyway - a Chrome extension to hide some of the popular commenting systems.
 
@@ -19,7 +19,7 @@ Well, here it is anyway - a Chrome extension to hide some of the popular comment
 * YouTube comments (they're the worst)
 * Any other comment system where someone happened to assign the ID "comments" or "respond". Hopefully this doesn't hide anything unexpected, like some site that assigned the "comments" ID to the main content of their posts... [let me know](https://github.com/grantwinney/chrome-extension-block-comments/issues/new) if it does.
 
-## How's it work?
+## How does it work?
 
 Either when the page is first loaded, or when the comments are inserted into the page (Disqus and YouTube delay loading comments), or when you click the extension icon in the toolbar, it runs a bit of JavaScript. All the script does is check whether it should enable/disable comments, and then sets the display style to "none" or "initial".
 
@@ -31,7 +31,7 @@ It also uses storage to save its state, but it shouldn't prompt you for that.
 
 ### Future
 
-I intend to add one other feature where you can maintain a list of sites for which comments *should **not*** be hidden, even when the extension is enabled for all other sites.
+I'd like to add one other feature where you can maintain a list of sites for which comments *should **not*** be hidden, even when the extension is enabled for all other sites. And maybe a button that allows you to temporarily blocking comments on a particular page until the tab is closed. Someday...
 
 ## Need help? Have a request?
 
