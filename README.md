@@ -4,7 +4,7 @@ I thought about doing this awhile back, when I was reading major news outlets an
 
 Ironically, now that I got around to making this, many sites are dumping their comment systems. It's just too costly to monitor the flood of comments on these huge sites, so they tend to devolve into a cess pool.
 
-If you're interested, I wrote about [what I learned while creating it](https://grantwinney.com/a-new-chrome-extension-for-hiding-comments/).
+If you're interested, I wrote about [what I learned while creating it](https://grantwinney.com/a-new-chrome-extension-for-hiding-comments/). If you'd just like to [install the extension](https://chrome.google.com/webstore/detail/hide-comments/bmhkdngdngchlneelllmdennfpmepbnc), it's available in the chrome web store.
 
 ## What does this hide?
 
