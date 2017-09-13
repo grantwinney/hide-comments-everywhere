@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Options</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/options.css" />
+        <script src="js/shared.js"></script>
+        <script src="js/options.js"></script>
+    </head>
+    <body>
+        <h1>Excluded URLs</h1>
+        <p>
+            Include a list of URLs, one per line, that should be allowed to show comments all the time.
+            Enter the exact URL or a <a href="https://developer.chrome.com/extensions/match_patterns">match pattern</a>.
+            <ul id="samples">
+                <li><code>http://www.whatever.com/some_path</code> <em>- exact match</em></li>
+                <li><code>http://*/*</code> <em>- any url using http</em></li>
+                <li><code>http://*/foo*</code> <em>- any url using http, and path starts with "/foo"</em></li>
+                <li><code>https://*.google.com/foo*bar</code> <em>- url using https, on google.com host, path starts with /foo, ends with bar</em></li>
+                <li><code>http://google.com/*</code> <em>- any url using http, and host is "google.com"</em></li>
+                <li><code>*://mail.google.com/*</code> <em>- any url using http or https, and host is "mail.google.com"</em></li>
+                <li><code>&lt;all_urls&gt;</code> <em>- matches any url that uses a permitted scheme</em></li>
+            </ul>
+        </p>
+        <p>
+            <textarea id="message"></textarea>
+        </p>
+        <p>
+            <input id="save" type="submit" value="Save">
+        </p>
+    </body>
+</html>

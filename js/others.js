@@ -22,8 +22,11 @@ function toggleWordPressAndOthers(isEnabled) {
     toggleElement(document.getElementById('respond'), isEnabled);
 }
 
+var isHiding = true;
+
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    var isEnabled = (message.enabled ? "none" : "initial");
+    isHiding = message.enabled;
+    var isEnabled = (isHiding ? "none" : "initial");
     toggleFacebook(isEnabled);
     toggleDisqus(isEnabled);
     toggleAutomattic(isEnabled);
@@ -32,7 +35,5 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 });
 
 document.arrive("#disqus_thread > iframe", {onceOnly: true}, function() {
-    chrome.storage.local.get('enabled', function(result) {
-        toggleElement(document.getElementById('disqus_thread'), (is_extension_enabled(result) ? "none" : "initial"));
-    });
+    toggleElement(document.getElementById('disqus_thread'), (isHiding ? "none" : "initial"));
 });
