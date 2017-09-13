@@ -23,7 +23,9 @@ Well, here it is anyway - a Chrome extension to hide some of the popular comment
 
 Either when the page is first loaded, or the URL changes (you click a link), or the comments are injected into the page (Disqus and YouTube delay loading comments), or when you click the extension icon in the toolbar, it runs a bit of JavaScript. All the script does is check whether it should enable/disable comments, and then sets the display style to "none" or "initial".
 
-You can specify a list of URLs, one per line, that should be allowed to show comments all the time (the extension is effectively disabled for those URLs). Enter the exact URL or a [match pattern](https://developer.chrome.com/extensions/match_patterns).
+Click on the icon in the toolbar to temporarily disable the extension for a single tab, in order to display contents. Click it again to re-enable for that tab.
+
+You can also specify a list of URLs, one per line, that should display comments all the time (the extension is effectively disabled for those URLs). Enter the exact URL or a [match pattern](https://developer.chrome.com/extensions/match_patterns).
 
 ### Permissions
 
