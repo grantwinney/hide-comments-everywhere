@@ -5,7 +5,7 @@
 
     "name": "Hide Comments",
     "description": "Hides some major commenting systems like Disqus, Livefyre, Facebook plugin, WordPress, YouTube, etc.",
-    "version": "1.0.5",
+    "version": "1.0.7",
 
     "update_url": "http://clients2.google.com/service/update2/crx",
 
@@ -27,12 +27,20 @@
         ]
     },
 
+    "icons": {
+        "16": "images/hide-comments-16.png",
+        "32": "images/hide-comments-32.png",
+        "48": "images/hide-comments-48.png",
+        "64": "images/hide-comments-64.png",
+        "128": "images/hide-comments-128.png"
+    },
+
     "content_scripts": [
         {
             "js": [
                 "js/arrive.min.js",
                 "js/shared.js",
-                "js/youtube.js"
+                "js/sites/youtube.js"
             ],
             "matches": [
                 "*://*.youtube.com/*"
@@ -42,7 +50,7 @@
             "js": [
                 "js/arrive.min.js",
                 "js/shared.js",
-                "js/reddit.js"
+                "js/sites/reddit.js"
             ],
             "matches": [
                 "*://*.reddit.com/*"
@@ -52,23 +60,37 @@
             "js": [
                 "js/arrive.min.js",
                 "js/shared.js",
-                "js/others.js"
+                "js/sites/ijr.js"
+            ],
+            "matches": [
+                "*://*.ijr.com/*"
+            ]
+        },
+        {
+            "js": [
+                "js/arrive.min.js",
+                "js/shared.js",
+                "js/sites/devto.js"
+            ],
+            "matches": [
+                "*://*.dev.to/*"
+            ]
+        },
+        {
+            "js": [
+                "js/arrive.min.js",
+                "js/shared.js",
+                "js/sites/others.js"
             ],
             "matches": [
                 "<all_urls>"
             ],
             "exclude_matches": [
                 "*://*.youtube.com/*",
-                "*://*.reddit.com/*"
+                "*://*.reddit.com/*",
+                "*://*.ijr.com/*",
+                "*://*.dev.to/*"
             ]
         }
-    ],
-
-    "icons": {
-        "16": "images/hide-comments-16.png",
-        "32": "images/hide-comments-32.png",
-        "48": "images/hide-comments-48.png",
-        "64": "images/hide-comments-64.png",
-        "128": "images/hide-comments-128.png"
-    }
+    ]
 }
