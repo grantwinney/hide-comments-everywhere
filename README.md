@@ -15,8 +15,13 @@ Well, here it is anyway - a Chrome extension to hide some of the popular comment
 * Automattic o2
 * Livefyre
 * WordPress
+
+Also hides comments on other sites.
+
 * Reddit
 * YouTube
+* Facebook
+* Twitter
 * Any other comment system where someone happened to assign the ID "comments" or "respond". Hopefully this doesn't hide anything unexpected, like some site that assigned the "comments" ID to the main content of their posts... [let me know](https://github.com/grantwinney/chrome-extension-block-comments/issues/new) if it does.
 
 ## How does it work?

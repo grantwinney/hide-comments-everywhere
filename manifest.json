@@ -5,7 +5,7 @@
 
     "name": "Hide Comments",
     "description": "Hides some major commenting systems like Disqus, Livefyre, Facebook plugin, WordPress, YouTube, etc.",
-    "version": "1.0.7",
+    "version": "1.0.8",
 
     "update_url": "http://clients2.google.com/service/update2/crx",
 
@@ -80,6 +80,26 @@
             "js": [
                 "js/arrive.min.js",
                 "js/shared.js",
+                "js/sites/facebook.js"
+            ],
+            "matches": [
+                "*://*.facebook.com/*"
+            ]
+        },
+        {
+            "js": [
+                "js/arrive.min.js",
+                "js/shared.js",
+                "js/sites/twitter.js"
+            ],
+            "matches": [
+                "*://*.twitter.com/*"
+            ]
+        },
+        {
+            "js": [
+                "js/arrive.min.js",
+                "js/shared.js",
                 "js/sites/others.js"
             ],
             "matches": [
@@ -89,7 +109,9 @@
                 "*://*.youtube.com/*",
                 "*://*.reddit.com/*",
                 "*://*.ijr.com/*",
-                "*://*.dev.to/*"
+                "*://*.dev.to/*",
+                "*://*.facebook.com/*",
+                "*://*.twitter.com/*"
             ]
         }
     ]
