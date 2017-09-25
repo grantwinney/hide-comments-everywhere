@@ -1,0 +1,38 @@
+{
+    "sites":
+    [
+        {
+            "site": "https?:\/\/(.*\.)?dev\.to",
+            "classes": ["comments-container-container", "comments-count"]
+        },
+        {
+            "site": "https?:\/\/(.*\.)?youtube\.com",
+            "tags": ["ytd-comments"],
+            "delay-selectors": ["ytd-comments"]
+        },
+        {
+            "site": "https?:\/\/(.*\.)?reddit\.com",
+            "site": "*://*.reddit.com/*",
+            "classes": ["commentarea"]
+        },
+        {
+            "site": "https?:\/\/(.*\.)?twitter\.com",
+            "classes": ["inline-reply-tweetbox", "replies-to"]
+        },
+        {
+            "site": "https?:\/\/(.*\.)?facebook\.com",
+            "classes": ["UFIContainer", "comment_link"]
+        },
+        {
+            "site": "https?:\/\/(.*\.)?ijr\.com",
+            "classes": ["opt360-discuss-cta-top-comments"]
+        },
+        {
+            "site": "https?:\/\/.*",
+            "classes": ["fb-comments", "o2-display-comments-toggle", "o2-post-comments", "o2-post-comment-controls", "commentlist"],
+            "tags": ["fb:comments-count"],
+            "ids": ["disqus_thread", "comments", "respond"],
+            "delay-selectors": ["#disqus_thread > iframe"]
+        }
+    ]
+}
