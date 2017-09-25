@@ -2,29 +2,29 @@
     "sites":
     [
         {
-            "site": "https?:\/\/(.*\.)?dev\.to",
+            "site": "https?:\/\/(.*[.])?dev[.]to",
             "classes": ["comments-container-container", "comments-count"]
         },
         {
-            "site": "https?:\/\/(.*\.)?youtube\.com",
+            "site": "https?:\/\/(.*[.])?youtube[.]com",
             "tags": ["ytd-comments"],
             "delay-selectors": ["ytd-comments"]
         },
         {
-            "site": "https?:\/\/(.*\.)?reddit\.com",
+            "site": "https?:\/\/(.*[.])?reddit[.]com",
             "site": "*://*.reddit.com/*",
             "classes": ["commentarea"]
         },
         {
-            "site": "https?:\/\/(.*\.)?twitter\.com",
+            "site": "https?:\/\/(.*[.])?twitter[.]com",
             "classes": ["inline-reply-tweetbox", "replies-to"]
         },
         {
-            "site": "https?:\/\/(.*\.)?facebook\.com",
+            "site": "https?:\/\/(.*[.])?facebook[.]com",
             "classes": ["UFIContainer", "comment_link"]
         },
         {
-            "site": "https?:\/\/(.*\.)?ijr\.com",
+            "site": "https?:\/\/(.*[.])?ijr[.]com",
             "classes": ["opt360-discuss-cta-top-comments"]
         },
         {
