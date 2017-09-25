@@ -12,7 +12,6 @@
         },
         {
             "site": "https?:\/\/(.*[.])?reddit[.]com",
-            "site": "*://*.reddit.com/*",
             "classes": ["commentarea"]
         },
         {
