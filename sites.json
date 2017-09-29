@@ -3,39 +3,33 @@
     [
         {
             "pattern": "https?://(.*[.])?dev[.]to",
-            "classes": ["comments-container-container", "comments-count"]
+            "immediate": ".comments-container-container, .comments-count"
         },
         {
             "pattern": "https?://(.*[.])?youtube[.]com",
-            "tags": ["ytd-comments"],
-            "delayselectors": [
-                                {"selector": "ytd-comments", "tag_element": "ytd-comments"}
-                              ]
+            "immediate": "ytd-comments",
+            "delay": "ytd-comments"
         },
         {
             "pattern": "https?://(.*[.])?reddit[.]com",
-            "classes": ["commentarea"]
+            "immediate": ".commentarea"
         },
         {
             "pattern": "https?://(.*[.])?twitter[.]com",
-            "classes": ["inline-reply-tweetbox", "replies-to", "ProfileTweet-action--reply"]
+            "immediate": ".inline-reply-tweetbox, .replies-to, .ProfileTweet-action--reply"
         },
         {
             "pattern": "https?://(.*[.])?facebook[.]com",
-            "classes": ["UFIContainer", "comment_link"]
+            "immediate": ".comment_link, .UFIComment, .UFIAddComment"
         },
         {
             "pattern": "https?://(.*[.])?ijr[.]com",
-            "classes": ["opt360-discuss-cta-top-comments"]
+            "immediate": ".opt360-discuss-cta-top-comments"
         },
         {
             "pattern": "https?://.*",
-            "classes": ["fb-comments", "o2-display-comments-toggle", "o2-post-comments", "o2-post-comment-controls", "commentlist"],
-            "tags": ["fb:comments-count"],
-            "ids": ["disqus_thread", "comments", "respond"],
-            "delayselectors": [
-                                {"selector": "#disqus_thread > iframe", "id_element": "disqus_thread"}
-                              ]
+            "immediate": ".fb-comments, fb:comments-count, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, comments, respond",
+            "delay": "#disqus_thread > iframe"
         }
     ]
 }
