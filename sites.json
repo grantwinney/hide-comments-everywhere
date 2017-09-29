@@ -12,7 +12,7 @@
         },
         {
             "pattern": "^https?://(.*[.])?reddit[.]com",
-            "immediate": ".commentarea"
+            "immediate": ".commentarea, .comments"
         },
         {
             "pattern": "^https?://(.*[.])?twitter[.]com",
