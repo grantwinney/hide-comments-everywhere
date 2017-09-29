@@ -18,7 +18,7 @@
         },
         {
             "pattern": "https?://(.*[.])?twitter[.]com",
-            "classes": ["inline-reply-tweetbox", "replies-to", "Icon--reply"]
+            "classes": ["inline-reply-tweetbox", "replies-to", "ProfileTweet-action--reply"]
         },
         {
             "pattern": "https?://(.*[.])?facebook[.]com",
