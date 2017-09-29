@@ -7,7 +7,7 @@
         },
         {
             "pattern": "^https?://(.*[.])?youtube[.]com",
-            "immediate": "ytd-comments",
+            "immediate": "ytd-comments, ytd-live-chat-frame, .yt-spinner, #watch-discussion, #watch-sidebar-live-chat, #comments-test-iframe",
             "delay": "ytd-comments"
         },
         {
