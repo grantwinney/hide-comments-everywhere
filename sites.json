@@ -2,32 +2,34 @@
     "sites":
     [
         {
-            "pattern": "https?://(.*[.])?dev[.]to",
+            "pattern": "^https?://(.*[.])?dev[.]to",
             "immediate": ".comments-container-container, .comments-count"
         },
         {
-            "pattern": "https?://(.*[.])?youtube[.]com",
+            "pattern": "^https?://(.*[.])?youtube[.]com",
             "immediate": "ytd-comments",
             "delay": "ytd-comments"
         },
         {
-            "pattern": "https?://(.*[.])?reddit[.]com",
+            "pattern": "^https?://(.*[.])?reddit[.]com",
             "immediate": ".commentarea"
         },
         {
-            "pattern": "https?://(.*[.])?twitter[.]com",
-            "immediate": ".inline-reply-tweetbox, .replies-to, .ProfileTweet-action--reply"
+            "pattern": "^https?://(.*[.])?twitter[.]com",
+            "immediate": ".inline-reply-tweetbox, .replies-to, .ProfileTweet-action--reply",
+            "delay": ".ProfileTweet-action--reply",
+            "onceOnly": false
         },
         {
-            "pattern": "https?://(.*[.])?facebook[.]com",
+            "pattern": "^https?://(.*[.])?facebook[.]com",
             "immediate": ".comment_link, .UFIComment, .UFIAddComment, ._-56"
         },
         {
-            "pattern": "https?://(.*[.])?ijr[.]com",
-            "immediate": ".opt360-discuss-cta-top-comments"
+            "pattern": "^https?://(.*[.])?ijr[.]com",
+            "immediate": ".mt1, opt360-share-button-comments-article-start"
         },
         {
-            "pattern": "https?://.*",
+            "pattern": "^https?://.*",
             "immediate": ".fb-comments, fb:comments-count, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, comments, respond",
             "delay": "#disqus_thread > iframe"
         }
