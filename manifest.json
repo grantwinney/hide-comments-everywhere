@@ -12,8 +12,9 @@
     "options_page": "options.html",
 
     "permissions": [
+        "tabs",
         "storage",
-        "<all_urls>"
+        "https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome/master/sites.json"
     ],
 
     "browser_action": {
@@ -40,78 +41,10 @@
             "js": [
                 "js/arrive.min.js",
                 "js/shared.js",
-                "js/sites/youtube.js"
-            ],
-            "matches": [
-                "*://*.youtube.com/*"
-            ]
-        },
-        {
-            "js": [
-                "js/arrive.min.js",
-                "js/shared.js",
-                "js/sites/reddit.js"
-            ],
-            "matches": [
-                "*://*.reddit.com/*"
-            ]
-        },
-        {
-            "js": [
-                "js/arrive.min.js",
-                "js/shared.js",
-                "js/sites/ijr.js"
-            ],
-            "matches": [
-                "*://*.ijr.com/*"
-            ]
-        },
-        {
-            "js": [
-                "js/arrive.min.js",
-                "js/shared.js",
-                "js/sites/devto.js"
-            ],
-            "matches": [
-                "*://*.dev.to/*"
-            ]
-        },
-        {
-            "js": [
-                "js/arrive.min.js",
-                "js/shared.js",
-                "js/sites/facebook.js"
-            ],
-            "matches": [
-                "*://*.facebook.com/*"
-            ]
-        },
-        {
-            "js": [
-                "js/arrive.min.js",
-                "js/shared.js",
-                "js/sites/twitter.js"
-            ],
-            "matches": [
-                "*://*.twitter.com/*"
-            ]
-        },
-        {
-            "js": [
-                "js/arrive.min.js",
-                "js/shared.js",
-                "js/sites/others.js"
+                "js/content_script.js"
             ],
             "matches": [
                 "<all_urls>"
-            ],
-            "exclude_matches": [
-                "*://*.youtube.com/*",
-                "*://*.reddit.com/*",
-                "*://*.ijr.com/*",
-                "*://*.dev.to/*",
-                "*://*.facebook.com/*",
-                "*://*.twitter.com/*"
             ]
         }
     ]

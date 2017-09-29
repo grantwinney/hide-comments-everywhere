@@ -1,43 +1,33 @@
-function toggleElements(elements, displayValue) {
+function toggleElements(elements, isHiding) {
     for (var i = 0; i < elements.length; i++) {
-        toggleElement(elements[i], displayValue);
+        toggleElement(elements[i], isHiding);
     };
 };
 
-function toggleElement(element, displayValue) {
+function toggleElement(element, isHiding) {
     if (element != undefined) {
-        element.style.setProperty("display", displayValue, "important");
+        if (isHiding) {
+            element.style.setProperty('display', 'none', 'important');
+        } else {
+            element.style.setProperty('display', '', '');
+        }
     }
 };
 
-function getMatchPatternParts(url) {
-    var parts = url.split("://");
-    var hostAndPath = parts[1].split(/\/(.+)/);
-
-    var scheme = parts[0];
-    var host = hostAndPath[0];
-    var path = '/' + (hostAndPath[1] != undefined ? hostAndPath[1] : '');
-
-    return [scheme, host, path];
+function isValidMatch(url, pattern) {
+    var re = new RegExp(pattern);
+    return re.test(url);
 }
 
-function isValidMatchPattern(url) {
-    try {
-        if (url === '' || url == "<all_urls>") {
-            return true;
+function storeSiteDefinitions() {
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome/master/sites.json', true);
+    xobj.responseType = 'json';
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4) {
+            chrome.storage.local.set({'site_patterns': xobj.response})
         }
-
-        var parts = getMatchPatternParts(url);
-        var scheme = parts[0];
-        var host = parts[1];
-        var path = parts[2];
-
-        return ((scheme === '*' || scheme === 'http' || scheme === 'https' || scheme === 'file' || scheme === 'ftp')
-                && (host === '*'
-                    || (host.startsWith("*.") && host.length > 0 && host.substring(1).indexOf('/') === -1 && host.substring(1).indexOf('*') === -1)
-                    || (host.length > 0 && host.indexOf('/') === -1 && host.indexOf('*') === -1))
-                && (path.startsWith('/')));
-    } catch (e) {
-        return false;
-    }
+    };
+    xobj.send();
 }

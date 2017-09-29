@@ -7,13 +7,27 @@
         <script src="js/options.js"></script>
     </head>
     <body>
+        <h1>Get Updated Definitions</h1>
+        <p>
+            Update definitions occasionally, in order to pull down any new elements/classes
+            that are used with various commenting systems.
+        </p>
+        <p>
+            Try this first if you notice that
+            some comments are not hidden (especially if they previously were).
+        </p>
+        <p>
+            <input id="update_definitions" type="submit" value="Update Definitions">
+        </p>
+        <hr>
         <h1>Excluded URLs</h1>
         <p>
-            Include a list of URLs, one per line, that should be allowed to show comments all the time.
-            Enter the exact URL or a <a href="https://developer.chrome.com/extensions/match_patterns">match pattern</a>.
+            Include a list of URLs as <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">regex patterns</a>, one per line, that should be allowed to show comments all the time.
             <ul id="samples">
-                <li><code>http://www.whatever.com/some_path</code> <em>- exact match</em></li>
-                <li><code>http://*/*</code> <em>- any url using http</em></li>
+                <li><code>^http://www\.example\.com/some_path$</code> <em>- exact match</em></li>
+                <li><code>^https?://www\.example\.com/some_path$</code> <em>- exact match, either http or https</em></li>
+                <li><code>^https?://(.*[.])?youtube[.]com</code> <em>- exact match, but works for http or https</em></li>
+                <li><code>^http://</code> <em>- any url using http</em></li>
                 <li><code>http://*/foo*</code> <em>- any url using http, and path starts with "/foo"</em></li>
                 <li><code>https://*.google.com/foo*bar</code> <em>- url using https, on google.com host, path starts with /foo, ends with bar</em></li>
                 <li><code>http://google.com/*</code> <em>- any url using http, and host is "google.com"</em></li>

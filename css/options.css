@@ -17,3 +17,38 @@ body {
     max-width: 600px;
     min-height: 200px;
 }
+
+input[type=submit] {
+    padding: 5px 15px;
+    background: #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#save {
+    background: green;
+    color: white;
+    border: 1px solid darkgreen;
+    cursor: hand;
+}
+#save:hover {
+    background: lightgreen;
+    color: black;
+    border: 1px solid darkgreen;
+}
+
+#update_definitions {
+    background: gold;
+    border: 1px solid goldenrod;
+    cursor: hand;
+}
+
+#update_definitions:hover {
+    background: yellow;
+}
+
+hr {
+    width:60%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
