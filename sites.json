@@ -26,7 +26,7 @@
         },
         {
             "pattern": "^https?://(.*[.])?ijr[.]com",
-            "immediate": ".opt360-discuss-cta-top-comments, .opt360-share-button-comments-article-start"
+            "immediate": ".opt360-discuss-cta-top-comments, .opt360-share-button-comments-article-start, div.mt1 > a > div"
         },
         {
             "pattern": "^https?://.*",
