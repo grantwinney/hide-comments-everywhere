@@ -29,6 +29,10 @@
             "immediate": ".opt360-discuss-cta-top-comments, .opt360-share-button-comments-article-start, div.mt1 > a > div"
         },
         {
+            "pattern": "^https?://(.*[.])?techdirt[.]com",
+            "immediate": ".storylinks, .comments"
+        },
+        {
             "pattern": "^https?://",
             "immediate": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .respond",
             "delay": "#disqus_thread > iframe"
