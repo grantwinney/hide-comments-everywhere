@@ -2,36 +2,40 @@
     "sites":
     [
         {
-            "site": "https?:\/\/(.*[.])?dev[.]to",
+            "pattern": "https?://(.*[.])?dev[.]to",
             "classes": ["comments-container-container", "comments-count"]
         },
         {
-            "site": "https?:\/\/(.*[.])?youtube[.]com",
+            "pattern": "https?://(.*[.])?youtube[.]com",
             "tags": ["ytd-comments"],
-            "delay-selectors": ["ytd-comments"]
+            "delayselectors": [
+                                {"selector": "ytd-comments", "tag_element": "ytd-comments"}
+                              ]
         },
         {
-            "site": "https?:\/\/(.*[.])?reddit[.]com",
+            "pattern": "https?://(.*[.])?reddit[.]com",
             "classes": ["commentarea"]
         },
         {
-            "site": "https?:\/\/(.*[.])?twitter[.]com",
+            "pattern": "https?://(.*[.])?twitter[.]com",
             "classes": ["inline-reply-tweetbox", "replies-to"]
         },
         {
-            "site": "https?:\/\/(.*[.])?facebook[.]com",
+            "pattern": "https?://(.*[.])?facebook[.]com",
             "classes": ["UFIContainer", "comment_link"]
         },
         {
-            "site": "https?:\/\/(.*[.])?ijr[.]com",
+            "pattern": "https?://(.*[.])?ijr[.]com",
             "classes": ["opt360-discuss-cta-top-comments"]
         },
         {
-            "site": "https?:\/\/.*",
+            "pattern": "https?://.*",
             "classes": ["fb-comments", "o2-display-comments-toggle", "o2-post-comments", "o2-post-comment-controls", "commentlist"],
             "tags": ["fb:comments-count"],
             "ids": ["disqus_thread", "comments", "respond"],
-            "delay-selectors": ["#disqus_thread > iframe"]
+            "delayselectors": [
+                                {"selector": "#disqus_thread > iframe", "id_element": "disqus_thread"}
+                              ]
         }
     ]
 }
