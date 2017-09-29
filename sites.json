@@ -30,7 +30,7 @@
         },
         {
             "pattern": "^https?://",
-            "immediate": ".o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, comments, respond",
+            "immediate": ".fb-comments, fb\:comments-count, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, comments, respond",
             "delay": "#disqus_thread > iframe"
         }
     ]
