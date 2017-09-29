@@ -20,7 +20,7 @@
         },
         {
             "pattern": "https?://(.*[.])?facebook[.]com",
-            "immediate": ".comment_link, .UFIComment, .UFIAddComment"
+            "immediate": ".comment_link, .UFIComment, .UFIAddComment, ._-56"
         },
         {
             "pattern": "https?://(.*[.])?ijr[.]com",
