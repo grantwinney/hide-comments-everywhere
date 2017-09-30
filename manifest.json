@@ -3,9 +3,9 @@
     "author": "Grant Winney",
     "homepage_url": "https://github.com/grantwinney/chrome-extension-block-comments",
 
-    "name": "Hide Comments",
-    "description": "Hides some major commenting systems like Disqus, Livefyre, Facebook plugin, WordPress, YouTube, etc.",
-    "version": "1.0.8",
+    "name": "Hide Comments Everywhere",
+    "description": "An anti-social social extension to hide commenting systems like Disqus, Livefyre, Facebook, Twitter, WordPress, YouTube, etc.",
+    "version": "1.0.9",
 
     "update_url": "http://clients2.google.com/service/update2/crx",
 

@@ -8,7 +8,7 @@ If you're interested, I wrote about what I've learned (links below). If you'd ju
 
 ## What does this hide?
 
-Here it is... the anti-social social plugin. A Chrome extension to commenting systems, including:
+Here it is... the anti-social social plugin. A Chrome extension to hide commenting systems, including (but in no way limited to):
 
 * Facebook comment plugin
 * Disqus
@@ -36,8 +36,12 @@ It needs access to all your tabs / pages in order to inject css to hide various 
 
 It also uses storage to save its state, but it shouldn't prompt you for that. The list of sites to hide comments for uses local storage, but your personal list of excluded sites uses synchronized storage so it should be available on any machine this extension is installed on.
 
+## I need your help!
+
+If you notice a commenting system that should be added, [open an issue](https://github.com/grantwinney/chrome-extension-block-comments/issues/new) for that. Include the website where you noticed it, or [create a pull request](https://github.com/grantwinney/hide-comments-in-chrome/pulls) with the necessary changes to the "[sites.json](https://github.com/grantwinney/hide-comments-in-chrome/blob/master/sites.json)" file, and I'll follow-up as time permits.
+
+Thanks!
+
 ## Need help? Have a request?
 
 [Open a new issue](https://github.com/grantwinney/chrome-extension-block-comments/issues/new) with as many details as possible. The more you let me know upfront, the less I'll have to ask later!
-
-If you notice a major commenting system that should be added, [open an issue](https://github.com/grantwinney/chrome-extension-block-comments/issues/new) for that too. Include the website where you noticed it, and I'll follow-up as time permits.
