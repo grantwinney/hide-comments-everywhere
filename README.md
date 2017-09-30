@@ -1,42 +1,40 @@
 # Hide Comments
 
-I thought about doing this awhile back, when I was reading major news outlets and was getting fed up with how full of vitriol some commenters are. I just wanted the content. YouTube can be even worse.
+I thought about doing this awhile back, when I was reading major news outlets and was getting fed up with how full of vitriol some commenters are. Many sites are realizing this and dumping their comment systems completely. It's just too costly to monitor the flood of comments on these huge sites, so they tend to devolve into a cess pool. Personally, I just want the content most of the time. YouTube anyone?
 
-Ironically, now that I got around to making this, many sites are dumping their comment systems. It's just too costly to monitor the flood of comments on these huge sites, so they tend to devolve into a cess pool.
+If you're interested, I wrote about what I've learned (links below). If you'd just like to try it out, [it's available in the chrome web store](https://chrome.google.com/webstore/detail/hide-comments/bmhkdngdngchlneelllmdennfpmepbnc).
 
-If you're interested, I wrote about [what I learned while creating it](https://grantwinney.com/a-new-chrome-extension-for-hiding-comments/). If you'd just like to [install the extension](https://chrome.google.com/webstore/detail/hide-comments/bmhkdngdngchlneelllmdennfpmepbnc), it's available in the chrome web store.
+* [A new Chrome extension for hiding comments (and what I learned)](https://grantwinney.com/a-new-chrome-extension-for-hiding-comments/)
 
 ## What does this hide?
 
-Well, here it is anyway - a Chrome extension to hide some of the popular commenting systems.
+Here it is... the anti-social social plugin. A Chrome extension to commenting systems, including:
 
 * Facebook comment plugin
 * Disqus
-* Automattic o2
 * Livefyre
 * WordPress
-
-Also hides comments on other sites.
-
 * Reddit
 * YouTube
 * Facebook
 * Twitter
-* Any other comment system where someone happened to assign the ID "comments" or "respond". Hopefully this doesn't hide anything unexpected, like some site that assigned the "comments" ID to the main content of their posts... [let me know](https://github.com/grantwinney/chrome-extension-block-comments/issues/new) if it does.
+* Any other comment system where someone happened to assign the ID or class "comments" or "respond". Hopefully this doesn't hide anything unexpected, like some site that assigned the "comments" ID to the main content of their posts... please [let me know](https://github.com/grantwinney/chrome-extension-block-comments/issues/new) if it does.
 
 ## How does it work?
 
-Either when the page is first loaded, or the URL changes (you click a link), or the comments are injected into the page (Disqus and YouTube delay loading comments), or when you click the extension icon in the toolbar, it runs a bit of JavaScript. All the script does is check whether it should enable/disable comments, and then sets the display style to "none" or "initial".
+It's triggered when the page is first loaded, or the URL changes (you click a link), or the comments are injected into the page (Disqus and YouTube delay loading comments), or when you click the extension icon in the toolbar, running some JavaScript.
 
-Click on the icon in the toolbar to temporarily disable the extension for a single tab, in order to display contents. Click it again to re-enable for that tab.
+The script checks whether it should enable/disable comments, and then adds a display style of "none" or removes said display style (resetting it to whatever the rest of the CSS on the page originally set it to). It determines this by hiding anything defined in the list of [included sites](https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome/master/sites.json), then showing anything listed in your list of *excluded* sites.
 
-You can also specify a list of URLs, one per line, that should display comments all the time (the extension is effectively disabled for those URLs). Enter the exact URL or a [match pattern](https://developer.chrome.com/extensions/match_patterns).
+The excluded sites are ones you define on the "options" page. Specify a list of URLs, one per line, that should display comments all the time (the extension is effectively disabled for those URLs). Enter the exact URL or a [match pattern](https://developer.chrome.com/extensions/match_patterns).
+
+Click on the icon in the toolbar to temporarily toggle enabling/disabling the extension for a single tab, in order to hide or display contents. Click it again to toggle it back. Reloading the page will cause it to follow the same rules above, looking first at included sites and then excluded sites.
 
 ### Permissions
 
-It will notify you that it needs access to all your tabs / pages. Since I have no idea if the site you're viewing has comments on it ahead of time, or will load them at some future time (like Disqus), I just apply a few CSS styles to every page in order to hide anything that might be there.
+It needs access to all your tabs / pages in order to inject css to hide various comment-related elements. I'd like to only require the activeTab permission, which wouldn't even need to request access, but I haven't found a way yet.
 
-It also uses storage to save its state, but it shouldn't prompt you for that.
+It also uses storage to save its state, but it shouldn't prompt you for that. The list of sites to hide comments for uses local storage, but your personal list of excluded sites uses synchronized storage so it should be available on any machine this extension is installed on.
 
 ## Need help? Have a request?
 
