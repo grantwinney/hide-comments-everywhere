@@ -14,7 +14,8 @@
     "permissions": [
         "tabs",
         "storage",
-        "https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome/master/sites.json"
+        "https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome/master/sites.json",
+        "https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome/master/sites-version.json"
     ],
 
     "browser_action": {

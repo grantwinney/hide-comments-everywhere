@@ -2,6 +2,19 @@ body {
     text-align : center;
 }
 
+hr {
+    width: 60%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+input[type=submit] {
+    padding: 5px 15px;
+    background: #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
 #samples {
     width: 80%;
     min-width: 300px;
@@ -18,13 +31,6 @@ body {
     min-height: 200px;
 }
 
-input[type=submit] {
-    padding: 5px 15px;
-    background: #ccc;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-}
-
 #save {
     background: green;
     color: white;
@@ -37,6 +43,12 @@ input[type=submit] {
     border: 1px solid darkgreen;
 }
 
+#new_definition_message {
+    font-style: italic;
+    color: red;
+    display: none;
+}
+
 #update_definitions {
     background: gold;
     border: 1px solid goldenrod;
@@ -45,10 +57,4 @@ input[type=submit] {
 
 #update_definitions:hover {
     background: yellow;
-}
-
-hr {
-    width:60%;
-    margin-top: 30px;
-    margin-bottom: 30px;
 }

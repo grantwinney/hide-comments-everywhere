@@ -8,6 +8,7 @@
     </head>
     <body>
         <h1>Get Updated Definitions</h1>
+        <p id="new_definition_message">New definitions available!</p>
         <p>
             Update definitions occasionally, in order to pull down any new elements/classes
             that are used with various commenting systems.
@@ -26,13 +27,9 @@
             <ul id="samples">
                 <li><code>^http://www\.example\.com/some_path$</code> <em>- exact match</em></li>
                 <li><code>^https?://www\.example\.com/some_path$</code> <em>- exact match, either http or https</em></li>
-                <li><code>^https?://(.*[.])?youtube[.]com</code> <em>- exact match, but works for http or https</em></li>
-                <li><code>^http://</code> <em>- any url using http</em></li>
-                <li><code>http://*/foo*</code> <em>- any url using http, and path starts with "/foo"</em></li>
-                <li><code>https://*.google.com/foo*bar</code> <em>- url using https, on google.com host, path starts with /foo, ends with bar</em></li>
-                <li><code>http://google.com/*</code> <em>- any url using http, and host is "google.com"</em></li>
-                <li><code>*://mail.google.com/*</code> <em>- any url using http or https, and host is "mail.google.com"</em></li>
-                <li><code>&lt;all_urls&gt;</code> <em>- matches any url that uses a permitted scheme</em></li>
+                <li><code>^https?://(.*[.])?youtube[.]com$</code> <em>- ignore subdomain (i.e. works for youtube.com or blog.youtube.com)</em></li>
+                <li><code>^http://</code> <em>- any url starting with http</em></li>
+                <li><code>.*</code> <em>- any url (effectively disables the extension)</em></li>
             </ul>
         </p>
         <p>

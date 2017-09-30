@@ -6,7 +6,6 @@ function handleSelectors(selector, isHiding) {
 
 function handleDelaySelectors(selector, onceOnly, isHiding) {
     if (selector != undefined) {
-        // document.arrive(selector, {onceOnly: onceOnly == undefined || onceOnly == true}, function() {
         document.arrive(selector, {onceOnly: true}, function() {
             toggleElements(document.querySelectorAll(selector), isHiding);
         });

@@ -11,18 +11,6 @@ function show_disabled_icon(tabId) {
     chrome.browserAction.setBadgeText({ text: 'X', tabId: tabId });
 };
 
-function toggleActiveness(tabId, tabUrl) {
-    chrome.browserAction.getBadgeText({tabId: tabId}, function(badgeText) {
-        if (badgeText == "") {
-            show_disabled_icon(tabId);
-            chrome.tabs.sendMessage(tabId, { enabled: false, url: tabUrl });
-        } else {
-            show_enabled_icon(tabId);
-            chrome.tabs.sendMessage(tabId, { enabled: true, url: tabUrl });
-        }
-    });
-};
-
 function isUrlExcluded(url, excludedUrls) {
     var excludedUrlPatterns = excludedUrls.split(/\r?\n/);
     for (var i = 0; i < excludedUrlPatterns.length; i++) {
@@ -37,7 +25,15 @@ function isUrlExcluded(url, excludedUrls) {
 };
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-    toggleActiveness(tab.id, tab.url);
+    chrome.browserAction.getBadgeText({tabId: tab.id}, function(badgeText) {
+        if (badgeText == "") {
+            show_disabled_icon(tab.id);
+            chrome.tabs.sendMessage(tab.id, { enabled: false, url: tab.url });
+        } else {
+            show_enabled_icon(tab.id);
+            chrome.tabs.sendMessage(tab.id, { enabled: true, url: tab.url });
+        }
+    });
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
@@ -56,6 +52,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 
 chrome.storage.local.get('site_patterns', function(result) {
     if (result == undefined || result.site_patterns == undefined) {
-        storeSiteDefinitions();
+        getAndStoreSiteDefinitions();
     }
 });
