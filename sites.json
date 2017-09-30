@@ -41,8 +41,8 @@
             "immediate": ".comments, .comments-link"
         },
         {
-            "pattern": "^https?://(.*[.])?stackoverflow[.]com",
-            "immediate": ".comments, .comments-link"
+            "pattern": "^https?://(.*[.])?http://collider[.]com",
+            "immediate": ".facebook-comments-cover"
         },
         {
             "pattern": "^https?://",
