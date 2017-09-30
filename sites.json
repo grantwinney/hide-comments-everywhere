@@ -22,7 +22,7 @@
         },
         {
             "pattern": "^https?://(.*[.])?facebook[.]com",
-            "immediate": ".comment_link, .UFIComment, .UFIAddComment, ._-56, UFILikeSentence ._ohf, _ohf",
+            "immediate": ".comment_link, .UFIComment, .UFIAddComment, ._-56, UFILikeSentence ._ohf, .UFIReplyList",
             "delay": ".comment_link, .UFIComment, .UFIAddComment, ._-56, UFILikeSentence ._ohf"
         },
         {
