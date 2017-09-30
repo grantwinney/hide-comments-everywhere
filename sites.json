@@ -41,6 +41,10 @@
             "immediate": ".comments, .comments-link"
         },
         {
+            "pattern": "^https?://(.*[.])?stackoverflow[.]com",
+            "immediate": ".comments, .comments-link"
+        },
+        {
             "pattern": "^https?://",
             "immediate": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .respond",
             "delay": "#disqus_thread > iframe"
