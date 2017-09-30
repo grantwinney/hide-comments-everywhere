@@ -16,7 +16,8 @@
         },
         {
             "pattern": "^https?://(.*[.])?twitter[.]com",
-            "immediate": ".inline-reply-tweetbox, .replies-to, .ProfileTweet-action--reply, .Icon--reply"
+            "immediate": ".inline-reply-tweetbox, .replies-to, .ProfileTweet-action--reply, .Icon--reply",
+            "delay": ".ProfileTweet-action--reply"
         },
         {
             "pattern": "^https?://(.*[.])?facebook[.]com",
