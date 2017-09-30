@@ -41,7 +41,7 @@
             "immediate": ".comments, .comments-link"
         },
         {
-            "pattern": "^https?://(.*[.])?http://collider[.]com",
+            "pattern": "^https?://(.*[.])?collider[.]com",
             "immediate": ".facebook-comments-cover"
         },
         {
