@@ -1,4 +1,4 @@
-# Hide Comments
+# Hide Comments Everywhere
 
 I thought about doing this awhile back, when I was reading major news outlets and was getting fed up with how full of vitriol some commenters are. Many sites are realizing this and dumping their comment systems completely. It's just too costly to monitor the flood of comments on these huge sites, so they tend to devolve into a cess pool. Personally, I just want the content most of the time. YouTube anyone?
 
