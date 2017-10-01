@@ -1,14 +1,11 @@
 function show_enabled_icon(tabId) {
     chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: tabId });
     chrome.browserAction.setTitle({ title: '', tabId: tabId });
-    chrome.browserAction.setBadgeText({ text: '', tabId: tabId });
 };
 
 function show_disabled_icon(tabId) {
     chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: tabId });
     chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled)', tabId: tabId });
-    chrome.browserAction.setBadgeBackgroundColor({ color: [155,155,155,255], tabId: tabId });
-    chrome.browserAction.setBadgeText({ text: 'X', tabId: tabId });
 };
 
 function isUrlExcluded(url, excludedUrls) {
@@ -25,13 +22,13 @@ function isUrlExcluded(url, excludedUrls) {
 };
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-    chrome.browserAction.getBadgeText({tabId: tab.id}, function(badgeText) {
-        if (badgeText == "") {
-            show_disabled_icon(tab.id);
-            chrome.tabs.sendMessage(tab.id, { enabled: false, url: tab.url });
-        } else {
+    chrome.browserAction.getTitle({tabId: tab.id}, function(title) {
+        if (title.endsWith('(disabled)')) {
             show_enabled_icon(tab.id);
             chrome.tabs.sendMessage(tab.id, { enabled: true, url: tab.url });
+        } else {
+            show_disabled_icon(tab.id);
+            chrome.tabs.sendMessage(tab.id, { enabled: false, url: tab.url });
         }
     });
 });
