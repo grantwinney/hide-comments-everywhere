@@ -21,7 +21,8 @@
         },
         {
             "pattern": "^https?://(.*[.])?facebook[.]com",
-            "immediate": ".comment_link, .UFIComment, .UFIAddComment, ._-56, .UFILikeSentence ._ohf, .UFIReplyList, .UFIPagerLink, .UFIPagerCount"
+            "immediate": ".comment_link, .UFIComment, .UFIAddComment, ._-56, .UFILikeSentence ._ohf, .UFIReplyList, .UFIPagerLink, .UFIPagerCount",
+            "delay": ".comment_link, .UFIComment, .UFIAddComment, ._-56, .UFILikeSentence ._ohf, .UFIReplyList, .UFIPagerLink, .UFIPagerCount"
         },
         {
             "pattern": "^https?://(.*[.])?ijr[.]com",
@@ -50,7 +51,7 @@
         {
             "pattern": "^https?://",
             "immediate": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .respond, #comments, #respond, div.post-stream > div:nth-child(1n+2)",
-            "delay": "#disqus_thread > iframe"
+            "delay": "#disqus_thread > iframe, div.post-stream > div:nth-child(1n+2)"
         }
     ]
 }
