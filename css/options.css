@@ -58,3 +58,9 @@ input[type=submit] {
 #update_definitions:hover {
     background: yellow;
 }
+
+#dev_mode {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}

@@ -22,7 +22,7 @@ function isValidMatch(url, pattern) {
 function getDefinitionVersion(action) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome/master/sites-version.json', true);
+    xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome/master/definitions/version.json', true);
     xobj.responseType = 'json';
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4) {
@@ -54,7 +54,11 @@ function getAndStoreSiteDefinitions() {
     toggleWaitCursor(true);
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome/master/sites.json', true);
+    if (document.getElementById('dev_mode').checked) {
+        xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome/master/definitions/sites-dev.json', true);
+    } else {
+        xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome/master/definitions/sites.json', true);
+    }
     xobj.responseType = 'json';
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4) {
