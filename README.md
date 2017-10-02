@@ -26,7 +26,7 @@ It's triggered when the page is first loaded, or the URL changes (you click a li
 
 The script checks whether it should enable/disable comments, and then adds a display style of "none" or removes said display style (resetting it to whatever the rest of the CSS on the page originally set it to). It determines this by hiding anything defined in the list of [included sites](https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome/master/sites.json), then showing anything listed in your list of *excluded* sites.
 
-The excluded sites are ones you define on the "options" page. Specify a list of URLs, one per line, that should display comments all the time (the extension is effectively disabled for those URLs). Enter the exact URL or a [match pattern](https://developer.chrome.com/extensions/match_patterns).
+The excluded sites are ones you define on the "options" page. Specify a list of URLs as [regex patterns](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), one per line, that should display comments all the time (the extension is effectively disabled for those URLs).
 
 Click on the icon in the toolbar to temporarily toggle enabling/disabling the extension for a single tab, in order to hide or display contents. Click it again to toggle it back. Reloading the page will cause it to follow the same rules above, looking first at included sites and then excluded sites.
 
