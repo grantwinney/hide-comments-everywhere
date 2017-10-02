@@ -38,11 +38,11 @@
         },
         {
             "pattern": "^https?://(.*[.])?stackexchange[.]com",
-            "immediate": ".comments, .comments-link"
+            "immediate": ".comments, .comments-link, .js-link-separator"
         },
         {
             "pattern": "^https?://(.*[.])?stackoverflow[.]com",
-            "immediate": ".comments, .comments-link"
+            "immediate": ".comments, .comments-link, .js-link-separator"
         },
         {
             "pattern": "^https?://(.*[.])?collider[.]com",
