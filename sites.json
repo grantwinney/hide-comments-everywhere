@@ -50,8 +50,8 @@
         },
         {
             "pattern": "^https?://",
-            "immediate": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .respond, #comments, #respond, div.post-stream > div:nth-child(1n+2)",
-            "delay": "#disqus_thread > iframe, div.post-stream > div:nth-child(1n+2)"
+            "immediate": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .respond, #comments, #respond",
+            "delay": "#disqus_thread > iframe"
         }
     ]
 }
