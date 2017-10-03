@@ -34,7 +34,9 @@ function getDefinitionVersion(action) {
 
 function toggleNewDefinitionMessage(show) {
     var message = document.getElementById('new_definition_message');
-    message.style.setProperty('display', show ? 'block' : 'none');
+    if (message != null) {
+        message.style.setProperty('display', show ? 'block' : 'none');
+    }
 }
 
 function toggleWaitCursor(show) {
@@ -54,7 +56,8 @@ function getAndStoreSiteDefinitions() {
     toggleWaitCursor(true);
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    if (document.getElementById('dev_mode').checked) {
+    var devModeCheckbox = document.getElementById('dev_mode')
+    if (devModeCheckbox != null && devModeCheckbox.checked) {
         xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/sites-dev.json', true);
     } else {
         xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/sites.json', true);

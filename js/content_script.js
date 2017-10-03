@@ -21,7 +21,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         var sites = result.site_patterns.sites;
         for (var i = 0; i < sites.length; i++) {
             var site = sites[i];
-            if (isValidMatch(message.url, site.pattern)) {
+            if (isValidMatch(location.href, site.pattern)) {
                 handleSelectors(site.immediate, message.enabled);
                 handleDelaySelectors(site.delay, site.onceOnly, message.enabled);
                 break;

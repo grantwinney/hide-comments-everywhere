@@ -26,15 +26,13 @@ It's triggered when the page is first loaded, or the URL changes (you click a li
 
 The script checks whether it should enable/disable comments, and then adds a display style of "none" or removes said display style (resetting it to whatever the rest of the CSS on the page originally set it to). It determines this by hiding anything defined in the list of [included sites](https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/sites.json), then showing anything listed in your list of *excluded* sites.
 
-The excluded sites are ones you define on the "options" page. Specify a list of URLs as [regex patterns](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), one per line, that should display comments all the time (the extension is effectively disabled for those URLs).
+The excluded sites are ones you define on the "options" page. Specify a list of URLs as [regex patterns](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), one per line, that should display comments all the time (the extension is effectively disabled for those URLs). Your list of excluded sites uses synchronized storage, so it should be available on any machine you've installed the extension on.
 
 Click on the icon in the toolbar to temporarily toggle enabling/disabling the extension for a single tab, in order to hide or display contents. Click it again to toggle it back. Reloading the page will cause it to follow the same rules above, looking first at included sites and then excluded sites.
 
 ### Permissions
 
-It needs access to all your tabs / pages in order to inject css to hide various comment-related elements. I'd like to only require the activeTab permission, which wouldn't even need to request access, but I haven't found a way yet.
-
-It also uses storage to save its state, but it shouldn't prompt you for that. The list of sites to hide comments for uses local storage, but your personal list of excluded sites uses synchronized storage so it should be available on any machine this extension is installed on.
+It uses storage to save its state, but it shouldn't prompt you for that.
 
 ## I need your help!
 
