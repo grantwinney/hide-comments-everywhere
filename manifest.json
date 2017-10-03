@@ -5,18 +5,17 @@
 
     "name": "Hide Comments Everywhere",
     "description": "An anti-social social extension to hide commenting systems like Disqus, Livefyre, Facebook, Twitter, WordPress, YouTube, etc.",
-    "version": "1.1.0",
+    "version": "1.1.1",
 
     "update_url": "http://clients2.google.com/service/update2/crx",
 
     "options_page": "options.html",
 
     "permissions": [
-        "tabs",
         "storage",
-        "https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/definitions/sites.json",
-        "https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/definitions/sites-dev.json",
-        "https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/definitions/version.json"
+        "https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/sites.json",
+        "https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/sites-dev.json",
+        "https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/version.json"
     ],
 
     "browser_action": {

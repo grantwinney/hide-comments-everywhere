@@ -22,7 +22,7 @@ function isValidMatch(url, pattern) {
 function getDefinitionVersion(action) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/definitions/version.json', true);
+    xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/version.json', true);
     xobj.responseType = 'json';
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4) {
@@ -55,9 +55,9 @@ function getAndStoreSiteDefinitions() {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
     if (document.getElementById('dev_mode').checked) {
-        xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/definitions/sites-dev.json', true);
+        xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/sites-dev.json', true);
     } else {
-        xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/definitions/sites.json', true);
+        xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/sites.json', true);
     }
     xobj.responseType = 'json';
     xobj.onreadystatechange = function () {
