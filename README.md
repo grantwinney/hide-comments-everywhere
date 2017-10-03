@@ -32,7 +32,9 @@ Click on the icon in the toolbar to temporarily toggle enabling/disabling the ex
 
 ### Permissions
 
-It uses storage to save its state, but it shouldn't prompt you for that.
+You'll be notified that it can "read and change all your data on the websites you visit" because that's how it works - it hides certain comment-related elements on the page so you don't see them.
+
+It also uses storage to save its state, but it shouldn't prompt you for that.
 
 ## I need your help!
 
