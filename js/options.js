@@ -1,7 +1,7 @@
 function loadExcludedUrls() {
     chrome.storage.sync.get('excluded_urls', function(result) {
         if (result != undefined && result.excluded_urls != undefined) {
-            document.getElementById('message').value = result.excluded_urls;
+            document.getElementById('excluded_urls').value = result.excluded_urls;
         }
     });
 }
@@ -32,7 +32,7 @@ function validateExcludedUrls(urls) {
 
 function saveExcludedUrls() {
     toggleWaitCursor(true);
-    var excludedUrls = document.getElementById('message').value;
+    var excludedUrls = document.getElementById('excluded_urls').value;
     if (validateExcludedUrls(excludedUrls.split(/\r?\n/))) {
         chrome.storage.sync.set({'excluded_urls': excludedUrls});
     } else {
