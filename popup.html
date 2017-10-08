@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Options</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/popup.css" />
+        <script src="js/shared.js"></script>
+        <script src="js/popup.js"></script>
+    </head>
+    <body>
+        <div id="alert">d</div>
+        <div id="title">
+            <img src="images/hide-comments-16.png" id="icon">
+            Hide Comments Everywhere
+        </div>
+        <div id="body">
+            <input id="toggle_hide" type="submit" value="Toggle Comments">
+
+            <h1>Allow/Block Current URL</h1>
+            <p class="instructions"><em>Allow URL: Add a URL to your personal exclusion list, so comments are allowed.
+            <br>Block URL: Submit a URL for consideration to be added to the blocked list.</em></p>
+            <p id="urls">
+            </p>
+            <p>
+                <input class="buttons" id="add_to_exclusion" type="submit" value="Allow URL">
+                <input class="buttons" id="submit_for_inclusion" type="submit" value="Block URL">
+                <input class="buttons" id="edit_exclusion_urls" type="submit" value="Edit Allowed URLs">
+            </p>
+            <p><em>Click "Edit" if you'd rather use regular expressions to specify an allowed URL.</em></p>
+        </div>
+    </body>
+</html>

@@ -18,18 +18,6 @@ function checkForNewDefinitions() {
     });
 }
 
-function validateExcludedUrls(urls) {
-    try {
-        for (var i = 0; i < urls.length; i++) {
-            new RegExp(urls[i]);
-        }
-        return true;
-    }
-    catch(e) {
-        return false;
-    }
-}
-
 function saveExcludedUrls() {
     toggleWaitCursor(true);
     var excludedUrls = document.getElementById('excluded_urls').value;

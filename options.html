@@ -21,13 +21,14 @@
             <input id="update_definitions" type="submit" value="Update Definitions">
         </p>
         <hr>
-        <h1>Excluded URLs</h1>
+        <h1>Allowed URLs</h1>
         <p>
             Include a list of URLs as <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">regex patterns</a>, one per line, that should be allowed to show comments all the time.
             <ul id="samples">
                 <li><code>^http://www\.example\.com/some_path$</code> <em>- exact match</em></li>
                 <li><code>^https?://www\.example\.com/some_path$</code> <em>- exact match, either http or https</em></li>
                 <li><code>^https?://(.*[.])?youtube[.]com$</code> <em>- ignore subdomain (i.e. works for youtube.com or blog.youtube.com)</em></li>
+                <li><code>^http://example\.com</code> <em>- any url starting with http://example.com</em></li>
                 <li><code>^http://</code> <em>- any url starting with http</em></li>
                 <li><code>.*</code> <em>- any url (effectively disables the extension)</em></li>
             </ul>

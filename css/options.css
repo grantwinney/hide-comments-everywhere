@@ -21,14 +21,15 @@ input[type=submit] {
     max-width: 600px;
     text-align:left;
     margin: auto;
-    line-height: 2em;
+    line-height: 1.6em;
 }
 
 #excluded_urls {
     width: 80%;
-    min-width: 300px;
-    max-width: 600px;
+    max-width: 800px;
+    min-width: 200px;
     min-height: 200px;
+    white-space: nowrap;
 }
 
 #save {

@@ -1,0 +1,88 @@
+body {
+    width: 600px;
+    margin: 0px;
+}
+
+input[type=radio] {
+    margin: 10px 10px 5px 10px;
+}
+
+input[type=submit] {
+    padding: 5px 15px;
+    background: #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: lightblue;
+    color: black;
+    border: 1px solid darkblue;
+}
+input[type=submit]:hover {
+    cursor: hand;
+    background: #3399ff;
+    color: white;
+    border: 1px solid darkgreen;
+}
+
+#alert {
+    position: absolute;
+    display: none;
+    color: white;
+    background: #DF0000;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    margin: 0px;
+    padding: 5px;
+    font-size: larger;
+    opacity: 0.8;
+    text-align: center;
+    z-index: 100;
+}
+
+#title {
+    background-color: goldenrod;
+    color: #fff;
+    padding: 10px;
+    font-size: larger;
+    font-variant: small-caps;
+}
+
+#icon {
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+#body {
+    padding: 0px 10px 10px 10px;
+}
+
+#edit_exclusion_urls {
+    margin-left: 50px;
+    background: gray;
+    color: white;
+    border: 1px solid black;
+}
+#edit_exclusion_urls:hover {
+    cursor: hand;
+    background: lightgray;
+    color: black;
+    border: 1px solid darkgreen;
+}
+
+#toggle_hide {
+    width: 100%;
+    font-size: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-variant: small-caps;
+}
+
+.instructions {
+    line-height: 1.7em;
+}
+
+.buttons {
+    margin-top: 5px;
+    margin-right: 20px;
+    margin-bottom: 0px;
+}

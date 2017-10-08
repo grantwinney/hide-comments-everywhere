@@ -75,3 +75,25 @@ function getAndStoreSiteDefinitions() {
     };
     xobj.send();
 }
+
+function show_enabled_icon(tabId) {
+    chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: tabId });
+    chrome.browserAction.setTitle({ title: '', tabId: tabId });
+};
+
+function show_disabled_icon(tabId) {
+    chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: tabId });
+    chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled)', tabId: tabId });
+};
+
+function validateExcludedUrls(urls) {
+    try {
+        for (var i = 0; i < urls.length; i++) {
+            new RegExp(urls[i]);
+        }
+        return true;
+    }
+    catch(e) {
+        return false;
+    }
+}
