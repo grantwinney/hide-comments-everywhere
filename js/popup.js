@@ -61,7 +61,7 @@ function addToExclusion(tabId) {
                 var updatedUrls = excludedUrls + (excludedUrls[excludedUrls.length - 1] === '\n' ? '' : '\r\n') + regexUrl + '\r\n';
                 if (validateExcludedUrls([regexUrl])) {
                     chrome.storage.sync.set({'excluded_urls': updatedUrls});
-                    chrome.tabs.reload(tabId);
+                    chrome.tabs.sendMessage(tabId, { event: 'pageload' });
                     window.close();
                 } else {
                     displayMessage('The URL you specified is invalid. Double-check it and try saving again.')
