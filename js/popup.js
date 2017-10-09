@@ -97,7 +97,7 @@ function submitUrlForInclusion() {
         }
         if (urlToInclude !== '') {
             var title = "Here's a new site I'd like you to consider blocking";
-            var body = encodeURIComponent("Here's a new site I'd like you to consider blocking:\n\n" + urlToInclude + '\n\n(please include any other relevant details)');
+            var body = encodeURIComponent(title + ":\n\n" + urlToInclude + '\n\n(please include any other relevant details)');
             var url = `https://github.com/grantwinney/hide-comments-in-chrome-sites/issues/new?title=${title}&body=${body}`;
             window.open(url, '_blank')
         }
