@@ -1,14 +1,14 @@
-function handleSelectors(selector, isHiding) {
+function handleSelectors(selector, isHidden) {
     if (selector != undefined) {
-        toggleElements(document.querySelectorAll(selector), isHiding);
+        toggleElements(document.querySelectorAll(selector), isHidden);
     }
 }
 
-function handleDelaySelectors(selector, onceOnly, isHiding) {
+function handleDelaySelectors(selector, onceOnly, isHidden) {
     if (selector != undefined) {
         document.unbindArrive(selector);
         document.arrive(selector, {onceOnly: onceOnly !== false}, function() {
-            toggleElements(document.querySelectorAll(selector), isHiding);
+            toggleElements(document.querySelectorAll(selector), isHidden);
         });
     }
 }

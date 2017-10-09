@@ -1,12 +1,12 @@
-function toggleElements(elements, isHiding) {
+function toggleElements(elements, isHidden) {
     for (var i = 0; i < elements.length; i++) {
-        toggleElement(elements[i], isHiding);
+        toggleElement(elements[i], isHidden);
     };
 };
 
-function toggleElement(element, isHiding) {
+function toggleElement(element, isHidden) {
     if (element != undefined) {
-        if (isHiding) {
+        if (isHidden) {
             element.style.setProperty('display', 'none', 'important');
         } else {
             element.style.setProperty('display', '', '');
