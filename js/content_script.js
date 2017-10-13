@@ -7,9 +7,13 @@ function handleSelectors(selector, isHidden) {
 function handleDelaySelectors(selector, onceOnly, isHidden) {
     if (selector != undefined) {
         document.unbindArrive(selector);
-        document.arrive(selector, {onceOnly: onceOnly !== false}, function() {
-            toggleElements(document.querySelectorAll(selector), isHidden);
-        });
+        if (isHidden) {
+            document.arrive(selector, {onceOnly: onceOnly !== false}, function() {
+                console.info("Hide Comments Everywhere detected arrival of: " + selector)
+                toggleElements(document.querySelectorAll(selector), isHidden);
+            });
+        }
+        toggleElements(document.querySelectorAll(selector), isHidden);
     }
 }
 
