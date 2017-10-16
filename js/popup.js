@@ -133,20 +133,8 @@ window.addEventListener('DOMContentLoaded', function load(event) {
         document.getElementById('add_to_exclusion').addEventListener('click', function() {
             addToExclusion(tabId);
         });
-        document.getElementById('edit_exclusion_urls').addEventListener('click', function() {
-            chrome.runtime.openOptionsPage(function() {
-                chrome.tabs.sendMessage(tabId, { event: 'open_options_request', pane_to_show: 'filters' });
-            });
-        });
-        document.getElementById('open_options').addEventListener('click', function() {
-            chrome.runtime.openOptionsPage(function() {
-                chrome.tabs.sendMessage(tabId, { event: 'open_options_request', pane_to_show: 'options' });
-            });
-        });
-        document.getElementById('help').addEventListener('click', function() {
-            chrome.runtime.openOptionsPage(function() {
-                chrome.tabs.sendMessage(tabId, { event: 'open_options_request', pane_to_show: 'support' });
-            });
+        document.getElementById('options').addEventListener('click', function() {
+            chrome.runtime.openOptionsPage();
         });
     });
 });
