@@ -1,12 +1,21 @@
-function makeRadioButton(name, value, text) {
+function makeRadioButton(name, value, text, select = false) {
     var radio = document.createElement("input");
     radio.type = "radio";
     radio.name = name;
     radio.value = value;
+    radio.checked = select;
+
+    var description = document.createElement("input");
+    description.type = "text";
+    description.value = text;
+    description.size = 85;
+    description.readOnly = true;
+    description.addEventListener('click', function() { radio.checked = true; });
 
     var label = document.createElement("label");
     label.appendChild(radio);
-    label.appendChild(document.createTextNode(text));
+    label.appendChild(description);
+    label.setAttribute('title', text);
     return label;
 }
 
@@ -19,7 +28,7 @@ function makeRadioButtonWithCustomInput(name, value, text) {
     var input = document.createElement("input");
     input.type = "text";
     input.id = 'custom_url_input';
-    input.size = "50";
+    input.size = 55;
 
     input.addEventListener('click', function() { radio.checked = true; });
     input.addEventListener('keydown', function(event) { if (event.key !== 'Tab') radio.checked = true; });
@@ -30,16 +39,6 @@ function makeRadioButtonWithCustomInput(name, value, text) {
     label.appendChild(input);
     return label;
 }
-
-function showEnabledIcon(tabId) {
-    chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: tabId });
-    chrome.browserAction.setTitle({ title: '', tabId: tabId });
-};
-
-function showDisabledIcon(tabId) {
-    chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: tabId });
-    chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled)', tabId: tabId });
-};
 
 function addToExclusion(tabId) {
     toggleWaitCursor(true);
@@ -104,39 +103,50 @@ function submitUrlForInclusion() {
     }
 }
 
-window.addEventListener('load', function load(event) {
-    chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+function onOpened() {
+  console.log(`Options page opened`);
+}
+
+function onError(error) {
+  console.log(`Error: ${error}`);
+}
+
+
+window.addEventListener('DOMContentLoaded', function load(event) {
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
         var url = new URL(tabs[0].url);
         var origin = url.origin;
         var path = url.origin + url.pathname;
+        var tabId = tabs[0].id;
 
         var urls = document.getElementById('urls');
-        urls.appendChild(makeRadioButton('url', origin + '/.*', origin));
+        urls.appendChild(makeRadioButton('url', origin + '/.*', origin, true));
         urls.appendChild(document.createElement('br'));
         urls.appendChild(makeRadioButton('url', path, path));
         urls.appendChild(document.createElement('br'));
         urls.appendChild(makeRadioButtonWithCustomInput('url', 'custom', 'Custom: (include http/https) '));
 
-        var tabId = tabs[0].id;
-        document.getElementById('toggle_hide').addEventListener('click', function() {
-            chrome.browserAction.getTitle({tabId: tabId}, function(title) {
-                if (title.endsWith('(disabled)')) {
-                    showEnabledIcon(tabId);
-                    chrome.tabs.sendMessage(tabId, { event: 'toggle', hideComments: true });
-                } else {
-                    showDisabledIcon(tabId);
-                    chrome.tabs.sendMessage(tabId, { event: 'toggle', hideComments: false });
-                }
-            });
-            window.close();
-        });
-
-        document.getElementById('add_to_exclusion').addEventListener('click', function() { addToExclusion(tabId); });
-
         document.getElementById('submit_for_inclusion').addEventListener('click', submitUrlForInclusion);
-
+        document.getElementById('toggle_hide').addEventListener('click', function() {
+            toggleComments(tabId, function() { window.close(); });
+        });
+        document.getElementById('add_to_exclusion').addEventListener('click', function() {
+            addToExclusion(tabId);
+        });
         document.getElementById('edit_exclusion_urls').addEventListener('click', function() {
-            chrome.runtime.openOptionsPage();
+            chrome.runtime.openOptionsPage(function() {
+                chrome.tabs.sendMessage(tabId, { event: 'open_options_request', pane_to_show: 'filters' });
+            });
+        });
+        document.getElementById('open_options').addEventListener('click', function() {
+            chrome.runtime.openOptionsPage(function() {
+                chrome.tabs.sendMessage(tabId, { event: 'open_options_request', pane_to_show: 'options' });
+            });
+        });
+        document.getElementById('help').addEventListener('click', function() {
+            chrome.runtime.openOptionsPage(function() {
+                chrome.tabs.sendMessage(tabId, { event: 'open_options_request', pane_to_show: 'support' });
+            });
         });
     });
 });

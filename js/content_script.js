@@ -37,30 +37,31 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
             return;
         }
         var sites = sp_result.site_patterns.sites;
-
-        if (message.event === 'pageload') {
-            chrome.storage.sync.get('excluded_urls', function(eu_result) {
-                var hideComments = (eu_result === undefined || eu_result.excluded_urls === undefined || !isUrlExcluded(location.href, eu_result.excluded_urls));
+        switch(message.event) {
+            case 'pageload':
+                chrome.storage.sync.get('excluded_urls', function(eu_result) {
+                    var hideComments = (eu_result === undefined || eu_result.excluded_urls === undefined || !isUrlExcluded(location.href, eu_result.excluded_urls));
+                    for (var i = 0; i < sites.length; i++) {
+                        var site = sites[i];
+                        if (isValidMatch(location.href, site.pattern)) {
+                            handleSelectors(site.immediate, hideComments);
+                            handleDelaySelectors(site.delay, site.onceOnly, hideComments);
+                            chrome.runtime.sendMessage({event: "scriptdone", hideComments: hideComments});
+                            break;
+                        }
+                    }
+                });
+                break;
+            case 'toggle':
                 for (var i = 0; i < sites.length; i++) {
                     var site = sites[i];
                     if (isValidMatch(location.href, site.pattern)) {
-                        handleSelectors(site.immediate, hideComments);
-                        handleDelaySelectors(site.delay, site.onceOnly, hideComments);
-                        chrome.runtime.sendMessage({event: "scriptdone", hideComments: hideComments});
+                        handleSelectors(site.immediate, message.hideComments);
+                        handleDelaySelectors(site.delay, site.onceOnly, message.hideComments);
                         break;
                     }
                 }
-            });
-        } else if (message.event === 'toggle') {
-            for (var i = 0; i < sites.length; i++) {
-                var site = sites[i];
-                if (isValidMatch(location.href, site.pattern)) {
-                    handleSelectors(site.immediate, message.hideComments);
-                    handleDelaySelectors(site.delay, site.onceOnly, message.hideComments);
-                    break;
-                }
-            }
+                break;
         }
-
     });
 });

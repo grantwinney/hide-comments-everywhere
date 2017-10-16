@@ -3,29 +3,46 @@
         <title>Options</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/popup.css" />
+        <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
         <script src="js/shared.js"></script>
         <script src="js/popup.js"></script>
     </head>
     <body>
-        <div id="alert">d</div>
+        <div id="alert"></div>
         <div id="title">
             <img src="images/hide-comments-16.png" id="icon">
             Hide Comments Everywhere
         </div>
         <div id="body">
-            <input id="toggle_hide" type="submit" value="Toggle Comments">
-
+            <h1>Toggle Comments</h1>
+            <p>Temporarily enable/disable comments on the current browser tab by clicking the button below.
+               Refreshing the tab or navigating to a new URL will run through the filters again, cancelling this action.</p>
+            <button id="toggle_hide" type="submit" class="buttons">
+               <i class="fa fa-toggle-on fa-lg"></i> Toggle Comments
+            </button>
             <h1>Allow/Block Current URL</h1>
             <p class="instructions"><em>Allow URL: Add a URL to your personal exclusion list, so comments are allowed.
             <br>Block URL: Submit a URL for consideration to be added to the blocked list.</em></p>
             <p id="urls">
             </p>
             <p>
-                <input class="buttons" id="add_to_exclusion" type="submit" value="Allow URL">
-                <input class="buttons" id="submit_for_inclusion" type="submit" value="Block URL">
-                <input class="buttons" id="edit_exclusion_urls" type="submit" value="Edit Allowed URLs">
+                <button id="add_to_exclusion" type="submit" class="buttons">
+                    <i class="fa fa-check fa-lg"></i> Allow URL
+                </button>
+                <button id="submit_for_inclusion" type="submit" class="buttons">
+                    <i class="fa fa-close fa-lg"></i> Block URL
+                </button>
+                <button id="edit_exclusion_urls" type="submit" class="buttons">
+                    <i class="fa fa-edit fa-lg"></i> Edit Whitelist
+                </button>
+                <button id="open_options" type="submit" class="buttons" title="Options">
+                    <i class="fa fa-gear fa-lg"></i>
+                </button>
+                <button id="help" type="submit" class="buttons" title="Support">
+                    <i class="fa fa-question fa-lg"></i>
+                </button>
             </p>
-            <p><em>Click "Edit" if you'd rather use regular expressions to specify an allowed URL.</em></p>
+            <p><em>Click "Edit Whitelist" if you'd rather use regular expressions to specify an allowed URL.</em></p>
         </div>
     </body>
 </html>

@@ -71,20 +71,12 @@ function getAndStoreSiteDefinitions() {
                 chrome.storage.local.set({'definition_version': version});
                 toggleWaitCursor(false);
             });
+        } else {
+            toggleWaitCursor(false);
         }
     };
     xobj.send();
 }
-
-function show_enabled_icon(tabId) {
-    chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: tabId });
-    chrome.browserAction.setTitle({ title: '', tabId: tabId });
-};
-
-function show_disabled_icon(tabId) {
-    chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: tabId });
-    chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled)', tabId: tabId });
-};
 
 function validateExcludedUrls(urls) {
     try {
@@ -96,4 +88,34 @@ function validateExcludedUrls(urls) {
     catch(e) {
         return false;
     }
+}
+
+function toggleComments(tabId, postAction = undefined) {
+    chrome.browserAction.getTitle({tabId: tabId}, function(title) {
+        if (title.endsWith('(disabled)')) {
+            showEnabledIcon(tabId, postAction);
+            chrome.tabs.sendMessage(tabId, { event: 'toggle', hideComments: true });
+        } else {
+            showDisabledIcon(tabId, postAction);
+            chrome.tabs.sendMessage(tabId, { event: 'toggle', hideComments: false });
+        }
+    });
+}
+
+function showEnabledIcon(tabId, callback) {
+    chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: tabId }, function() {
+        chrome.browserAction.setTitle({ title: '', tabId: tabId });
+        if (callback !== undefined) {
+            callback();
+        }
+    });
+}
+
+function showDisabledIcon(tabId, callback) {
+    chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: tabId }, function() {
+        chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled)', tabId: tabId });
+        if (callback !== undefined) {
+            callback();
+        }
+    });
 }

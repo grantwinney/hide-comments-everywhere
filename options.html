@@ -3,42 +3,106 @@
         <title>Options</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/options.css" />
+        <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
         <script src="js/shared.js"></script>
         <script src="js/options.js"></script>
     </head>
     <body>
-        <h1>Get Updated Definitions</h1>
-        <p id="new_definition_message">New definitions available!</p>
-        <p>
-            Update definitions occasionally, in order to pull down any new elements/classes
-            that are used with various commenting systems.
-        </p>
-        <p>
-            Try this first if you notice that
-            some comments are not hidden (especially if they previously were).
-        </p>
-        <p>
-            <input id="update_definitions" type="submit" value="Update Definitions">
-        </p>
-        <hr>
-        <h1>Allowed URLs</h1>
-        <p>
-            Include a list of URLs as <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">regex patterns</a>, one per line, that should be allowed to show comments all the time.
-            <ul id="samples">
-                <li><code>^http://www\.example\.com/some_path$</code> <em>- exact match</em></li>
-                <li><code>^https?://www\.example\.com/some_path$</code> <em>- exact match, either http or https</em></li>
-                <li><code>^https?://(.*[.])?youtube[.]com$</code> <em>- ignore subdomain (i.e. works for youtube.com or blog.youtube.com)</em></li>
-                <li><code>^http://example\.com</code> <em>- any url starting with http://example.com</em></li>
-                <li><code>^http://</code> <em>- any url starting with http</em></li>
-                <li><code>.*</code> <em>- any url (effectively disables the extension)</em></li>
-            </ul>
-        </p>
-        <p>
-            <textarea id="excluded_urls"></textarea>
-        </p>
-        <p>
-            <input id="save" type="submit" value="Save">
-        </p>
-        <input id="dev_mode" type="checkbox" title="Dev Mode">
+        <div class="header-parent">
+            <div class="header-child">
+                <img src="images/hide-comments-64.png" style="vertical-align:middle">
+                <span class="header-title">
+                    <span class="header-title-first-letter">H</span><span class="header-title-rest-of-word">ide</span>
+                    <span class="header-title-first-letter">C</span><span class="header-title-rest-of-word">omments</span>
+                    <span class="header-title-first-letter">E</span><span class="header-title-rest-of-word">verywhere</span>
+                </span>
+                <span class="header-menu">
+                    <span class="header-menu-item" id="options-menu-item"><a href="javascript:void(0)">Options</a></span>
+                    <span class="header-menu-item" id="filters-menu-item"><a href="javascript:void(0)">Filters</a></span>
+                    <span class="header-menu-item" id="support-menu-item"><a href="javascript:void(0)">Support</a></span>
+                </span>
+            </div>
+        </div>
+        <div id="options">
+            <div class="pane-title">Options</div>
+            <table class="available-options">
+                <tr><td><input id="one_click_option" type="checkbox" title="One Click Disable"></td>
+                    <td id="one_click_option_description">Make the extension icon in the toolbar simply toggle comment visibility instead of displaying a popup</td></tr>
+            </table>
+            <p class="pane-subtitle">Updates</p>
+            <p id="new_definition_message">New definitions available</p>
+            <p class="pane-section">The filter list is occasionally updated to include new sites (or changes to existing sites).</p>
+            <p class="pane-section">If an update's available, you'll see a notice on this page. To get it, just press the button below.</p>
+            <p class="pane-section" style="font-style:italic; font-size:smaller">(Also, try this first if you notice that some comments are not hidden - esp if they previously were!)</p>
+            <p>
+                <input id="update_definitions" type="submit" value="Update Definitions">
+            </p>
+        </div>
+        <div id="filters">
+            <div class="pane-title">Filters</div>
+            <p>You can specify a list of URLs to <em>not</em> block, which should be allowed to show comments all the time.</p>
+            <p>Each URL must be a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">regex pattern</a>, one per line. Here are some examples:
+            <p>
+                <table id="samples" style="font-size:smaller;">
+                    <tr>
+                        <td>exact match</td>
+                        <td><code>^http://www\.example\.com/some_path$</code></td>
+                    </tr>
+                    <tr>
+                        <td>exact match, either http or https</td>
+                        <td><code>^https?://www\.example\.com/some_path$</code></td>
+                    </tr>
+                    <tr>
+                        <td>ignore subdomain (i.e. works for youtube.com or blog.youtube.com)</td>
+                        <td><code>^https?://(.*[.])?youtube[.]com$</code></td>
+                    </tr>
+                    <tr>
+                        <td>any url starting with http://example.com</td>
+                        <td><code>^http://example\.com</code></td>
+                    </tr>
+                    <tr>
+                        <td>any url starting with http</td>
+                        <td><code>^http://</code></td>
+                    </tr>
+                    <tr>
+                        <td>any url (effectively disables the extension)</td>
+                        <td><code>.*</code></td>
+                    </tr>
+                </table>
+            </p>
+            <p>
+                <textarea id="excluded_urls"></textarea>
+            </p>
+            <p>
+                <input id="save" type="submit" value="Save Whitelist">
+            </p>
+        </div>
+        <div id="support">
+            <div class="pane-title">Support</div>
+            <p class="pane-subtitle">Questions? Problems?</p>
+            <p class="pane-section">If you have a question or problem, just <a href="https://github.com/grantwinney/hide-comments-in-chrome/issues/new">open a new issue <span class="fa fa-github"></span></a> and I'll address it as time permits <em>
+                                    (or <a href="https://github.com/grantwinney/hide-comments-in-chrome/compare">create a pull request <span class="fa fa-github"></span></a> if you have a fix)</em>.</p>
+            <p class="pane-section">If you've been using this extension for awhile and you like it, it'd be great if you could take a moment to <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/reviews">rate it in the store <span class="fa fa-google"></span></a>.
+            <p class="pane-subtitle">Got a Site to Block?</p>
+            <p class="pane-section">If you have a site you think should be added to the global list, <a href="https://github.com/grantwinney/hide-comments-in-chrome-sites/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)">open an issue for it <span class="fa fa-github"></span></a> with as many details as possible.</p>
+            <p class="pane-section">If you know which element(s) need to be hidden, feel free to just <a href="https://github.com/grantwinney/hide-comments-in-chrome-sites/compare">open a pull request <span class="fa fa-github"></span></a>.</p>
+            <p class="pane-subtitle">Contact Me</p>
+            <p>You can find me on <a href="https://twitter.com/GrantWinney">Twitter <span class="fa fa-twitter"></span></a>, <a href="https://github.com/grantwinney">GitHub <span class="fa fa-github"></span></a> and occasionally <a href="https://grantwinney.com/">writing online <span class="fa fa-globe"></span></a>.
+        </div>
+        <div id="dev_mode_container">
+            <input id="dev_mode" type="checkbox" title="Dev Mode">
+        </div>
+        <div class="footer-parent">
+            <div class="footer-child">
+                <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc">Chrome Store</a> |
+                <a href="https://github.com/grantwinney/hide-comments-in-chrome/issues/new">Report Issue</a> |
+                <a href="https://github.com/grantwinney/hide-comments-in-chrome-sites/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)">Submit URL</a> |
+                <span id="version"></span>
+                <span style="padding-left:5px">|</span>
+                <a href="https://twitter.com/GrantWinney" class="fa fa-twitter fa-lg" aria-hidden="true" target="_blank"></a>
+                <a href="https://github.com/grantwinney" class="fa fa-github fa-lg" aria-hidden="true" target="_blank"></a>
+                <a href="https://grantwinney.com/" class="fa fa-globe fa-lg" aria-hidden="true" target="_blank"></a>
+            </div>
+        </div>
     </body>
 </html>

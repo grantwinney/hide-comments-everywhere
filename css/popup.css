@@ -5,9 +5,16 @@ body {
 
 input[type=radio] {
     margin: 10px 10px 5px 10px;
+    cursor: hand;
 }
 
-input[type=submit] {
+input:read-only {
+    border: 0px;
+    cursor: hand;
+    font-size: 100%;
+}
+
+input[type=submit], button[type=submit] {
     padding: 5px 15px;
     background: #ccc;
     -webkit-border-radius: 5px;
@@ -16,11 +23,23 @@ input[type=submit] {
     color: black;
     border: 1px solid darkblue;
 }
-input[type=submit]:hover {
+input[type=submit]:hover, button[type=submit]:hover {
     cursor: hand;
     background: #3399ff;
     color: white;
     border: 1px solid darkgreen;
+}
+
+p {
+    line-height: 1.6em;
+}
+
+h1 {
+    font-weight: normal;
+}
+
+label {
+    white-space: nowrap;
 }
 
 #alert {
@@ -34,17 +53,17 @@ input[type=submit]:hover {
     margin: 0px;
     padding: 5px;
     font-size: larger;
-    opacity: 0.8;
+    opacity: 0.7;
     text-align: center;
     z-index: 100;
 }
 
 #title {
-    background-color: goldenrod;
-    color: #fff;
+    background-color: lightgray;
     padding: 10px;
     font-size: larger;
     font-variant: small-caps;
+    box-shadow: 0px 1px 1px #aaa;
 }
 
 #icon {
@@ -58,11 +77,14 @@ input[type=submit]:hover {
 
 #edit_exclusion_urls {
     margin-left: 50px;
+}
+
+#edit_exclusion_urls, #open_options, #help {
     background: gray;
     color: white;
     border: 1px solid black;
 }
-#edit_exclusion_urls:hover {
+#edit_exclusion_urls:hover, #open_options:hover, #help:hover {
     cursor: hand;
     background: lightgray;
     color: black;
@@ -70,8 +92,7 @@ input[type=submit]:hover {
 }
 
 #toggle_hide {
-    width: 100%;
-    font-size: 40px;
+    font-size: larger;
     margin-top: 10px;
     margin-bottom: 10px;
     font-variant: small-caps;

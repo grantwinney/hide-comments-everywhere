@@ -1,3 +1,16 @@
+function loadOptions() {
+    chrome.storage.local.get('one_click_option', function(result) {
+        var oneClickEnabled = (result != undefined && result.one_click_option == true);
+        document.getElementById('one_click_option').checked = oneClickEnabled;
+    });
+}
+
+function setOneClickDisable() {
+    var oneClickEnabled = document.getElementById('one_click_option').checked;
+    chrome.storage.local.set({'one_click_option': oneClickEnabled});
+    chrome.browserAction.setPopup({popup: oneClickEnabled ? "" : "../popup.html"});
+}
+
 function loadExcludedUrls() {
     chrome.storage.sync.get('excluded_urls', function(result) {
         if (result != undefined && result.excluded_urls != undefined) {
@@ -29,9 +42,38 @@ function saveExcludedUrls() {
     toggleWaitCursor(false);
 }
 
-window.addEventListener('load', function load(event) {
+function showPane(paneToShow) {
+    document.getElementById('options').style.setProperty('display', paneToShow === 'options' ? 'inline' : 'none');
+    document.getElementById('options-menu-item').style.setProperty('text-decoration', paneToShow === 'options' ? 'underline' : 'none');
+    document.getElementById('filters').style.setProperty('display', paneToShow === 'filters' ? 'inline' : 'none');
+    document.getElementById('filters-menu-item').style.setProperty('text-decoration', paneToShow === 'filters' ? 'underline' : 'none');
+    document.getElementById('support').style.setProperty('display', paneToShow === 'support' ? 'inline' : 'none');
+    document.getElementById('support-menu-item').style.setProperty('text-decoration', paneToShow === 'support' ? 'underline' : 'none');
+}
+
+function showVersion() {
+    var manifest = chrome.runtime.getManifest();
+    document.getElementById('version').innerHTML = '&copy; 2017, ver ' + manifest.version;
+}
+
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    switch(message.event) {
+        case 'open_options_request':
+            showPane(message.pane_to_show);
+            break;
+    }
+});
+
+window.addEventListener('DOMContentLoaded', function load(event) {
+    loadOptions();
     loadExcludedUrls();
     checkForNewDefinitions();
+    showVersion();
+    document.getElementById('one_click_option').addEventListener('click', setOneClickDisable);
+    document.getElementById('one_click_option_description').addEventListener('click', function() { document.getElementById('one_click_option').click(); });
     document.getElementById('update_definitions').addEventListener('click', getAndStoreSiteDefinitions);
     document.getElementById('save').addEventListener('click', saveExcludedUrls);
+    document.getElementById('options-menu-item').addEventListener('click', function(e) { e.preventDefault(); showPane('options') });
+    document.getElementById('filters-menu-item').addEventListener('click', function(e) { e.preventDefault(); showPane('filters') });
+    document.getElementById('support-menu-item').addEventListener('click', function(e) { e.preventDefault(); showPane('support') });
 });
