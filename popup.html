@@ -23,8 +23,36 @@
             <h1>Allow/Block Current URL</h1>
             <p class="instructions"><em>Allow URL: Add a URL to your personal exclusion list, so comments are allowed.
             <br>Block URL: Submit a URL for consideration to be added to the blocked list.</em></p>
-            <p id="urls">
-            </p>
+            <table id="urls">
+                <tr>
+                    <td><input id="baseUrl" type="radio" name="url" checked="true"></td>
+                    <td width="100%">
+                        <label for="baseUrl">
+                            <input id="baseUrlDesc" type="text" readonly="true">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input id="fullUrl" type="radio" name="url"></td>
+                    <td width="100%">
+                        <label for="fullUrl">
+                            <input id="fullUrlDesc" type="text" readonly="true">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input id="customUrl" type="radio" name="url" value="custom"></td>
+                    <td id="customUrlHeading">Custom: (include http/https)</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td width="100%">
+                        <label for="customUrl">
+                            <input id="customUrlDesc" type="text">
+                        </label>
+                    </td>
+                </tr>
+            </table>
             <p>
                 <button id="add_to_exclusion" type="submit" class="buttons">
                     <i class="fa fa-check fa-lg"></i> Allow URL

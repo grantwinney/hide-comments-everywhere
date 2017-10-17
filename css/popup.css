@@ -8,10 +8,14 @@ input[type=radio] {
     cursor: hand;
 }
 
+input[type=text] {
+    width: 100%;
+    font-size: smaller;
+}
+
 input:read-only {
     border: 0px;
     cursor: hand;
-    font-size: 100%;
 }
 
 input[type=submit], button[type=submit] {
@@ -93,6 +97,11 @@ label {
     margin-top: 10px;
     margin-bottom: 10px;
     font-variant: small-caps;
+}
+
+#customUrlHeading {
+    font-size: smaller;
+    cursor: hand;
 }
 
 .instructions {

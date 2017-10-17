@@ -1,54 +1,13 @@
-function makeRadioButton(name, value, text, select = false) {
-    var radio = document.createElement("input");
-    radio.type = "radio";
-    radio.name = name;
-    radio.value = value;
-    radio.checked = select;
-
-    var description = document.createElement("input");
-    description.type = "text";
-    description.value = text;
-    description.size = 85;
-    description.readOnly = true;
-    description.addEventListener('click', function() { radio.checked = true; });
-
-    var label = document.createElement("label");
-    label.appendChild(radio);
-    label.appendChild(description);
-    label.setAttribute('title', text);
-    return label;
-}
-
-function makeRadioButtonWithCustomInput(name, value, text) {
-    var radio = document.createElement("input");
-    radio.type = "radio";
-    radio.name = name;
-    radio.value = value;
-
-    var input = document.createElement("input");
-    input.type = "text";
-    input.id = 'custom_url_input';
-    input.size = 55;
-
-    input.addEventListener('click', function() { radio.checked = true; });
-    input.addEventListener('keydown', function(event) { if (event.key !== 'Tab') radio.checked = true; });
-
-    var label = document.createElement("label");
-    label.appendChild(radio);
-    label.appendChild(document.createTextNode(text));
-    label.appendChild(input);
-    return label;
-}
-
 function addToExclusion(tabId) {
     toggleWaitCursor(true);
     var selection = document.querySelector('input[name="url"]:checked');
     if (selection !== null) {
         var urlToInclude = selection.value;
         if (urlToInclude === 'custom') {
-            urlToInclude = document.getElementById('custom_url_input').value;
+            urlToInclude = document.getElementById('customUrlDesc').value;
         }
-        if (urlToInclude == '') {
+        if (urlToInclude === '') {
+            displayMessage("Enter a valid URL")
             toggleWaitCursor(false);
             return;
         }
@@ -92,44 +51,55 @@ function submitUrlForInclusion() {
     if (selection !== null) {
         var urlToInclude = selection.value;
         if (urlToInclude === 'custom') {
-            urlToInclude = document.getElementById('custom_url_input').value;
+            urlToInclude = document.getElementById('customUrlDesc').value;
         }
-        if (urlToInclude !== '') {
-            var title = "Here's a new site I'd like you to consider blocking";
-            var body = encodeURIComponent(title + ":\n\n" + urlToInclude + '\n\n(please include any other relevant details)');
-            var url = `https://github.com/grantwinney/hide-comments-in-chrome-sites/issues/new?title=${title}&body=${body}`;
-            window.open(url, '_blank')
+        if (urlToInclude === '') {
+            displayMessage("Enter a valid URL")
+            toggleWaitCursor(false);
+            return;
         }
+        var title = "Here's a new site I'd like you to consider blocking";
+        var body = encodeURIComponent(title + ":\n\n" + urlToInclude + '\n\n(please include any other relevant details)');
+        var url = `https://github.com/grantwinney/hide-comments-in-chrome-sites/issues/new?title=${title}&body=${body}`;
+        window.open(url, '_blank')
     }
 }
 
-function onOpened() {
-  console.log(`Options page opened`);
-}
+function displayUrlOptions(url) {
+    document.getElementById('baseUrl').value = url.origin;
+    document.getElementById('baseUrlDesc').value = url.origin;
+    document.getElementById('baseUrlDesc').addEventListener('click', function() {
+        document.getElementById('baseUrl').checked = true;
+    });
 
-function onError(error) {
-  console.log(`Error: ${error}`);
+    document.getElementById('fullUrl').value = url.origin + url.pathname;
+    document.getElementById('fullUrlDesc').value = url.origin + url.pathname;
+    document.getElementById('fullUrlDesc').addEventListener('click', function() {
+        document.getElementById('fullUrl').checked = true;
+    });
+    
+    document.getElementById('customUrl').value = 'custom';
+    document.getElementById('customUrlDesc').addEventListener('click', function() {
+        document.getElementById('customUrl').checked = true;
+    });
+    document.getElementById('customUrlHeading').addEventListener('click', function() {
+        document.getElementById('customUrl').checked = true;
+    });
+    document.getElementById('customUrlDesc').addEventListener('keydown', function(event) {
+        if (event.key !== 'Tab') {
+            document.getElementById('customUrl').checked = true;
+        }
+    });
 }
-
 
 window.addEventListener('DOMContentLoaded', function load(event) {
     chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
-        var url = new URL(tabs[0].url);
-        var origin = url.origin;
-        var path = url.origin + url.pathname;
+        displayUrlOptions(new URL(tabs[0].url));
         var tabId = tabs[0].id;
-
-        var urls = document.getElementById('urls');
-        urls.appendChild(makeRadioButton('url', origin + '/.*', origin, true));
-        urls.appendChild(document.createElement('br'));
-        urls.appendChild(makeRadioButton('url', path, path));
-        urls.appendChild(document.createElement('br'));
-        urls.appendChild(makeRadioButtonWithCustomInput('url', 'custom', 'Custom: (include http/https) '));
-
-        document.getElementById('submit_for_inclusion').addEventListener('click', submitUrlForInclusion);
         document.getElementById('toggle_hide').addEventListener('click', function() {
             toggleComments(tabId, function() { window.close(); });
         });
+        document.getElementById('submit_for_inclusion').addEventListener('click', submitUrlForInclusion);
         document.getElementById('add_to_exclusion').addEventListener('click', function() {
             addToExclusion(tabId);
         });
