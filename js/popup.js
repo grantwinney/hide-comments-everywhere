@@ -66,28 +66,25 @@ function submitUrlForInclusion() {
 }
 
 function displayUrlOptions(url) {
-    document.getElementById('baseUrl').value = url.origin;
-    document.getElementById('baseUrlDesc').value = url.origin;
-    document.getElementById('baseUrlDesc').addEventListener('click', function() {
-        document.getElementById('baseUrl').checked = true;
-    });
+    var baseUrl = document.getElementById('baseUrl');
+    var baseUrlDesc = document.getElementById('baseUrlDesc');
+    baseUrl.value = url.origin;
+    baseUrlDesc.value = baseUrlDesc.title = url.origin;
+    baseUrlDesc.addEventListener('click', function() {baseUrl.checked = true;});
 
-    document.getElementById('fullUrl').value = url.origin + url.pathname;
-    document.getElementById('fullUrlDesc').value = url.origin + url.pathname;
-    document.getElementById('fullUrlDesc').addEventListener('click', function() {
-        document.getElementById('fullUrl').checked = true;
-    });
-    
-    document.getElementById('customUrl').value = 'custom';
-    document.getElementById('customUrlDesc').addEventListener('click', function() {
-        document.getElementById('customUrl').checked = true;
-    });
-    document.getElementById('customUrlHeading').addEventListener('click', function() {
-        document.getElementById('customUrl').checked = true;
-    });
-    document.getElementById('customUrlDesc').addEventListener('keydown', function(event) {
+    var fullUrl = document.getElementById('fullUrl');
+    var fullUrlDesc = document.getElementById('fullUrlDesc');
+    fullUrl.value = fullUrlDesc.value = fullUrlDesc.title = url.origin + url.pathname;
+    fullUrlDesc.addEventListener('click', function() {fullUrl.checked = true;});
+
+    var customUrl = document.getElementById('customUrl');
+    var customUrlDesc = document.getElementById('customUrlDesc');
+    customUrl.value = 'custom';
+    customUrlDesc.addEventListener('click', function() {customUrl.checked = true;});
+    document.getElementById('customUrlHeading').addEventListener('click', function() {customUrl.checked = true;});
+    customUrlDesc.addEventListener('keydown', function(event) {
         if (event.key !== 'Tab') {
-            document.getElementById('customUrl').checked = true;
+            customUrl.checked = true;
         }
     });
 }

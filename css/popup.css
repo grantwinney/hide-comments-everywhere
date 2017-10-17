@@ -14,7 +14,7 @@ input[type=text] {
 }
 
 input:read-only {
-    border: 0px;
+    border: 1px solid #f3f3f3;
     cursor: hand;
 }
 
