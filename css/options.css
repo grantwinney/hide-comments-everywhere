@@ -54,13 +54,14 @@ td {
 
 #new_definition_message {
     font-style: italic;
-    color: yellow;
-    background-color: purple;
+    color: red;
     width: 300px;
     margin: auto;
     display: none;
     text-transform: uppercase;
-    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-weight: bold;
 }
 
 #dev_mode_container {

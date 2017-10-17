@@ -52,7 +52,7 @@ function toggleWaitCursor(show) {
     }
 }
 
-function getAndStoreSiteDefinitions() {
+function getAndStoreSiteDefinitions(currentVersion = undefined) {
     toggleWaitCursor(true);
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
@@ -67,10 +67,15 @@ function getAndStoreSiteDefinitions() {
         if (xobj.readyState == 4) {
             chrome.storage.local.set({'site_patterns': xobj.response});
             toggleNewDefinitionMessage(false);
-            getDefinitionVersion(function(version) {
-                chrome.storage.local.set({'definition_version': version});
+            if (currentVersion != undefined) {
+                chrome.storage.local.set({'definition_version': currentVersion});
                 toggleWaitCursor(false);
-            });
+            } else {
+                getDefinitionVersion(function(version) {
+                    chrome.storage.local.set({'definition_version': version});
+                    toggleWaitCursor(false);
+                });
+            }
         } else {
             toggleWaitCursor(false);
         }
