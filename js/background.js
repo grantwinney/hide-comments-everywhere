@@ -25,7 +25,8 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 chrome.windows.onCreated.addListener(function() {
     getDefinitionVersion(function(version) {
         chrome.storage.local.get('definition_version', function(result) {
-            if (result === undefined || result.definition_version === undefined || result.definition_version < version) {
+            if (result === undefined || result.definition_version === undefined
+                || !Number.isInteger(result.definition_version) || result.definition_version < version) {
                 getAndStoreSiteDefinitions(version);
             }
         });
@@ -33,7 +34,7 @@ chrome.windows.onCreated.addListener(function() {
 })
 
 chrome.storage.local.get('definition_version', function(result) {
-    if (result === undefined || result.definition_version === undefined) {
+    if (result === undefined || result.definition_version === undefined || !Number.isInteger(result.definition_version)) {
         getAndStoreSiteDefinitions();
     }
 });
