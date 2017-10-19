@@ -34,6 +34,6 @@ chrome.windows.onCreated.addListener(function() {
 
 chrome.storage.local.get('definition_version', function(result) {
     if (result === undefined || result.definition_version === undefined) {
-        getAndStoreSiteDefinitions(version);
+        getAndStoreSiteDefinitions();
     }
 });
