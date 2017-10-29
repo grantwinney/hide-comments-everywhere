@@ -5,7 +5,7 @@
 
     "name": "Hide Comments Everywhere",
     "description": "An anti-social social extension to hide commenting systems like Disqus, Livefyre, Facebook, Twitter, WordPress, YouTube, etc.",
-    "version": "1.2.3",
+    "version": "1.2.4",
 
     "update_url": "http://clients2.google.com/service/update2/crx",
 

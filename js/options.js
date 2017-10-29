@@ -76,10 +76,10 @@ window.addEventListener('DOMContentLoaded', function load(event) {
     loadExcludedUrls();
     checkForNewDefinitions();
     showVersion();
-    document.getElementById('one_click_option').addEventListener('click', setOneClickDisable);
+    document.getElementById('one_click_option').addEventListener('click', function() { setOneClickDisable(); });
     document.getElementById('one_click_option_description').addEventListener('click', function() { document.getElementById('one_click_option').click(); });
     document.getElementById('update_definitions').addEventListener('click', function() { getAndStoreSiteDefinitions(); });
-    document.getElementById('save').addEventListener('click', saveExcludedUrls);
+    document.getElementById('save').addEventListener('click', function() { saveExcludedUrls(); });
     document.getElementById('options-menu-item').addEventListener('click', function(e) { e.preventDefault(); showPane('options') });
     document.getElementById('filters-menu-item').addEventListener('click', function(e) { e.preventDefault(); showPane('filters') });
     document.getElementById('support-menu-item').addEventListener('click', function(e) { e.preventDefault(); showPane('support') });
