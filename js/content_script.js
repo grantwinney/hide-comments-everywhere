@@ -18,8 +18,8 @@ function handleDelaySelectors(selector, onceOnly, isHidden) {
 }
 
 function isUrlExcluded(url, excludedUrls) {
-    var excludedUrlPatterns = excludedUrls.split(/\r?\n/);
-    for (var i = 0; i < excludedUrlPatterns.length; i++) {
+    let excludedUrlPatterns = excludedUrls.split(/\r?\n/);
+    for (let i = 0; i < excludedUrlPatterns.length; i++) {
         if (excludedUrlPatterns[i] === '') {
             continue;
         }
@@ -36,13 +36,13 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
             console.error("Missing Site Patterns!");
             return;
         }
-        var sites = sp_result.site_patterns.sites;
+        let sites = sp_result.site_patterns.sites;
         switch(message.event) {
             case 'pageload':
                 chrome.storage.sync.get('excluded_urls', function(eu_result) {
-                    var hideComments = (eu_result === undefined || eu_result.excluded_urls === undefined || !isUrlExcluded(location.href, eu_result.excluded_urls));
-                    for (var i = 0; i < sites.length; i++) {
-                        var site = sites[i];
+                    let hideComments = (eu_result === undefined || eu_result.excluded_urls === undefined || !isUrlExcluded(location.href, eu_result.excluded_urls));
+                    for (let i = 0; i < sites.length; i++) {
+                        let site = sites[i];
                         if (isValidMatch(location.href, site.pattern)) {
                             handleSelectors(site.immediate, hideComments);
                             handleDelaySelectors(site.delay, site.onceOnly, hideComments);
@@ -53,8 +53,8 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 });
                 break;
             case 'toggle':
-                for (var i = 0; i < sites.length; i++) {
-                    var site = sites[i];
+                for (let i = 0; i < sites.length; i++) {
+                    let site = sites[i];
                     if (isValidMatch(location.href, site.pattern)) {
                         handleSelectors(site.immediate, message.hideComments);
                         handleDelaySelectors(site.delay, site.onceOnly, message.hideComments);

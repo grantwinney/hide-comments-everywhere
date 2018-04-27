@@ -1,8 +1,8 @@
 function addToExclusion(tabId) {
     toggleWaitCursor(true);
-    var selection = document.querySelector('input[name="url"]:checked');
+    let selection = document.querySelector('input[name="url"]:checked');
     if (selection !== null) {
-        var urlToInclude = selection.value;
+        let urlToInclude = selection.value;
         if (urlToInclude === 'custom') {
             urlToInclude = document.getElementById('customUrlDesc').value;
         }
@@ -12,11 +12,11 @@ function addToExclusion(tabId) {
             return;
         }
         chrome.storage.sync.get('excluded_urls', function(result) {
-            var excludedUrls = result != undefined && result.excluded_urls != undefined ? result.excluded_urls : '';
+            let excludedUrls = result != undefined && result.excluded_urls != undefined ? result.excluded_urls : '';
             try {
-                var url = new URL(urlToInclude);
-                var regexUrl = '^' + (url.origin + url.pathname).replace(/\./g, '\\.');
-                var updatedUrls = excludedUrls + (excludedUrls[excludedUrls.length - 1] === '\n' ? '' : '\r\n') + regexUrl + '\r\n';
+                let url = new URL(urlToInclude);
+                let regexUrl = '^' + (url.origin + url.pathname).replace(/\./g, '\\.');
+                let updatedUrls = excludedUrls + (excludedUrls[excludedUrls.length - 1] === '\n' ? '' : '\r\n') + regexUrl + '\r\n';
                 if (validateExcludedUrls([regexUrl])) {
                     chrome.storage.sync.set({'excluded_urls': updatedUrls});
                     chrome.tabs.sendMessage(tabId, { event: 'pageload' });
@@ -40,16 +40,16 @@ function addToExclusion(tabId) {
 }
 
 function displayMessage(message) {
-    var alert = document.getElementById('alert');
+    let alert = document.getElementById('alert');
     alert.innerHTML = message;
     alert.style.setProperty('display', 'block');
     window.setTimeout(function() {alert.style.setProperty('display', 'none');}, 5000);
 }
 
 function submitUrlForInclusion() {
-    var selection = document.querySelector('input[name="url"]:checked');
+    let selection = document.querySelector('input[name="url"]:checked');
     if (selection !== null) {
-        var urlToInclude = selection.value;
+        let urlToInclude = selection.value;
         if (urlToInclude === 'custom') {
             urlToInclude = document.getElementById('customUrlDesc').value;
         }
@@ -58,27 +58,27 @@ function submitUrlForInclusion() {
             toggleWaitCursor(false);
             return;
         }
-        var title = "Here's a new site I'd like you to consider blocking";
-        var body = encodeURIComponent(title + ":\n\n" + urlToInclude + '\n\n(please include any other relevant details)');
-        var url = `https://github.com/grantwinney/hide-comments-in-chrome-sites/issues/new?title=${title}&body=${body}`;
+        let title = "Here's a new site I'd like you to consider blocking";
+        let body = encodeURIComponent(title + ":\n\n" + urlToInclude + '\n\n(please include any other relevant details)');
+        let url = `https://github.com/grantwinney/hide-comments-in-chrome-sites/issues/new?title=${title}&body=${body}`;
         window.open(url, '_blank')
     }
 }
 
 function displayUrlOptions(url) {
-    var baseUrl = document.getElementById('baseUrl');
-    var baseUrlDesc = document.getElementById('baseUrlDesc');
+    let baseUrl = document.getElementById('baseUrl');
+    let baseUrlDesc = document.getElementById('baseUrlDesc');
     baseUrl.value = url.origin;
     baseUrlDesc.value = baseUrlDesc.title = url.origin;
     baseUrlDesc.addEventListener('click', function() {baseUrl.checked = true;});
 
-    var fullUrl = document.getElementById('fullUrl');
-    var fullUrlDesc = document.getElementById('fullUrlDesc');
+    let fullUrl = document.getElementById('fullUrl');
+    let fullUrlDesc = document.getElementById('fullUrlDesc');
     fullUrl.value = fullUrlDesc.value = fullUrlDesc.title = url.origin + url.pathname;
     fullUrlDesc.addEventListener('click', function() {fullUrl.checked = true;});
 
-    var customUrl = document.getElementById('customUrl');
-    var customUrlDesc = document.getElementById('customUrlDesc');
+    let customUrl = document.getElementById('customUrl');
+    let customUrlDesc = document.getElementById('customUrlDesc');
     customUrl.value = 'custom';
     customUrlDesc.addEventListener('click', function() {customUrl.checked = true;});
     document.getElementById('customUrlHeading').addEventListener('click', function() {customUrl.checked = true;});
@@ -92,7 +92,7 @@ function displayUrlOptions(url) {
 window.addEventListener('DOMContentLoaded', function load(event) {
     chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
         displayUrlOptions(new URL(tabs[0].url));
-        var tabId = tabs[0].id;
+        let tabId = tabs[0].id;
         document.getElementById('toggle_hide').addEventListener('click', function() {
             toggleComments(tabId, function() { window.close(); });
         });

@@ -40,6 +40,6 @@ chrome.storage.local.get('definition_version', function(result) {
 });
 
 chrome.storage.local.get('one_click_option', function(result) {
-    var oneClickEnabled = (result != undefined && result.one_click_option == true);
+    let oneClickEnabled = (result != undefined && result.one_click_option == true);
     chrome.browserAction.setPopup({popup: oneClickEnabled ? "" : "../popup.html"});
 });

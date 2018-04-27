@@ -1,5 +1,5 @@
 function toggleElements(elements, isHidden) {
-    for (var i = 0; i < elements.length; i++) {
+    for (let i = 0; i < elements.length; i++) {
         toggleElement(elements[i], isHidden);
     };
 };
@@ -15,12 +15,12 @@ function toggleElement(element, isHidden) {
 };
 
 function isValidMatch(url, pattern) {
-    var re = new RegExp(pattern);
+    let re = new RegExp(pattern);
     return re.test(url);
 }
 
 function getDefinitionVersion(action) {
-    var xobj = new XMLHttpRequest();
+    let xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
     xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/version.json', true);
     xobj.responseType = 'json';
@@ -33,20 +33,20 @@ function getDefinitionVersion(action) {
 }
 
 function toggleNewDefinitionMessage(show) {
-    var message = document.getElementById('new_definition_message');
+    let message = document.getElementById('new_definition_message');
     if (message != null) {
         message.style.setProperty('display', show ? 'block' : 'none');
     }
 }
 
 function toggleWaitCursor(show) {
-    var elements = document.querySelectorAll('body, a, input, textarea');
-    for (var i = 0; i < elements.length; i++) {
+    let elements = document.querySelectorAll('body, a, input, textarea');
+    for (let i = 0; i < elements.length; i++) {
         elements[i].style.setProperty('cursor', show ? 'progress' : 'auto');
     };
     if (!show) {
-        var buttons = document.getElementsByTagName('input');
-        for (var i = 0; i < buttons.length; i++) {
+        let buttons = document.getElementsByTagName('input');
+        for (let i = 0; i < buttons.length; i++) {
             buttons[i].style.setProperty('cursor', 'hand');
         };
     }
@@ -54,9 +54,9 @@ function toggleWaitCursor(show) {
 
 function getAndStoreSiteDefinitions(currentVersion = undefined) {
     toggleWaitCursor(true);
-    var xobj = new XMLHttpRequest();
+    let xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    var devModeCheckbox = document.getElementById('dev_mode')
+    let devModeCheckbox = document.getElementById('dev_mode')
     if (devModeCheckbox != null && devModeCheckbox.checked) {
         xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/sites-dev.json', true);
     } else {
@@ -85,7 +85,7 @@ function getAndStoreSiteDefinitions(currentVersion = undefined) {
 
 function validateExcludedUrls(urls) {
     try {
-        for (var i = 0; i < urls.length; i++) {
+        for (let i = 0; i < urls.length; i++) {
             new RegExp(urls[i]);
         }
         return true;

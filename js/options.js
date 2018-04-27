@@ -1,12 +1,12 @@
 function loadOptions() {
     chrome.storage.local.get('one_click_option', function(result) {
-        var oneClickEnabled = (result != undefined && result.one_click_option == true);
+        let oneClickEnabled = (result != undefined && result.one_click_option == true);
         document.getElementById('one_click_option').checked = oneClickEnabled;
     });
 }
 
 function setOneClickDisable() {
-    var oneClickEnabled = document.getElementById('one_click_option').checked;
+    let oneClickEnabled = document.getElementById('one_click_option').checked;
     chrome.storage.local.set({'one_click_option': oneClickEnabled});
     chrome.browserAction.setPopup({popup: oneClickEnabled ? "" : "../popup.html"});
 }
@@ -33,7 +33,7 @@ function checkForNewDefinitions() {
 
 function saveExcludedUrls() {
     toggleWaitCursor(true);
-    var excludedUrls = document.getElementById('excluded_urls').value;
+    let excludedUrls = document.getElementById('excluded_urls').value;
     if (validateExcludedUrls(excludedUrls.split(/\r?\n/))) {
         chrome.storage.sync.set({'excluded_urls': excludedUrls});
     } else {
@@ -52,8 +52,8 @@ function showPane(paneToShow) {
 }
 
 function showVersion() {
-    var manifest = chrome.runtime.getManifest();
-    var version = document.getElementById('version');
+    let manifest = chrome.runtime.getManifest();
+    let version = document.getElementById('version');
     version.innerHTML = '&copy; ' + (new Date()).getFullYear() + ', ver ' + manifest.version
 
     chrome.storage.local.get('definition_version', function(result) {
