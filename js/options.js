@@ -54,7 +54,7 @@ function showPane(paneToShow) {
 function showVersion() {
     var manifest = chrome.runtime.getManifest();
     var version = document.getElementById('version');
-    version.innerHTML = '&copy; 2017, ver ' + manifest.version
+    version.innerHTML = '&copy; ' + (new Date()).getFullYear() + ', ver ' + manifest.version
 
     chrome.storage.local.get('definition_version', function(result) {
         if (result != undefined || result.definition_version != undefined) {

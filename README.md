@@ -2,15 +2,13 @@
 
 # Hide Comments Everywhere
 
-I thought about doing this awhile back, when I was reading major news outlets and was getting fed up with how full of vitriol some commenters are. Many sites are realizing this and dumping their comment systems completely. It's just too costly to monitor the flood of comments on these huge sites, so they tend to devolve into a cess pool. Personally, I just want the content most of the time. YouTube anyone?
+Fed up with the vitriol left in comments, many sites are dumping their comment systems completely. It's just too costly to monitor them, so they tend to devolve into a cess pool. Personally, I just want the content most of the time. _YouTube anyone?_
 
-If you're interested, I wrote about what I've learned (links below). If you'd just like to try it out, [it's available in the chrome web store](https://chrome.google.com/webstore/detail/hide-comments/bmhkdngdngchlneelllmdennfpmepbnc).
-
-* [A new Chrome extension for hiding comments (and what I learned)](https://grantwinney.com/a-new-chrome-extension-for-hiding-comments/)
+To help with my own sanity _(and maybe yours?),_ I wrote an extension that hides many comment systems - identifying them is somewhat predictable. It's available for [Chrome](https://chrome.google.com/webstore/detail/hide-comments/bmhkdngdngchlneelllmdennfpmepbnc) and Firefox. And if you're interested, I wrote about [what I learned](https://grantwinney.com/a-new-chrome-extension-for-hiding-comments/) too.
 
 ## What does this hide?
 
-Here it is... the anti-social social plugin. A Chrome extension to hide commenting systems, including (but in no way limited to):
+A lot, including but not limited to:
 
 * Facebook comment plugin
 * Disqus
