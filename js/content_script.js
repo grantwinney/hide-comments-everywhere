@@ -30,6 +30,10 @@ function isUrlExcluded(url, excludedUrls) {
     return false;
 };
 
+function showCommentsInCodeBlocks() {
+    toggleElement(document.querySelectorAll('pre .comment, code .comment'), false);
+}
+
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     chrome.storage.local.get('site_patterns', function(sp_result) {
         if (sp_result == undefined || sp_result.site_patterns == undefined) {
@@ -46,6 +50,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                         if (isValidMatch(location.href, site.pattern)) {
                             handleSelectors(site.immediate, hideComments);
                             handleDelaySelectors(site.delay, site.onceOnly, hideComments);
+                            showCommentsInCodeBlocks();
                             chrome.runtime.sendMessage({event: "scriptdone", hideComments: hideComments});
                             break;
                         }
@@ -58,6 +63,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                     if (isValidMatch(location.href, site.pattern)) {
                         handleSelectors(site.immediate, message.hideComments);
                         handleDelaySelectors(site.delay, site.onceOnly, message.hideComments);
+                        showCommentsInCodeBlocks();
                         break;
                     }
                 }
