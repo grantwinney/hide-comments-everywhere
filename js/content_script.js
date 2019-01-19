@@ -31,7 +31,7 @@ function isUrlExcluded(url, excludedUrls) {
 };
 
 function showCommentsInCodeBlocks() {
-    toggleElement(document.querySelectorAll('pre .comment, code .comment'), false);
+    toggleElements(document.querySelectorAll('pre .comment, code .comment'), false);
 }
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
