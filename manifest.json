@@ -5,7 +5,7 @@
 
     "name": "Hide Comments Everywhere",
     "description": "An anti-social social extension to hide commenting systems across the web, including Disqus and YouTube.",
-    "version": "1.2.7",
+    "version": "1.2.8",
 
     "update_url": "http://clients2.google.com/service/update2/crx",
 
