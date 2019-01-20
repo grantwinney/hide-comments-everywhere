@@ -35,10 +35,15 @@ function saveExcludedUrls() {
     toggleWaitCursor(true);
     let excludedUrls = document.getElementById('excluded_urls').value;
     if (validateExcludedUrls(excludedUrls.split(/\r?\n/))) {
-        chrome.storage.sync.set({'excluded_urls': excludedUrls});
-        let sn = document.getElementById('save-notification');
-        sn.style.setProperty('display', 'inline')
-        setTimeout(function() {sn.style.setProperty('display', 'none')}, 4000);
+        chrome.storage.sync.set({'excluded_urls': excludedUrls}, function() {
+            let sn = document.getElementById('save-notification');
+            sn.innerText = chrome.runtime.lastError ? "ERROR!" : "SAVED!";
+            if (chrome.runtime.lastError) {
+                console.error(`Error: ${chrome.runtime.lastError.message}`);
+            }
+            sn.style.setProperty('display', 'inline')
+            setTimeout(function() {sn.style.setProperty('display', 'none')}, 4000);
+        });
     } else {
         alert('One or more of your URLs are invalid.\r\n\r\nDouble-check them and try saving again.')
     }
