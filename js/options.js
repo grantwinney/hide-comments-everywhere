@@ -36,6 +36,9 @@ function saveExcludedUrls() {
     let excludedUrls = document.getElementById('excluded_urls').value;
     if (validateExcludedUrls(excludedUrls.split(/\r?\n/))) {
         chrome.storage.sync.set({'excluded_urls': excludedUrls});
+        let sn = document.getElementById('save-notification');
+        sn.style.setProperty('display', 'inline')
+        setTimeout(function() {sn.style.setProperty('display', 'none')}, 4000);
     } else {
         alert('One or more of your URLs are invalid.\r\n\r\nDouble-check them and try saving again.')
     }
@@ -54,7 +57,7 @@ function showPane(paneToShow) {
 function showVersion() {
     let manifest = chrome.runtime.getManifest();
     let version = document.getElementById('version');
-    version.innerHTML = '&copy; ' + (new Date()).getFullYear() + ', ver ' + manifest.version
+    version.innerHTML = '&copy; 2018 - ' + (new Date()).getFullYear() + ', ver ' + manifest.version
 
     chrome.storage.local.get('definition_version', function(result) {
         if (result != undefined || result.definition_version != undefined) {

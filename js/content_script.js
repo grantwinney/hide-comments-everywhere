@@ -30,8 +30,10 @@ function isUrlExcluded(url, excludedUrls) {
     return false;
 };
 
-function showCommentsInCodeBlocks() {
-    toggleElements(document.querySelectorAll('pre .comment, code .comment'), false);
+function elementsToAlwaysShow() {
+    // always show comments in code blocks
+    // always show textarea comments, which are probably part of a contact form
+    toggleElements(document.querySelectorAll('pre .comment, code .comment, textarea.comments'), false);
 }
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
@@ -50,7 +52,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                         if (isValidMatch(location.href, site.pattern)) {
                             handleSelectors(site.immediate, hideComments);
                             handleDelaySelectors(site.delay, site.onceOnly, hideComments);
-                            showCommentsInCodeBlocks();
+                            elementsToAlwaysShow();
                             chrome.runtime.sendMessage({event: "scriptdone", hideComments: hideComments});
                             break;
                         }
@@ -63,7 +65,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                     if (isValidMatch(location.href, site.pattern)) {
                         handleSelectors(site.immediate, message.hideComments);
                         handleDelaySelectors(site.delay, site.onceOnly, message.hideComments);
-                        showCommentsInCodeBlocks();
+                        elementsToAlwaysShow();
                         break;
                     }
                 }
