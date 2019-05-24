@@ -4,7 +4,7 @@
 
 Fed up with the vitriol left in comments, many sites are dumping their comment systems completely. It's just too costly to monitor them, so they tend to devolve into a cess pool. Personally, I just want the content most of the time. _YouTube anyone?_
 
-To help with my own sanity _(and maybe yours?),_ I wrote an extension that hides many comment systems - identifying them is somewhat predictable. It's available for [Chrome](https://chrome.google.com/webstore/detail/hide-comments/bmhkdngdngchlneelllmdennfpmepbnc) and Firefox. And if you're interested, I wrote about [what I learned](https://grantwinney.com/a-new-chrome-extension-for-hiding-comments/) too.
+To help with my own sanity _(and maybe yours?),_ I wrote an extension that hides many comment systems - identifying them is somewhat predictable. It's available for [Chrome](https://chrome.google.com/webstore/detail/hide-comments/bmhkdngdngchlneelllmdennfpmepbnc) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere/). And if you're interested, I wrote about [what I learned](https://grantwinney.com/a-new-chrome-extension-for-hiding-comments/) too.
 
 ## What does this hide?
 
