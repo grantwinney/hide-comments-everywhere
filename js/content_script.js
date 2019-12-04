@@ -38,10 +38,23 @@ function elementsToAlwaysShow() {
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     chrome.storage.local.get('site_patterns', function(sp_result) {
-        if (sp_result == undefined || sp_result.site_patterns == undefined) {
-            console.error("Missing Site Patterns!");
+        if (sp_result === undefined || sp_result.site_patterns === undefined) {
+            console.error("Missing site patterns!");
             return;
         }
+
+        // Sites like GitHub should never have comments hidden, hence a hard-coded whitelist
+        let perm_whitelist = sp_result.site_patterns.ignore;
+        if (perm_whitelist !== undefined) {
+            for (let i = 0; i < perm_whitelist.length; i++) {
+                let site_pattern = perm_whitelist[i];
+                if (isValidMatch(location.href, site_pattern)) {
+                    return;
+                }
+            }
+        }
+
+        // Block comments for other sites
         let sites = sp_result.site_patterns.sites;
         switch(message.event) {
             case 'pageload':

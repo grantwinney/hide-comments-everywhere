@@ -30,6 +30,8 @@ The allowed (white-listed) sites are ones you define on the "options" page. Spec
 
 You can quickly add the URL of the current page by opening the extension popup (by clicking the icon in the toolbar), and then selecting a URL (or entering a custom one) and pressing the "Allow" button. Note that, unlike the "options" page, these URLs are entered normally and not as regular expressions.
 
+_Note: There's also a hard-coded whitelist, although I don't anticipate adding very many sites to it. One I added, for example, is GitHub. It's unlikely anyone would want to hide comments on GitHub issues, and since they applied a `comment` class it gets scooped up by the "catch-all" pattern and basically breaks the site._
+
 Click on the icon in the toolbar and press the large "toggle" button to temporarily toggle enabling/disabling the extension for a single tab, in order to hide or display comments. Click it again to toggle it back. Reloading the page will cause it to follow the same rules as above, looking first at blocked sites and then your personal allowed sites.
 
 ### Permissions
