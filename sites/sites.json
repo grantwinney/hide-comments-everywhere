@@ -1,0 +1,44 @@
+{
+    "exclusions": [
+        "github.com"
+    ],
+    "catchall": ".fb-comments, .fb_iframe_widget, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper",
+    "sites":
+        {
+            "kickstarter.com": ".js-comments, #comments-emoji",
+            "boredpanda.com": ".open-list-comments",
+            "collider.com": ".facebook-comments-cover",
+            "dev.to": ".comments-container-container, .comments-count",
+            "facebook.com": ".commentable_item > div > div:nth-of-type(3), .UFIRow, .UFIComment, .UFILastCommentComponent, .UFILastComment, ._1whp, div[data-testid='UFI2CommentsList/root_depth_0']",
+            "freecodecamp.org": ".topic-post:not(.topic-owner), div.post-stream > .topic-owner:nth-child(1n+2), .cloaked-post, .toggle-summary",
+            "ijr.com": ".entry-comments-link, .bb-icon-comment, .comments-count, #comments, #comments-section, .elementor-post__meta-data",
+            "instagram.com": ".coreSpriteComment, .LGYDV, .gElp9, .sH9wk",
+            "linkedin.com": ".feed-shared-social-counts__num-comments, .social-details-social-counts__comments, .button.comment, .feed-shared-update__comments-container, .feed-shared-update-v2__comments-container, .comment, .feed-shared-first-prompt-block",
+            "namecheap.com": "#layout",
+            "reddit.com": ".commentarea, .comments, ._1UoeAeSRhOKSNdY_h3iS1O, .s6wlmco-0.jecSt, .s18rx025-9.dZUtRw, .qucja8-7, .s121jps0-1, .p0SYO8TbZVqJIWEeFcNZx, .s14rli7r-0.lgHMiM, .s1hs3nv-1, ._2M2wOqmeoPVvcSsJ6Po9-V, .rgcsyk-1",
+            "stackexchange.com": ".comments, .comments-link, .js-link-separator",
+            "superuser.com": ".comments, .comments-link, .js-link-separator",
+            "askubuntu.com": ".comments, .comments-link, .js-link-separator",
+            "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
+            "stackoverflow.blog": ".comments-wrapper",
+            "techdirt.com": ".storylinks, .comments",
+            "twitter.com": ".inline-reply-tweetbox, .replies-to, .ProfileTweet-action--reply, .Icon--reply",
+            "washingtonpost.com": "#comment_link_button_wrapper, #comments, .comments",
+            "news.ycombinator.com": ".comment-tree",
+            "youtube.com": "ytd-comments, ytd-live-chat-frame, .yt-spinner, #watch-discussion, #watch-sidebar-live-chat, #comments-test-iframe",
+            "vijesti.me": ".comm_box, .comm",
+            "gizmodo.com": "#js_discussion-region",
+            "ign.com": "#article_comments, .comments-section, .comment-count",
+            "buzzfeed.com": ".contributions, #mod-defer-user-contributions-1, #mod-defer-user-contributions-2",
+            "dailymail.co.uk": ".comments-link, #reader-comments",
+            "devblogs.microsoft.com": ".dpr-wrap, #comments",
+            "google.com": "#liveresults-sports-immersive__match-fullpage .PPjCfd :nth-child(5)",
+            "folha.uol.com.br": "#comentarios",
+            "slickdeals.net": "#commentsBox, #joinTheConversationBox",
+            "dailykos.com": "#react-comments, .comment-counts-btn",
+            "vk.com": ".replies, .post_replies_header, .wl_replies_wrap, .wl_reply_form_wrap",
+            "uol.com.br": ".comments",
+            "lefigaro.fr": "#commentsTitle, #commentsTitle + ul, #commentsTitle ~ span",
+            "haaretz.co.il": "#commentsSection, div[data-test='commentsContainer'], form[data-test='newCommentForm']"
+        }
+}
