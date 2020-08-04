@@ -12,7 +12,7 @@
             "dailykos.com": "#react-comments, .comment-counts-btn",
             "dailymail.co.uk": ".comments-link, #reader-comments",
             "devblogs.microsoft.com": ".dpr-wrap, #comments",
-            "dev.to": ".comments-container-container, .comments-count",
+            "dev.to": ".crayons-story__details > a:nth-child(2), #comments",
             "www.facebook.com": ".commentable_item > div > div:nth-of-type(3), .UFIRow, .UFIComment, .UFILastCommentComponent, .UFILastComment, ._1whp, div[data-testid='UFI2CommentsList/root_depth_0'], span > a[title='Leave a comment']",
             "freecodecamp.org": ".topic-post:not(.topic-owner), div.post-stream > .topic-owner:nth-child(1n+2), .cloaked-post, .toggle-summary",
             "folha.uol.com.br": "#comentarios",
