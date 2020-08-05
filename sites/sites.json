@@ -8,7 +8,7 @@
             "askubuntu.com": ".comments, .comments-link, .js-link-separator",
             "www.boredpanda.com": ".comments-count, #post-comments-area",
             "www.buzzfeed.com": ".contributions, #mod-defer-user-contributions-1, #mod-defer-user-contributions-2",
-            "dailykos.com": "#react-comments, .comment-counts-btn",
+            "dailykos.com": "#react-comments, .dk-social-count, .stories-grid__story__inner__comment-count, .story-associations__comment-count",
             "dailymail.co.uk": ".comments-link, #reader-comments",
             "devblogs.microsoft.com": ".dpr-wrap, #comments",
             "dev.to": ".crayons-story__details > a:nth-child(2), #comments",
