@@ -21,7 +21,7 @@
             "www.haaretz.co.il": "a[href='#commentsSection'], #commentsSection, div[data-test='commentsContainer'], form[data-test='newCommentForm'], form[data-test='newCommentForm'] ~ div",
             "ijr.org": ".bb-comments-wrap, #comments",
             "www.instagram.com": "ul.Ln-UN > li:nth-child(2), div.eo2As",
-            "kickstarter.com": ".js-comments, #comments-emoji",
+            "www.kickstarter.com": "#react-project-comments, #comments-emoji",
             "lefigaro.fr": "#commentsTitle, #commentsTitle + ul, #commentsTitle ~ span",
             "linkedin.com": ".feed-shared-social-counts__num-comments, .social-details-social-counts__comments, .button.comment, .feed-shared-update__comments-container, .feed-shared-update-v2__comments-container, .comment, .feed-shared-first-prompt-block",
             "namecheap.com": "#layout",
