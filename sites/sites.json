@@ -24,7 +24,7 @@
             "www.kickstarter.com": "#react-project-comments, #comments-emoji",
             "www.lefigaro.fr": "#commentsTitle, #commentsTitle + ul, #commentsTitle ~ span",
             "www.linkedin.com": "[data-control-name='comments_count'], .feed-shared-update__comments-container, .feed-shared-update-v2__comments-container, .feed-shared-first-prompt-block, .comment",
-            "namecheap.com": "#layout",
+            "www.namecheap.com": ".sds-blog-card__info-comments, .sds-blog-post__comments, #comments, #toggle-comments",
             "news.ycombinator.com": ".comment-tree",
             "reddit.com": ".commentarea, .comments, ._1UoeAeSRhOKSNdY_h3iS1O, .s6wlmco-0.jecSt, .s18rx025-9.dZUtRw, .qucja8-7, .s121jps0-1, .p0SYO8TbZVqJIWEeFcNZx, .s14rli7r-0.lgHMiM, .s1hs3nv-1, ._2M2wOqmeoPVvcSsJ6Po9-V, .rgcsyk-1",
             "slickdeals.net": "#commentsBox, #joinTheConversationBox",
