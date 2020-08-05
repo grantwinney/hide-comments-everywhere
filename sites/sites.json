@@ -27,7 +27,7 @@
             "www.namecheap.com": ".sds-blog-card__info-comments, .sds-blog-post__comments, #comments, #toggle-comments",
             "news.ycombinator.com": ".comment-tree",
             "www.reddit.com": "[data-click-id='comments'], .icon-comment, .icon-comment + span, div.uI_hDmU5GSiudtABRz_37 > div:not(:first-child)",
-            "slickdeals.net": "#commentsBox, #joinTheConversationBox",
+            "slickdeals.net": "#commentsBox, #joinTheConversationBox, .add-comment, .add-comment + span, a[href='#commentsBox']",
             "stackexchange.com": ".comments, .comments-link, .js-link-separator",
             "superuser.com": ".comments, .comments-link, .js-link-separator",
             "stackoverflow.blog": ".comments-wrapper",
