@@ -10,7 +10,7 @@
             "www.buzzfeed.com": ".contributions, #mod-defer-user-contributions-1, #mod-defer-user-contributions-2",
             "www.dailykos.com": "#react-comments, .dk-social-count, .comment-counts-btn, .stories-grid__story__inner__comment-count.story-associations__comment-count",
             "www.dailymail.co.uk": ".comments-count, .share-count, .comments-link, #reader-comments",
-            "devblogs.microsoft.com": ".dpr-wrap, #comments",
+            "devblogs.microsoft.com": ".post-comment-count, .dpr-wrap, #comments",
             "dev.to": ".crayons-story__details > a:nth-child(2), #comments",
             "www.facebook.com": ".commentable_item > div > div:nth-of-type(3), .UFIRow, .UFIComment, .UFILastCommentComponent, .UFILastComment, ._1whp, div[data-testid='UFI2CommentsList/root_depth_0'], span > a[title='Leave a comment']",
             "freecodecamp.org": ".topic-post:not(.topic-owner), div.post-stream > .topic-owner:nth-child(1n+2), .cloaked-post, .toggle-summary",
