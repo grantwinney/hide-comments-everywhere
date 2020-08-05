@@ -12,7 +12,7 @@
             "www.dailymail.co.uk": ".comments-count, .share-count, .comments-link, #reader-comments",
             "devblogs.microsoft.com": ".post-comment-count, .post-comments, .dpr-wrap, #comments",
             "dev.to": ".crayons-story__details > a:nth-child(2), #comments",
-            "www.facebook.com": ".commentable_item > div > div > div > div > div:nth-of-type(3) > span:first-child, .UFIRow, .UFIComment, .UFILastCommentComponent, .UFILastComment, ._1whp, div[data-testid='UFI2CommentsList/root_depth_0'], span > a[title='Leave a comment']",
+            "www.facebook.com": ".commentable_item > div > div > div > div > div:nth-of-type(3) > span:first-child, .commentable_item > div > div:nth-of-type(3), a[title='Leave a comment']",
             "freecodecamp.org": ".topic-post:not(.topic-owner), div.post-stream > .topic-owner:nth-child(1n+2), .cloaked-post, .toggle-summary",
             "folha.uol.com.br": "#comentarios",
             "gizmodo.com": "#js_discussion-region",
