@@ -34,7 +34,6 @@
                 "superuser.com": ".comments, .comments-link, .js-link-separator",
             "www.techdirt.com": ".storylinks, .comments",
             "twitter.com": ".inline-reply-tweetbox, .replies-to, .ProfileTweet-action--reply, .Icon--reply",
-            "uol.com.br": ".comments",
             "vijesti.me": ".comm_box, .comm",
             "vk.com": ".replies, .post_replies_header, .wl_replies_wrap, .wl_reply_form_wrap",
             "washingtonpost.com": "#comment_link_button_wrapper, #comments, .comments",
