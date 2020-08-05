@@ -26,7 +26,7 @@
             "www.linkedin.com": "[data-control-name='comments_count'], .feed-shared-update__comments-container, .feed-shared-update-v2__comments-container, .feed-shared-first-prompt-block, .comment",
             "www.namecheap.com": ".sds-blog-card__info-comments, .sds-blog-post__comments, #comments, #toggle-comments",
             "news.ycombinator.com": ".comment-tree",
-            "www.reddit.com": "[data-click-id='comments'], .uI_hDmU5GSiudtABRz_37 div:not(:first-child)",
+            "www.reddit.com": "[data-click-id='comments'], div.uI_hDmU5GSiudtABRz_37 > div:not(:first-child)",
             "slickdeals.net": "#commentsBox, #joinTheConversationBox",
             "stackexchange.com": ".comments, .comments-link, .js-link-separator",
             "superuser.com": ".comments, .comments-link, .js-link-separator",
