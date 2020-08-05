@@ -5,7 +5,6 @@
     "catchall": ".fb-comments, .fb_iframe_widget, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper, #hyvor-talk-view, div[data-spotim-default-areas]",
     "sites":
         {
-            "askubuntu.com": ".comments, .comments-link, .js-link-separator",
             "www.boredpanda.com": ".comments-count, #post-comments-area",
             "www.buzzfeed.com": ".contributions, #mod-defer-user-contributions-1, #mod-defer-user-contributions-2",
             "www.dailykos.com": "#react-comments, .dk-social-count, .comment-counts-btn, .stories-grid__story__inner__comment-count.story-associations__comment-count",
@@ -29,10 +28,11 @@
             "www.reddit.com": "[data-click-id='comments'], .icon-comment, .icon-comment + span, div.uI_hDmU5GSiudtABRz_37 > div:not(:first-child)",
             "slickdeals.net": "#commentsBox, #joinTheConversationBox, .add-comment, .add-comment + span, a[href='#commentsBox']",
             "stackexchange.com": ".comments, .comments-link, .js-link-separator",
-            "superuser.com": ".comments, .comments-link, .js-link-separator",
-            "stackoverflow.blog": ".comments-wrapper",
-            "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
-            "techdirt.com": ".storylinks, .comments",
+                "askubuntu.com": ".comments, .comments-link, .js-link-separator",
+                "stackoverflow.blog": ".comments-wrapper",
+                "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
+                "superuser.com": ".comments, .comments-link, .js-link-separator",
+            "www.techdirt.com": ".storylinks, .comments",
             "twitter.com": ".inline-reply-tweetbox, .replies-to, .ProfileTweet-action--reply, .Icon--reply",
             "uol.com.br": ".comments",
             "vijesti.me": ".comm_box, .comm",
