@@ -17,6 +17,7 @@
                 "io9.gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
                 "earther.gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
                 "paleofuture.gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
+            "www.google.com": "[data-tab_type='LIVE_COMMENTS']",
             "www.haaretz.co.il": "a[href='#commentsSection'], #commentsSection, div[data-test='commentsContainer'], form[data-test='newCommentForm'], form[data-test='newCommentForm'] ~ div",
             "ijr.org": ".bb-comments-wrap, #comments",
             "www.instagram.com": "ul.Ln-UN > li:nth-child(2), div.eo2As",
