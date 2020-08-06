@@ -33,7 +33,7 @@
                 "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
                 "superuser.com": ".comments, .comments-link, .js-link-separator",
             "www.techdirt.com": ".storylinks, .comments",
-            "twitter.com": ".inline-reply-tweetbox, .replies-to, .ProfileTweet-action--reply, .Icon--reply",
+            "twitter.com": "[data-testid='reply'], [aria-label='Timeline: Conversation'] > div > div > div:not(:first-child)",
             "www.vijesti.me": ".dataComments, .artViews > span:nth-child(3), .commWrap",
             "vk.com": ".replies, .post_replies_header, .wl_replies_wrap, .wl_reply_form_wrap",
             "www.washingtonpost.com": "a[href='#comments-wrapper'], #comments-wrapper"
