@@ -22,19 +22,20 @@ A lot, including but not limited to:
 
 ## How does it work?
 
-It's triggered when the page is first loaded, or the URL changes (you click a link), or the comments are injected into the page (Disqus and YouTube delay loading comments), or when you open the popup (via the extension icon in the toolbar) and choose to toggle a page or whitelist (allow) a new URL.
+This extension checks whether comments should be disabled for the current URL, and is triggered when the page is first loaded or the URL changes (i.e. you click a link).
 
-The extension checks whether it should enable/disable comments, and then adds a display style of "none" or removes the display style (resetting it to whatever the rest of the CSS on the page originally set it to). It determines this by hiding anything defined in the list of [included sites](https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json), then showing anything listed in your list of *excluded* sites.
+1. First, it checks the [sites.json](https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json) file for known DOM elements that contain comments on the current URL.
+2. Then it sees if you've chosen to exclude the current URL (the whitelist on the Options page under Filters).
+3. It injects a CSS stylesheet into the page that sets display style to "none" for comments (and anything related, like comment counters).
 
-The allowed (white-listed) sites are ones you define on the "options" page. Specify a list of URLs as [regex patterns](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), one per line, that should display comments all the time (the extension is effectively disabled for those URLs). Your list of allowed sites uses synchronized storage, so it should be available on any machine you've installed the extension on.
+The allowed (whitelisted) sites are ones you define on the Options page. Specify a list of URLs as [regex patterns](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), one per line, that should display comments all the time (the extension is effectively disabled for those URLs). Your list of allowed sites uses synchronized storage, so it should be available on any machine you've installed the extension on and are logged into.
 
-You can quickly add the URL of the current page by opening the extension popup (by clicking the icon in the toolbar), and then selecting a URL (or entering a custom one) and pressing the "Allow" button. Note that, unlike the "options" page, these URLs are entered normally and not as regular expressions.
-
-_Note: There's also a hard-coded whitelist, although I don't anticipate adding very many sites to it. One I added, for example, is GitHub. It's unlikely anyone would want to hide comments on GitHub issues, and since they applied a `comment` class it gets scooped up by the "catch-all" pattern and basically breaks the site._
+- You can quickly add the URL of the current page by opening the extension popup (click the icon in the toolbar), and then selecting a URL (or entering a custom one) and pressing the "Allow" button. Note that, unlike the "options" page, these URLs are entered normally and not as regular expressions.
+- **Note:** There's also a hard-coded whitelist, although I don't anticipate adding very many sites to it. One I added is GitHub, for which it's unlikely anyone would want to hide comments. There are issues with their DOM that cause legit sections of the site to be hidden.
 
 Click on the icon in the toolbar and press the large "toggle" button to temporarily toggle enabling/disabling the extension for a single tab, in order to hide or display comments. Click it again to toggle it back. Reloading the page will cause it to follow the same rules as above, looking first at blocked sites and then your personal allowed sites.
 
-### Permissions
+## Permissions
 
 You'll be notified that it can "read and change all your data on the websites you visit" because that's how it works - it hides certain comment-related elements on the page so you don't see them.
 
