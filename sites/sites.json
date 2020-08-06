@@ -36,6 +36,6 @@
             "twitter.com": ".inline-reply-tweetbox, .replies-to, .ProfileTweet-action--reply, .Icon--reply",
             "www.vijesti.me": ".dataComments, .artViews > span:nth-child(3), .commWrap",
             "vk.com": ".replies, .post_replies_header, .wl_replies_wrap, .wl_reply_form_wrap",
-            "washingtonpost.com": "a[href='#comments-wrapper'], #comments-wrapper"
+            "www.washingtonpost.com": "a[href='#comments-wrapper'], #comments-wrapper"
         }
 }
