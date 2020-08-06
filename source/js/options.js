@@ -1,3 +1,33 @@
+// Get the current site definitions, and hide the new definition message and adjust the wait cursor.
+function getAndStoreSiteDefinitions(currentVersion = undefined) {
+    toggleWaitCursor(true);
+    axios.get('https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json')
+         .then(function(result) {
+            chrome.storage.local.set({'patterns': result.data});
+            toggleNewDefinitionMessage(false);
+            if (currentVersion != undefined) {
+                chrome.storage.local.set({'definition_version': currentVersion});
+                toggleWaitCursor(false);
+            } else {
+                getDefinitionVersion(function(version) {
+                    chrome.storage.local.set({'definition_version': version});
+                    toggleWaitCursor(false);
+                });
+            }
+         })
+         .catch(function(error) {
+             logError(JSON.stringify(error));
+             toggleWaitCursor(false);
+         });
+}
+
+function toggleNewDefinitionMessage(show) {
+    let message = document.getElementById('new_definition_message');
+    if (message != null) {
+        message.style.setProperty('display', show ? 'block' : 'none');
+    }
+}
+
 function loadOptions() {
     chrome.storage.local.get('one_click_option', function(result) {
         let oneClickEnabled = (result != undefined && result.one_click_option == true);

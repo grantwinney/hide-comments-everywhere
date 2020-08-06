@@ -1,22 +1,17 @@
-function handleSelectors(selector, isHidden) {
-    if (selector != undefined) {
-        toggleElements(document.querySelectorAll(selector), isHidden);
-    }
+// Injects a style sheet that can be used to toggle a set of selectors on the current page.
+const toggleElements = (() => {
+    const style = document.createElement('style');
+    document.head.append(style);
+    return (selectors, hide) => style.textContent = hide ? `${selectors} { display: none !important } pre .comment, code .comment, textarea.comments { display: inherit }` : '';
+})();
+
+// Determines whether a URL matches a given regex pattern.
+function isValidMatch(url, pattern) {
+    let re = new RegExp(pattern);
+    return re.test(url);
 }
 
-function handleDelaySelectors(selector, onceOnly, isHidden) {
-    if (selector != undefined) {
-        document.unbindArrive(selector);
-        if (isHidden) {
-            document.arrive(selector, {onceOnly: onceOnly !== false}, function() {
-                console.info("Hide Comments Everywhere detected arrival of: " + selector)
-                toggleElements(document.querySelectorAll(selector), isHidden);
-            });
-        }
-        toggleElements(document.querySelectorAll(selector), isHidden);
-    }
-}
-
+// Test whether a URL is in the user's whitelist of excluded URLs
 function isUrlExcluded(url, excludedUrls) {
     let excludedUrlPatterns = excludedUrls.split(/\r?\n/);
     for (let i = 0; i < excludedUrlPatterns.length; i++) {
@@ -30,59 +25,60 @@ function isUrlExcluded(url, excludedUrls) {
     return false;
 };
 
-function elementsToAlwaysShow() {
-    // always show comments in code blocks
-    // always show textarea comments, which are probably part of a contact form
-    toggleElements(document.querySelectorAll('pre .comment, code .comment, textarea.comments'), false);
-}
-
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    chrome.storage.local.get('site_patterns', function(sp_result) {
-        if (sp_result === undefined || sp_result.site_patterns === undefined) {
-            console.error("Missing site patterns!");
+// Listens for messages from background script.
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/Runtime/onMessage
+chrome.runtime.onMessage.addListener(function(message, _sender, _sendResponse) {
+    chrome.storage.local.get('definitions', function(result) {
+        let definitions = result.definitions;
+        if (definitions === undefined || definitions.sites === undefined) {
+            logError("Missing site patterns!");
             return;
         }
 
         // Sites like GitHub should never have comments hidden, hence a hard-coded whitelist
-        let perm_whitelist = sp_result.site_patterns.ignore;
-        if (perm_whitelist !== undefined) {
-            for (let i = 0; i < perm_whitelist.length; i++) {
-                let site_pattern = perm_whitelist[i];
-                if (isValidMatch(location.href, site_pattern)) {
+        if (definitions.exclusions !== undefined) {
+            for (let i = 0; i < definitions.exclusions.length; i++) {
+                if (isValidMatch(location.hostname, definitions.exclusions[i])) {
                     return;
                 }
             }
         }
 
         // Block comments for other sites
-        let sites = sp_result.site_patterns.sites;
+        let sites = definitions.sites;
+        let siteMatchFound = false;
         switch(message.event) {
-            case 'pageload':
+            case 'tab_updated':  // A tab was upated with a new URL, so redo hiding the comments
                 chrome.storage.sync.get('excluded_urls', function(eu_result) {
                     let hideComments = (eu_result === undefined || eu_result.excluded_urls === undefined || !isUrlExcluded(location.href, eu_result.excluded_urls));
-                    for (let i = 0; i < sites.length; i++) {
-                        let site = sites[i];
-                        if (isValidMatch(location.href, site.pattern)) {
-                            handleSelectors(site.immediate, hideComments);
-                            handleDelaySelectors(site.delay, site.onceOnly, hideComments);
-                            elementsToAlwaysShow();
-                            chrome.runtime.sendMessage({event: "scriptdone", hideComments: hideComments});
+                    for (let site of Object.keys(sites)) {
+                        if (site === location.hostname) {
+                            toggleElements(sites[site], hideComments);
+                            chrome.runtime.sendMessage({event: "elements_modified", hideComments: true});
+                            siteMatchFound = true;
                             break;
                         }
                     }
+                    if (!siteMatchFound) {
+                        toggleElements(definitions.catchall, hideComments);
+                        chrome.runtime.sendMessage({event: "elements_modified", hideComments: hideComments});
+                    }
                 });
                 break;
-            case 'toggle':
-                for (let i = 0; i < sites.length; i++) {
-                    let site = sites[i];
-                    if (isValidMatch(location.href, site.pattern)) {
-                        handleSelectors(site.immediate, message.hideComments);
-                        handleDelaySelectors(site.delay, site.onceOnly, message.hideComments);
-                        elementsToAlwaysShow();
+            case 'toggle':  // Toggling comments based on user action
+                for (let site of Object.keys(sites)) {
+                    if (site === location.hostname) {
+                        toggleElements(sites[site], message.hideComments);
+                        siteMatchFound = true;
                         break;
                     }
                 }
+                if (!siteMatchFound) {
+                    toggleElements(definitions.catchall, message.hideComments);
+                }
                 break;
+            default:
+                logError(`content script: ${message.event}`);
         }
     });
 });

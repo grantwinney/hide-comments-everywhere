@@ -2,6 +2,7 @@ body {
     text-align: center;
     margin: 0px;
     font-size: 90%;
+    width: 1000px;
 }
 
 input[type=submit] {
@@ -14,6 +15,7 @@ input[type=submit] {
 a {
     color: blue;
     text-decoration: none;
+    cursor: hand !important;
 }
 
 a:hover {

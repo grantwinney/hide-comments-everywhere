@@ -19,7 +19,7 @@ function addToExclusion(tabId) {
                 let updatedUrls = excludedUrls + (excludedUrls[excludedUrls.length - 1] === '\n' ? '' : '\r\n') + regexUrl + '\r\n';
                 if (validateExcludedUrls([regexUrl])) {
                     chrome.storage.sync.set({'excluded_urls': updatedUrls});
-                    chrome.tabs.sendMessage(tabId, { event: 'pageload' });
+                    chrome.tabs.sendMessage(tabId, { event: 'tab_updated' });
                     window.close();
                 } else {
                     displayMessage('The URL you specified is invalid. Double-check it and try saving again.')
@@ -60,7 +60,7 @@ function submitUrlForInclusion() {
         }
         let title = "Here's a new site I'd like you to consider blocking";
         let body = encodeURIComponent(title + ":\n\n" + urlToInclude + '\n\n(please include any other relevant details)');
-        let url = `https://github.com/grantwinney/hide-comments-in-chrome-sites/issues/new?title=${title}&body=${body}`;
+        let url = `https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=${title}&body=${body}`;
         window.open(url, '_blank')
     }
 }

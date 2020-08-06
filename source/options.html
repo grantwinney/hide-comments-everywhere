@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/options.css" />
         <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+        <script src="js/axios.min.js"></script>
         <script src="js/shared.js"></script>
         <script src="js/options.js"></script>
     </head>
@@ -33,9 +34,10 @@
             <div id="new_definition_message">New definitions available</div>
             <p class="pane-section">The filter list of blocked sites is occasionally updated.</p>
             <p class="pane-section">If one's available, you'll see a banner on this page. To get it, press the button below.</p>
-            <p class="pane-section" style="font-style:italic; font-size:smaller">(Updates are also automatically installed when a new window is opened, or when Chrome is restarted.)</p>
+            <p class="pane-section" style="font-style:italic; font-size:smaller">(Updates are also automatically installed when a new window is opened, or when the browser is restarted.)</p>
             <p><input id="update_definitions" type="submit" value="Update Definitions"></p>
         </div>
+        
         <div id="filters">
             <div class="pane-title">Filters</div>
             <p>You can specify a list of URLs to <em>not</em> block, which should be allowed to show comments all the time.</p>
@@ -51,7 +53,7 @@
                         <td><code>^https?://www\.example\.com/some_path$</code></td>
                     </tr>
                     <tr>
-                        <td>ignore subdomain (i.e. works for youtube.com or blog.youtube.com)</td>
+                        <td>ignore subdomain (i.e. youtube.com or blog.youtube.com)</td>
                         <td><code>^https?://(.*[.])?youtube[.]com$</code></td>
                     </tr>
                     <tr>
@@ -76,26 +78,22 @@
                 <div id="save-notification" class="saved-notification">SAVED!</div>
             </p>
         </div>
+
         <div id="support">
-            <div class="pane-title">Support</div>
             <p class="pane-subtitle">Questions? Problems?</p>
-            <p class="pane-section">If you have a question or problem, just <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new">open a new issue <span class="fa fa-github"></span></a> and I'll address it as time permits <em>
-                                    (or <a href="https://github.com/grantwinney/hide-comments-everywhere/compare">create a pull request <span class="fa fa-github"></span></a> if you have a fix)</em>.</p>
-            <p class="pane-section">If you've been using this extension for awhile and you like it, it'd be great if you could take a moment to <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/reviews">rate it in the store <span class="fa fa-google"></span></a>.
+            <p class="pane-section">Just <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new">open a new issue</a> and I'll address it as time permits,
+                                    or <a href="https://github.com/grantwinney/hide-comments-everywhere/compare">create a pull request</a> if you have a fix.</p>
+            <p class="pane-section">If you've been using this extension for awhile and enjoy it, please <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/reviews">leave a rating</a>.
             <p class="pane-subtitle">Got a Site to Block?</p>
-            <p class="pane-section">If you have a site you think should be added to the global list, <a href="https://github.com/grantwinney/hide-comments-in-chrome-sites/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)">open an issue for it <span class="fa fa-github"></span></a> with as many details as possible.</p>
-            <p class="pane-section">If you know which element(s) need to be hidden, feel free to just <a href="https://github.com/grantwinney/hide-comments-in-chrome-sites/compare">open a pull request <span class="fa fa-github"></span></a>.</p>
-            <p class="pane-subtitle">Contact Me</p>
-            <p>You can find me on <a href="https://twitter.com/GrantWinney">Twitter <span class="fa fa-twitter"></span></a>, <a href="https://github.com/grantwinney">GitHub <span class="fa fa-github"></span></a> and occasionally <a href="https://grantwinney.com/">writing online <span class="fa fa-globe"></span></a>.
+            <p class="pane-section">If you have a site you think should be blocked by default, <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)">open an issue</a> with as many details as possible.</p>
+            <p class="pane-section">If you know which element(s) need to be hidden, feel free to just <a href="https://github.com/grantwinney/hide-comments-everywhere/compare">open a pull request </a>.</p>
         </div>
-        <div id="dev_mode_container">
-            <input id="dev_mode" type="checkbox" title="Dev Mode">
-        </div>
+
         <div class="footer-parent">
             <div class="footer-child">
                 <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc">Chrome Store</a> |
                 <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new">Report Issue</a> |
-                <a href="https://github.com/grantwinney/hide-comments-in-chrome-sites/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)">Submit URL</a> |
+                <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)">Submit URL</a> |
                 <span id="version"></span>
                 <span style="padding-left:5px">|</span>
                 <a href="https://github.com/grantwinney" class="fa fa-github fa-lg" aria-hidden="true" title="GitHub" target="_blank"></a>

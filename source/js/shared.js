@@ -1,44 +1,52 @@
-function toggleElements(elements, isHidden) {
-    for (let i = 0; i < elements.length; i++) {
-        toggleElement(elements[i], isHidden);
-    };
-};
-
-function toggleElement(element, isHidden) {
-    if (element != undefined) {
-        if (isHidden) {
-            element.style.setProperty('display', 'none', 'important');
-        } else {
-            element.style.setProperty('display', '', '');
-        }
-    }
-};
-
-function isValidMatch(url, pattern) {
-    let re = new RegExp(pattern);
-    return re.test(url);
+// Write an error to the console, prepended with the addon name.
+function logError(errorMessage) {
+    console.log(`${chrome.runtime.getManifest().name}: ${errorMessage}`);
 }
 
+// Addon is enabled for a particular url
+function showEnabledIcon(tabId, callback) {
+    chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: tabId }, function() {
+        chrome.browserAction.setTitle({ title: '', tabId: tabId });
+        if (callback !== undefined) {
+            callback();
+        }
+    });
+}
+
+// Addon is disabled for a particular url
+function showDisabledIcon(tabId, callback) {
+    chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: tabId }, function() {
+        chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled)', tabId: tabId });
+        if (callback !== undefined) {
+            callback();
+        }
+    });
+}
+
+// Get the current version number for the site definitions.
 function getDefinitionVersion(action) {
-    let xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/version.json', true);
-    xobj.responseType = 'json';
-    xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4) {
-            action(xobj.response.version);
-        }
-    };
-    xobj.send();
+    axios.get('https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json')
+         .then(function(result) {
+            action(result.data.version);
+         });
 }
 
-function toggleNewDefinitionMessage(show) {
-    let message = document.getElementById('new_definition_message');
-    if (message != null) {
-        message.style.setProperty('display', show ? 'block' : 'none');
-    }
+// Get the current site definitions.
+function getDefinitions(currentVersion = undefined) {
+    axios.get('https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json')
+         .then(function(result) {
+            chrome.storage.local.set({'definitions': result.data});
+            if (currentVersion != undefined) {
+                chrome.storage.local.set({'definition_version': currentVersion});
+            } else {
+                getDefinitionVersion(function(version) {
+                    chrome.storage.local.set({'definition_version': version});
+                });
+            }
+         });
 }
 
+// Show a "progress" cursor while busy
 function toggleWaitCursor(show) {
     let elements = document.querySelectorAll('body, a, input, textarea');
     for (let i = 0; i < elements.length; i++) {
@@ -52,49 +60,8 @@ function toggleWaitCursor(show) {
     }
 }
 
-function getAndStoreSiteDefinitions(currentVersion = undefined) {
-    toggleWaitCursor(true);
-    let xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    let devModeCheckbox = document.getElementById('dev_mode')
-    if (devModeCheckbox != null && devModeCheckbox.checked) {
-        xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/sites-dev.json', true);
-    } else {
-        xobj.open('GET', 'https://raw.githubusercontent.com/grantwinney/hide-comments-in-chrome-sites/master/sites.json', true);
-    }
-    xobj.responseType = 'json';
-    xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4) {
-            chrome.storage.local.set({'site_patterns': xobj.response});
-            toggleNewDefinitionMessage(false);
-            if (currentVersion != undefined) {
-                chrome.storage.local.set({'definition_version': currentVersion});
-                toggleWaitCursor(false);
-            } else {
-                getDefinitionVersion(function(version) {
-                    chrome.storage.local.set({'definition_version': version});
-                    toggleWaitCursor(false);
-                });
-            }
-        } else {
-            toggleWaitCursor(false);
-        }
-    };
-    xobj.send();
-}
-
-function validateExcludedUrls(urls) {
-    try {
-        for (let i = 0; i < urls.length; i++) {
-            new RegExp(urls[i]);
-        }
-        return true;
-    }
-    catch(e) {
-        return false;
-    }
-}
-
+// User chose to toggle comments (temporary), so adjust the addon icon/title and send a message
+//  to the content script to toggle whether or not comments are hidden on the page.
 function toggleComments(tabId, postAction = undefined) {
     chrome.browserAction.getTitle({tabId: tabId}, function(title) {
         if (title.endsWith('(disabled)')) {
@@ -107,20 +74,16 @@ function toggleComments(tabId, postAction = undefined) {
     });
 }
 
-function showEnabledIcon(tabId, callback) {
-    chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: tabId }, function() {
-        chrome.browserAction.setTitle({ title: '', tabId: tabId });
-        if (callback !== undefined) {
-            callback();
+// Validates that the user's custom URL whitelist are valid to use as regex patterns
+function validateExcludedUrls(urls) {
+    try {
+        for (let i = 0; i < urls.length; i++) {
+            new RegExp(urls[i]);
         }
-    });
+        return true;
+    }
+    catch(e) {
+        return false;
+    }
 }
 
-function showDisabledIcon(tabId, callback) {
-    chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: tabId }, function() {
-        chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled)', tabId: tabId });
-        if (callback !== undefined) {
-            callback();
-        }
-    });
-}
