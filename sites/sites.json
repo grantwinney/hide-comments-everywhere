@@ -5,6 +5,7 @@
     "catchall": ".fb-comments, .fb_iframe_widget, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper, #hyvor-talk-view, div[data-spotim-default-areas]",
     "sites":
         {
+            "abcnews.go.com": ".CommentButton",
             "www.boredpanda.com": ".comments-count, #post-comments-area",
             "www.buzzfeed.com": ".contributions, #mod-defer-user-contributions-1, #mod-defer-user-contributions-2",
             "www.dailykos.com": "#react-comments, .dk-social-count, .comment-counts-btn, .stories-grid__story__inner__comment-count.story-associations__comment-count",
