@@ -39,7 +39,7 @@ td {
     max-width: 600px;
     min-width: 200px;
     min-height: 180px;
-    white-space: nowrap;
+    white-space: pre;
 }
 
 #save, #update_definitions {
