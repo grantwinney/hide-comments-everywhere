@@ -21,7 +21,7 @@
                 "paleofuture.gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
             "www.google.com": "[data-tab_type='LIVE_COMMENTS']",
             "www.haaretz.co.il": "a[href='#commentsSection'], #commentsSection, div[data-test='commentsContainer'], form[data-test='newCommentForm'], form[data-test='newCommentForm'] ~ div",
-            "www.houzz.com", "div[scopeid='comments-content'], div[data-compid='comment'], div[compid='comment'], a.hz-editorial-gallery-related-combined__item__comment",
+            "www.houzz.com": "div[scopeid='comments-content'], div[data-compid='comment'], div[compid='comment'], a.hz-editorial-gallery-related-combined__item__comment",
             "ijr.org": ".bb-comments-wrap, #comments, .comments-count, .activity-state-comments",
             "www.instagram.com": "ul.Ln-UN > li:nth-child(2), div.eo2As",
             "www.kickstarter.com": "#react-project-comments, #comments-emoji",
