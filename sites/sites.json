@@ -19,6 +19,7 @@
                 "io9.gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
                 "earther.gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
                 "paleofuture.gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
+            "gogoanime.sh": ".anime_video_body_comment",
             "www.google.com": "[data-tab_type='LIVE_COMMENTS']",
             "www.haaretz.co.il": "a[href='#commentsSection'], #commentsSection, div[data-test='commentsContainer'], form[data-test='newCommentForm'], form[data-test='newCommentForm'] ~ div",
             "www.houzz.com": "[scopeid='comments-content'], [data-compid='comment'], [compid='comment'], .hz-editorial-gallery-related-combined__item__comment",
