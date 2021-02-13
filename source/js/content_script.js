@@ -36,9 +36,9 @@ chrome.runtime.onMessage.addListener(function(message, _sender, _sendResponse) {
         }
 
         // Sites like GitHub should never have comments hidden, hence a hard-coded whitelist
-        if (definitions.exclusions !== undefined) {
-            for (let i = 0; i < definitions.exclusions.length; i++) {
-                if (isValidMatch(location.hostname, definitions.exclusions[i])) {
+        if (definitions.excluded_sites !== undefined) {
+            for (let i = 0; i < definitions.excluded_sites.length; i++) {
+                if (isValidMatch(location.hostname, definitions.excluded_sites[i])) {
                     return;
                 }
             }
