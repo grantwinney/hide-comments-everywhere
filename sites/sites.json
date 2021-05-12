@@ -5,7 +5,7 @@
     "excluded_selectors" : [
         "code .comment"
     ],
-    "catchall": ".fb-comments, .fb_iframe_widget, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper, #hyvor-talk-view, div[data-spotim-default-areas], .guestbook, #guestbook",
+    "catchall": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper, #hyvor-talk-view, div[data-spotim-default-areas], .guestbook, #guestbook",
     "sites":
         {
             "abcnews.go.com": ".CommentButton",
@@ -36,6 +36,7 @@
             "www.linkedin.com": "[data-control-name='comments_count'], .feed-shared-update__comments-container, .feed-shared-update-v2__comments-container, .feed-shared-first-prompt-block, .comment",
             "www.namecheap.com": ".sds-blog-card__info-comments, .sds-blog-post__comments, #comments, #toggle-comments",
             "news.ycombinator.com": ".comment-tree",
+            "www.o2.pl": "",
             "www.pinterest.com": "[data-test-id='canonical-card']",
             "www.reddit.com": "[data-click-id='comments'], .icon-comment, .icon-comment + span, div.uI_hDmU5GSiudtABRz_37 > div:not(:first-child)",
             "slickdeals.net": "#commentsBox, #joinTheConversationBox, .add-comment, .add-comment + span, a[href='#commentsBox']",
