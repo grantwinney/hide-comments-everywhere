@@ -10,14 +10,12 @@ To help with my own sanity _(and maybe yours?),_ I wrote an extension that hides
 
 A lot, including but not limited to:
 
-* Facebook comment plugin
+* YouTube
+* Twitter
+* Reddit
 * Disqus
 * Livefyre
 * WordPress
-* Reddit
-* YouTube
-* Facebook
-* Twitter
 * Any other comment system where someone happened to assign the ID or class "comments" or "respond". Hopefully this doesn't hide anything unexpected, like some site that assigned the "comments" ID to the main content of their posts... please [let me know](https://github.com/grantwinney/hide-comments-everywhere/issues/new) if it does.
 
 ## How does it work?
