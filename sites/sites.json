@@ -17,7 +17,7 @@
             "gall.dcinside.com": ".view_comment",
             "devblogs.microsoft.com": ".post-comment-count, .post-comments, .dpr-wrap, #comments",
             "dev.to": ".crayons-story__details > a:nth-child(2), #comments",
-            "einthusan.tv": "#UIDiscussionCompact, #UIMovieSummary .stats > p:nth-child(3)",
+            "einthusan.tv": "#UIDiscussionCompact, .stats > p:nth-child(3)",
             "www.facebook.com": ".commentable_item > div > div > div > div > div:nth-of-type(3) > span:first-child, .commentable_item > div > div > div:nth-of-type(3), .commentable_item > div > div:nth-of-type(3), a[title='Leave a comment'], [data-testid='Keycommand_wrapper_feed_story'] > div > div > div > div > div > div > div > div:nth-child(2) > div > div:nth-child(4) > div > div > div > div > div > div > div:nth-child(2), [data-testid='Keycommand_wrapper_feed_story'] > div > div > div > div > div > div > div > div:nth-child(2) > div > div:nth-child(4) > div > div > div:nth-child(2), [role='complementary'] > div:nth-child(2) > div > div > div > div:nth-child(2) > div > div > div > div:nth-child(2), [role='complementary'] > div > div > div > div > div:nth-child(4), [role='complementary'] > div > div > div > div > div:nth-child(2) > div > div > div > div:nth-child(2), [aria-label='Leave a comment']",
             "folha.uol.com.br": "#comentarios",
             "gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
