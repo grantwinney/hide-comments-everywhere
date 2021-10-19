@@ -30,7 +30,7 @@
             "www.haaretz.co.il": "a[href='#commentsSection'], #commentsSection, div[data-test='commentsContainer'], form[data-test='newCommentForm'], form[data-test='newCommentForm'] ~ div",
             "www.houzz.com": "[scopeid='comments-content'], [data-compid='comment'], [compid='comment'], .hz-editorial-gallery-related-combined__item__comment",
             "www.hwupgrade.it": "#commenti, .commenti",
-            "ijr.org": ".author-info ~ div, .article-icons > .ff-comment, #comment-btn",
+            "ijr.com": ".author-info ~ div, .article-icons > .ff-comment, #comment-btn",
             "www.instagram.com": "ul.Ln-UN > li:nth-child(2), div.eo2As",
             "www.kickstarter.com": "#react-project-comments, #comments-emoji",
             "www.lefigaro.fr": "#commentsTitle, #commentsTitle + ul, #commentsTitle ~ span",
