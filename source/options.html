@@ -4,31 +4,69 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/options.css" />
         <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+        <script src="js/jquery-3.6.0.min.js"></script>
         <script src="js/axios.min.js"></script>
         <script src="js/shared.js"></script>
         <script src="js/options.js"></script>
     </head>
     <body>
-        <div class="header-parent">
-            <div class="header-child">
-                <img src="images/hide-comments-64.png" style="vertical-align:middle">
-                <span class="header-title">
-                    <span class="header-title-first-letter">H</span><span class="header-title-rest-of-word">ide</span>
-                    <span class="header-title-first-letter">C</span><span class="header-title-rest-of-word">omments</span>
-                    <span class="header-title-first-letter">E</span><span class="header-title-rest-of-word">verywhere</span>
-                </span>
-                <span class="header-menu">
-                    <span class="header-menu-item" id="options-menu-item"><a href="javascript:void(0)">Options</a></span>
-                    <span class="header-menu-item" id="filters-menu-item"><a href="javascript:void(0)">Filters</a></span>
-                    <span class="header-menu-item" id="support-menu-item"><a href="javascript:void(0)">Support</a></span>
-                </span>
-            </div>
+        <div class="options-header">
+            <img class="options-header-image" src="images/hide-comments-64.png">
+            <span class="header-title">
+                <span class="header-title-first-letter">H</span><span class="header-title-rest-of-word">ide</span>
+                <span class="header-title-first-letter">C</span><span class="header-title-rest-of-word">omments</span>
+                <span class="header-title-first-letter">E</span><span class="header-title-rest-of-word">verywhere</span>
+            </span>
         </div>
         <div id="options">
+                <div class="pane-title">Filters <i id="filters-help-icon" class="fa fa-question-circle" aria-hidden="true" title="View examples"></i></div>
+                <p>You can specify a list of URLs to <em>not</em> block, which should be allowed to show comments all the time.</p>
+                <div id="filters-help" style="display:none">
+                    Each URL must be a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank">regex pattern</a>, one per line. Here are some examples:
+                    <p>
+                        <table id="samples" style="font-size:smaller;">
+                            <tr>
+                                <td>exact match</td>
+                                <td><code>^http://www\.example\.com/some_path$</code></td>
+                            </tr>
+                            <tr>
+                                <td>exact match, either http or https</td>
+                                <td><code>^https?://www\.example\.com/some_path$</code></td>
+                            </tr>
+                            <tr>
+                                <td>ignore subdomain (i.e. youtube.com or blog.youtube.com)</td>
+                                <td><code>^https?://(.*[.])?youtube[.]com$</code></td>
+                            </tr>
+                            <tr>
+                                <td>any url starting with http://example.com</td>
+                                <td><code>^http://example\.com</code></td>
+                            </tr>
+                            <tr>
+                                <td>any url starting with http</td>
+                                <td><code>^http://</code></td>
+                            </tr>
+                            <tr>
+                                <td>any url (effectively disables the extension)</td>
+                                <td><code>.*</code></td>
+                            </tr>
+                        </table>
+                    </p>
+                </div>
+                <p>
+                    <textarea id="excluded_urls"></textarea>
+                </p>
+                <p>
+                    <input id="save" type="submit" value="Save Whitelist">
+                    <div id="save-notification" class="saved-notification">SAVED!</div>
+                </p>
+
             <div class="pane-title">Options</div>
             <table class="available-options">
-                <tr><td><input id="one_click_option" type="checkbox" title="One Click Disable"></td>
-                    <td id="one_click_option_description">Make the extension icon in the toolbar simply toggle comment visibility instead of displaying a popup</td></tr>
+                <tr>
+                    <td>
+                        <input id="one_click_option" type="checkbox" title="One Click Disable">
+                        <label for="one_click_option">Make the extension icon in the toolbar simply toggle comment visibility instead of displaying a popup</label>
+                    </td></tr>
             </table>
             <p class="pane-subtitle">Updates</p>
             <div id="new_definition_message">New definitions available</div>
@@ -38,47 +76,6 @@
             <p><input id="update_definitions" type="submit" value="Update Definitions"></p>
         </div>
         
-        <div id="filters">
-            <div class="pane-title">Filters</div>
-            <p>You can specify a list of URLs to <em>not</em> block, which should be allowed to show comments all the time.</p>
-            <p>Each URL must be a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank">regex pattern</a>, one per line. Here are some examples:
-            <p>
-                <table id="samples" style="font-size:smaller;">
-                    <tr>
-                        <td>exact match</td>
-                        <td><code>^http://www\.example\.com/some_path$</code></td>
-                    </tr>
-                    <tr>
-                        <td>exact match, either http or https</td>
-                        <td><code>^https?://www\.example\.com/some_path$</code></td>
-                    </tr>
-                    <tr>
-                        <td>ignore subdomain (i.e. youtube.com or blog.youtube.com)</td>
-                        <td><code>^https?://(.*[.])?youtube[.]com$</code></td>
-                    </tr>
-                    <tr>
-                        <td>any url starting with http://example.com</td>
-                        <td><code>^http://example\.com</code></td>
-                    </tr>
-                    <tr>
-                        <td>any url starting with http</td>
-                        <td><code>^http://</code></td>
-                    </tr>
-                    <tr>
-                        <td>any url (effectively disables the extension)</td>
-                        <td><code>.*</code></td>
-                    </tr>
-                </table>
-            </p>
-            <p>
-                <textarea id="excluded_urls"></textarea>
-            </p>
-            <p>
-                <input id="save" type="submit" value="Save Whitelist">
-                <div id="save-notification" class="saved-notification">SAVED!</div>
-            </p>
-        </div>
-
         <div id="support">
             <p class="pane-subtitle">Questions? Problems?</p>
             <p class="pane-section">Just <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new" target="_blank">open a new issue</a> and I'll address it as time permits,

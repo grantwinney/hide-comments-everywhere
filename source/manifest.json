@@ -8,7 +8,8 @@
     "version": "1.4.3",
 
     "options_ui": {
-        "page": "options.html"
+        "page": "options.html",
+        "open_in_tab": true
     },
 
     "permissions": [
@@ -32,6 +33,7 @@
 
     "background": {
         "scripts": [
+            "js/jquery-3.6.0.min.js",
             "js/axios.min.js",
             "js/shared.js",
             "js/background.js"

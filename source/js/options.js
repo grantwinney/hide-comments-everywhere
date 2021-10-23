@@ -80,36 +80,19 @@ function saveExcludedUrls() {
     toggleWaitCursor(false);
 }
 
-function showPane(paneToShow) {
-    document.getElementById('options').style.setProperty('display', paneToShow === 'options' ? 'inline' : 'none');
-    document.getElementById('options-menu-item').style.setProperty('text-decoration', paneToShow === 'options' ? 'underline' : 'none');
-    document.getElementById('filters').style.setProperty('display', paneToShow === 'filters' ? 'inline' : 'none');
-    document.getElementById('filters-menu-item').style.setProperty('text-decoration', paneToShow === 'filters' ? 'underline' : 'none');
-    document.getElementById('support').style.setProperty('display', paneToShow === 'support' ? 'inline' : 'none');
-    document.getElementById('support-menu-item').style.setProperty('text-decoration', paneToShow === 'support' ? 'underline' : 'none');
-}
-
 function showVersion() {
     let manifest = chrome.runtime.getManifest();
     let version = document.getElementById('version');
-    version.innerHTML = '&copy; 2018 - ' + (new Date()).getFullYear() + ', ver ' + manifest.version
+    version.innerHTML = `&copy; 2018 - ${(new Date()).getFullYear()}, ver ${manifest.version}`
 
     chrome.storage.local.get('definition_version', function(result) {
-        if (result != undefined || result.definition_version != undefined) {
-            version.innerHTML += ' (' + result.definition_version + ')';
+        if (result?.definition_version) {
+            version.innerHTML += ` (${result.definition_version})`;
         }
     });
 }
 
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    switch(message.event) {
-        case 'open_options_request':
-            showPane(message.pane_to_show);
-            break;
-    }
-});
-
-window.addEventListener('DOMContentLoaded', function load(event) {
+window.addEventListener('DOMContentLoaded', function load(_event) {
     loadOptions();
     loadExcludedUrls();
     checkForNewDefinitions();
@@ -118,7 +101,8 @@ window.addEventListener('DOMContentLoaded', function load(event) {
     document.getElementById('one_click_option_description').addEventListener('click', function() { document.getElementById('one_click_option').click(); });
     document.getElementById('update_definitions').addEventListener('click', function() { getAndStoreSiteDefinitions(); });
     document.getElementById('save').addEventListener('click', function() { saveExcludedUrls(); });
-    document.getElementById('options-menu-item').addEventListener('click', function(e) { e.preventDefault(); showPane('options') });
-    document.getElementById('filters-menu-item').addEventListener('click', function(e) { e.preventDefault(); showPane('filters') });
-    document.getElementById('support-menu-item').addEventListener('click', function(e) { e.preventDefault(); showPane('support') });
+
+    $('#filters-help-icon').click(function(){
+        $('#filters-help').slideToggle(500);
+    });
 });
