@@ -1,102 +1,141 @@
 <html>
-    <head>
-        <title>Options</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/options.css" />
-        <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
-        <script src="js/jquery-3.6.0.min.js"></script>
-        <script src="js/axios.min.js"></script>
-        <script src="js/shared.js"></script>
-        <script src="js/options.js"></script>
-    </head>
-    <body>
-        <div class="options-header">
-            <img class="options-header-image" src="images/hide-comments-64.png">
-            <span class="header-title">
-                <span class="header-title-first-letter">H</span><span class="header-title-rest-of-word">ide</span>
-                <span class="header-title-first-letter">C</span><span class="header-title-rest-of-word">omments</span>
-                <span class="header-title-first-letter">E</span><span class="header-title-rest-of-word">verywhere</span>
-            </span>
-        </div>
-        <div id="options">
-                <div class="pane-title">Filters <i id="filters-help-icon" class="fa fa-question-circle" aria-hidden="true" title="View examples"></i></div>
-                <p>You can specify a list of URLs to <em>not</em> block, which should be allowed to show comments all the time.</p>
-                <div id="filters-help" style="display:none">
-                    Each URL must be a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank">regex pattern</a>, one per line. Here are some examples:
-                    <p>
-                        <table id="samples" style="font-size:smaller;">
-                            <tr>
-                                <td>exact match</td>
-                                <td><code>^http://www\.example\.com/some_path$</code></td>
-                            </tr>
-                            <tr>
-                                <td>exact match, either http or https</td>
-                                <td><code>^https?://www\.example\.com/some_path$</code></td>
-                            </tr>
-                            <tr>
-                                <td>ignore subdomain (i.e. youtube.com or blog.youtube.com)</td>
-                                <td><code>^https?://(.*[.])?youtube[.]com$</code></td>
-                            </tr>
-                            <tr>
-                                <td>any url starting with http://example.com</td>
-                                <td><code>^http://example\.com</code></td>
-                            </tr>
-                            <tr>
-                                <td>any url starting with http</td>
-                                <td><code>^http://</code></td>
-                            </tr>
-                            <tr>
-                                <td>any url (effectively disables the extension)</td>
-                                <td><code>.*</code></td>
-                            </tr>
-                        </table>
-                    </p>
-                </div>
-                <p>
-                    <textarea id="excluded_urls"></textarea>
-                </p>
-                <p>
-                    <input id="save" type="submit" value="Save Whitelist">
-                    <div id="save-notification" class="saved-notification">SAVED!</div>
-                </p>
 
-            <div class="pane-title">Options</div>
-            <table class="available-options">
+<head>
+    <title>Options</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/options.css" />
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/shared.js"></script>
+    <script src="js/options.js"></script>
+</head>
+
+<body>
+    <div class="options-header">
+        <img class="options-header-image" src="images/hide-comments-64.png">
+        <span class="header-title">
+            <div>Hide</div>
+            <div>Comments</div>
+            <div>Everywhere</div>
+        </span>
+    </div>
+    <div id="options">
+        <div class="pane-title"><i class="fa fa-cog" aria-hidden="true"></i> Settings</div>
+        <div>
+            <input id="one_click_option" type="checkbox">
+            <label for="one_click_option">Press the icon in the toolbar to toggle comment visibility, instead of
+                displaying a popup</label>
+        </div>
+
+        <div class="pane-title"><i class="fa fa-filter" aria-hidden="true"></i> Filters</div>
+        <div>
+            <p>
+                Specify a list of URLs that comments should <em>never</em> be blocked on (whitelist), or that comments
+                should <em>always</em> be blocked on (blacklist). If a site matches a pattern on both lists, the
+                whitelist
+                takes precedence and comments will be hidden. <a href="javascript:void(0)" id="filters-help-hint">See
+                    examples.</a>
+            </p>
+        </div>
+        <div id="filters-help">
+            <p>Each URL must be a <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions"
+                    target="_blank">regex pattern</a>, one per line. Here are some examples:</p>
+            <table id="regex-samples">
                 <tr>
-                    <td>
-                        <input id="one_click_option" type="checkbox" title="One Click Disable">
-                        <label for="one_click_option">Make the extension icon in the toolbar simply toggle comment visibility instead of displaying a popup</label>
-                    </td></tr>
+                    <td>exact match</td>
+                    <td><code>^http://www\.example\.com/some_path$</code></td>
+                </tr>
+                <tr>
+                    <td>exact match, either http or https</td>
+                    <td><code>^https?://www\.example\.com/some_path$</code></td>
+                </tr>
+                <tr>
+                    <td>ignore subdomain (i.e. youtube.com or blog.youtube.com)</td>
+                    <td><code>^https?://(.*[.])?youtube[.]com$</code></td>
+                </tr>
+                <tr>
+                    <td>any url starting with http://example.com</td>
+                    <td><code>^http://example\.com</code></td>
+                </tr>
+                <tr>
+                    <td>any url starting with http</td>
+                    <td><code>^http://</code></td>
+                </tr>
+                <tr>
+                    <td>any url (effectively disables the extension)</td>
+                    <td><code>.*</code></td>
+                </tr>
             </table>
-            <p class="pane-subtitle">Updates</p>
-            <div id="new_definition_message">New definitions available</div>
-            <p class="pane-section">The filter list of blocked sites is occasionally updated.</p>
-            <p class="pane-section">If one's available, you'll see a banner on this page. To get it, press the button below.</p>
-            <p class="pane-section" style="font-style:italic; font-size:smaller">(Updates are also automatically installed when a new window is opened, or when the browser is restarted.)</p>
-            <p><input id="update_definitions" type="submit" value="Update Definitions"></p>
         </div>
-        
-        <div id="support">
-            <p class="pane-subtitle">Questions? Problems?</p>
-            <p class="pane-section">Just <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new" target="_blank">open a new issue</a> and I'll address it as time permits,
-                                    or <a href="https://github.com/grantwinney/hide-comments-everywhere/compare" target="_blank">create a pull request</a> if you have a fix.</p>
-            <p class="pane-section">If you've been using this extension for awhile and enjoy it, please <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/reviews" target="_blank">leave a rating</a>.
-            <p class="pane-subtitle">Got a Site to Block?</p>
-            <p class="pane-section">If you have a site you think should be blocked by default, <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)" target="_blank">open an issue</a> with as many details as possible.</p>
-            <p class="pane-section">If you know which element(s) need to be hidden, feel free to just <a href="https://github.com/grantwinney/hide-comments-everywhere/compare" target="_blank">open a pull request </a>.</p>
+        <div>
+            <textarea id="excluded_urls"></textarea>
+        </div>
+        <div>
+            <input id="save-whitelist" type="submit" value="Save Whitelist">
+            <div id="save-whitelist-notification" class="saved-notification">SAVED!</div>
+        </div>
+        <div>
+            <textarea id="blacklist_urls"></textarea>
+        </div>
+        <div>
+            <input id="save-blacklist" type="submit" value="Save Blacklist">
+            <div id="save-blacklist-notification" class="saved-notification">SAVED!</div>
         </div>
 
-        <div class="footer-parent">
-            <div class="footer-child">
-                <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc" target="_blank">Chrome Store</a> |
-                <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new" target="_blank">Report Issue</a> |
-                <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)" target="_blank">Submit URL</a> |
-                <span id="version"></span>
-                <span style="padding-left:5px">|</span>
-                <a href="https://github.com/grantwinney" class="fa fa-github fa-lg" aria-hidden="true" title="GitHub" target="_blank"></a>
-                <a href="https://grantwinney.com/" class="fa fa-globe fa-lg" aria-hidden="true" title="Blog" target="_blank"></a>
-                <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/reviews/" class="fa fa-star fa-lg" aria-hidden="true" title="Leave a Rating" target="_blank"></a>
-            </div>
+        <div class="pane-title"><i class="fa fa-cloud-download" aria-hidden="true"></i> Updates</div>
+        <div id="new_definition_message">New definitions available</div>
+        <p style="margin: 0px">The <a
+                href="https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json">master
+                list of blocked sites</a> is occasionally updated, and when it is, you'll see a banner on this page.
+            Updates are applied automatically when the browser is restarted, or manually by pressing the button
+            below.
+        </p>
+        <div>
+            <input id="update-definitions" type="submit" value="Update Definitions">
         </div>
-    </body>
+
+        <div class="pane-title"><i class="fa fa-cloud-upload" aria-hidden="true"></i> Submit a Site</div>
+        <p style="margin: 0px">
+            If you have a site you think should be blocked by default, <a
+                href="https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)"
+                target="_blank">open an issue</a> with as many details as possible. If you know which element(s) need to
+            be hidden, <a href="https://github.com/grantwinney/hide-comments-everywhere/compare" target="_blank">pull
+                requests</a> are welcome. <em>(Note that both actions require signing up for a free GitHub
+                account.)</em>
+        </p>
+
+        <div class="pane-title"><i class="fa fa-question-circle" aria-hidden="true"></i> Questions? Problems?</div>
+        <p>Just <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new" target="_blank">open a new
+                issue</a> <em>(requires signing up for a free GitHub account)</em> and I'll address it as time permits,
+            or <a href="https://github.com/grantwinney/hide-comments-everywhere/compare" target="_blank">create a pull
+                request</a> if you have a fix.</p>
+        <p>If you've been using this extension for awhile and enjoy it, please leave a rating for <a
+                href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/reviews"
+                target="_blank">Chrome</a> or <a
+                href="https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere/reviews"
+                target="_blank">Firefox</a>. Thanks!
+    </div>
+
+    <div id="footer">
+        <div>
+            <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc"
+                target="_blank">Chrome</a> |
+            <a href="https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere"
+                target="_blank">Firefox</a> |
+            <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new" target="_blank">Report
+                Issue</a> |
+            <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)"
+                target="_blank">Submit URL</a> |
+            <span id="version"></span>
+            <span style="padding-left:5px">|</span>
+            <a href="https://github.com/grantwinney" class="fa fa-github fa-lg" aria-hidden="true" title="GitHub"
+                target="_blank"></a>
+            <a href="https://grantwinney.com/" class="fa fa-globe fa-lg" aria-hidden="true" title="Blog"
+                target="_blank"></a>
+        </div>
+    </div>
+</body>
+
 </html>

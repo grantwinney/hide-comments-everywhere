@@ -10,7 +10,18 @@ a:hover {
 
 body {
     margin: 0px;
+}
+
+body > div:first-child {
     text-align: center;
+}
+
+body > div {
+    margin: 30px;
+}
+
+div.pane-title {
+    padding-bottom: 20px;
 }
 
 input[type=submit] {
@@ -19,19 +30,81 @@ input[type=submit] {
     border-radius: 3px;
     color: white;
     cursor: hand;
+    margin-top: 20px;
     padding: 5px 10px;
+}
+
+input[type=submit]:hover {
+    background: lightgreen;
+    border: 1px solid darkgreen;
+    color: black;
 }
 
 input[type="checkbox"] + label {
     cursor: hand;
 }
 
-#excluded_urls {
+p {
+    margin-top: 0px;
+}
+
+#excluded_urls, #blacklist_urls {
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    box-shadow: 1px 1px 1px #ccc, 2px 2px 2px #eee;
+    margin-top: 20px;
     max-width: 800px;
     min-height: 180px;
     min-width: 200px;
     white-space: pre;
     width: 100%;
+}
+
+#filters-help {
+    display: none;
+}
+
+#filters-help-icon {
+    cursor: hand;
+    font-size: medium;
+    vertical-align: super;
+}
+
+#footer {
+    background: #ddd;
+    bottom: 0px;
+    box-shadow: 0px -1px 1px #ccc, 0px -2px 2px #eee;
+    display: table;
+    font-size: smaller;
+    margin: 0 auto;
+    padding: 10px 0px;
+    position: fixed;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+#footer a {
+    color: black;
+    text-decoration: none;
+}
+
+#footer a,
+#footer span {
+    padding: 0px 10px;
+}
+
+#footer a:hover {
+    color: #38d;
+    text-decoration: underline;
+}
+
+#footer a.fa {
+    padding: 0px 5px;
+}
+
+#footer a.fa:hover {
+    text-decoration: none;
 }
 
 #new_definition_message {
@@ -46,39 +119,52 @@ input[type="checkbox"] + label {
     width: 300px;
 }
 
+#options {
+    margin: 30px auto;
+    max-width: 800px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
+}
+
+#options div, #options p {
+    text-align: left;
+}
+
 #options p {
     line-height: 1.6em;
 }
 
-#save:hover,
-#update_definitions:hover {
-    background: lightgreen;
-    border: 1px solid darkgreen;
-    color: black;
-}
-
-#samples {
-    max-width: 600px;
+#regex-samples {
+    font-size: smaller;
     min-width: 300px;
     line-height: 1.6em;
-    margin: auto;
-    text-align:left;
+    text-align: left;
 }
 
-#samples td {
+#regex-samples td {
     padding: 0px 10px;
 }
 
-#filters-help-icon {
-    cursor: hand;
-    font-size: medium;
-    vertical-align: super;
+.header-title {
+    font-size: x-large;
+    margin-left: 20px;
+    margin-right: 20px;
+    white-space: nowrap;
 }
 
-.available-options {
-    font-size: 100%;
-    margin: 0 auto;
-    max-width: 90%;
+.header-title > div {
+    display: inline-block;
+}
+
+.header-title > div:first-letter {
+    color: #000;
+    font-family: arial, sans-serif;
+    font-size: xx-large;
+    font-weight: bold;
+    letter-spacing: 2px;
+    vertical-align: middle;
 }
 
 .options-header {
@@ -91,84 +177,27 @@ input[type="checkbox"] + label {
 }
 
 .options-header-image {
+    width: 50px;
     vertical-align: middle;
-}
-
-.header-title {
-    font-size: 30px;
-    margin-left: 20px;
-    margin-right: 20px;
-    white-space: nowrap;
-}
-
-.header-title-first-letter {
-    color: #000;
-    font-family: arial, sans-serif;
-    font-size: 40px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    vertical-align: middle;
-}
-
-.header-title-rest-of-word {
-    font-family: "Arial Narrow", arial, sans-serif;
-}
-
-.footer-parent {
-    background: #ddd;
-    bottom: 0px;
-    box-shadow: 0px -1px 1px #ccc, 0px -2px 2px #eee;
-    display: table;
-    font-size: smaller;
-    margin: 0 auto;
-    padding: 10px 0px;
-    position: fixed;
-    text-transform: uppercase;
-    width: 100%;
-}
-
-.footer-child {
-    display: table-cell;
-    margin: 0 auto;
-    vertical-align: middle;
-}
-
-.footer-child > a {
-    color: black;
-    text-decoration: none;
-}
-
-.footer-child > a, .footer-child > span {
-    padding: 0px 10px;
-}
-
-.footer-child > a.fa {
-    padding: 0px 5px;
-}
-
-.footer-child > a.fa:hover {
-    text-decoration: none;
-}
-.footer-child > a:hover {
-    color: #38d;
-    text-decoration: underline;
 }
 
 .pane-title {
     color: #333;
-    font-size: xx-large;
+    font-size: x-large;
     padding-bottom: 10px;
+}
+
+.pane-title:not(:first-child) {
+    padding-top: 50px;
+}
+
+.pane-title > i {
+    color: gray;
 }
 
 .pane-subtitle {
     color: #555;
-    font-size:x-large;
-}
-
-.pane-section {
-    margin: auto;
-    padding-bottom: 10;
-    width: 90%;
+    font-size: x-large;
 }
 
 .saved-notification {

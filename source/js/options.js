@@ -66,7 +66,7 @@ function saveExcludedUrls() {
     let excludedUrls = document.getElementById('excluded_urls').value;
     if (validateExcludedUrls(excludedUrls.split(/\r?\n/))) {
         chrome.storage.sync.set({'excluded_urls': excludedUrls}, function() {
-            let sn = document.getElementById('save-notification');
+            let sn = document.getElementById('save-whitelist-notification');
             sn.innerText = chrome.runtime.lastError ? "ERROR!" : "SAVED!";
             if (chrome.runtime.lastError) {
                 console.error(`Error: ${chrome.runtime.lastError.message}`);
@@ -98,11 +98,10 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
     checkForNewDefinitions();
     showVersion();
     document.getElementById('one_click_option').addEventListener('click', function() { setOneClickDisable(); });
-    document.getElementById('one_click_option_description').addEventListener('click', function() { document.getElementById('one_click_option').click(); });
-    document.getElementById('update_definitions').addEventListener('click', function() { getAndStoreSiteDefinitions(); });
-    document.getElementById('save').addEventListener('click', function() { saveExcludedUrls(); });
+    document.getElementById('update-definitions').addEventListener('click', function() { getAndStoreSiteDefinitions(); });
+    document.getElementById('save-whitelist').addEventListener('click', function() { saveExcludedUrls(); });
 
-    $('#filters-help-icon').click(function(){
+    $('#filters-help-hint').click(function(){
         $('#filters-help').slideToggle(500);
     });
 });
