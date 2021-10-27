@@ -35,6 +35,7 @@
         "scripts": [
             "js/jquery-3.6.0.min.js",
             "js/axios.min.js",
+            "js/toastr.min.js",
             "js/shared.js",
             "js/background.js"
         ],

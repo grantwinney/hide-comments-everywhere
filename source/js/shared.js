@@ -32,32 +32,29 @@ function getDefinitionVersion(action) {
 }
 
 // Get the current site definitions.
-function getDefinitions(currentVersion = undefined) {
-    axios.get('https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json')
-         .then(function(result) {
-            chrome.storage.local.set({'definitions': result.data});
-            if (currentVersion != undefined) {
-                chrome.storage.local.set({'definition_version': currentVersion});
-            } else {
-                getDefinitionVersion(function(version) {
-                    chrome.storage.local.set({'definition_version': version});
-                });
-            }
+function getUpdatedDefinitions(updatedAction, notUpdatedAction) {
+    axios.get('https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json')
+         .then(function(cloudVersionResult) {
+            chrome.storage.local.get('definition_version', function (localVersionResult) {
+                if (localVersionResult?.definition_version == undefined || localVersionResult.definition_version < cloudVersionResult.data.version) {
+                    axios.get('https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json')
+                         .then(function(cloudSitesResult) {
+                            chrome.storage.local.set({'definitions': cloudSitesResult.data});
+                            chrome.storage.local.set({'definition_version': cloudVersionResult.data.version});
+                            if (updatedAction) {
+                                updatedAction(cloudVersionResult.data.version);
+                            }
+                         })
+                         .catch(function (error) {
+                             logError(JSON.stringify(error));
+                         });
+                } else {
+                    if (notUpdatedAction) {
+                        notUpdatedAction(localVersionResult.definition_version);
+                    }
+                }
+            });
          });
-}
-
-// Show a "progress" cursor while busy
-function toggleWaitCursor(show) {
-    let elements = document.querySelectorAll('body, a, input, textarea');
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].style.setProperty('cursor', show ? 'progress' : 'auto');
-    };
-    if (!show) {
-        let buttons = document.getElementsByTagName('input');
-        for (let i = 0; i < buttons.length; i++) {
-            buttons[i].style.setProperty('cursor', 'hand');
-        };
-    }
 }
 
 // User chose to toggle comments (temporary), so adjust the addon icon/title and send a message
@@ -74,8 +71,8 @@ function toggleComments(tabId, postAction = undefined) {
     });
 }
 
-// Validates that the user's custom URL whitelist are valid to use as regex patterns
-function validateExcludedUrls(urls) {
+// Validates that the user's custom URL's are valid to use as regex patterns
+function validateCustomUrls(urls) {
     try {
         for (let i = 0; i < urls.length; i++) {
             new RegExp(urls[i]);

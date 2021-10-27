@@ -24,24 +24,34 @@ div.pane-title {
     padding-bottom: 20px;
 }
 
-input[type=submit] {
-    background: #090;
-    border: 1px solid darkgreen;
-    border-radius: 3px;
-    color: white;
+.checkbox-container {
+    display: flex;
+}
+
+input[type=checkbox] {
+    margin-right: 12px;
+}
+
+input[type=checkbox] + label {
     cursor: hand;
+}
+
+input[type=submit] {
+    border: 1px solid black;
+    cursor: hand;
+    margin-right: 20px;
     margin-top: 20px;
     padding: 5px 10px;
+}
+
+#save-blacklist, #submit-blacklist {
+    margin-bottom: 20px;
 }
 
 input[type=submit]:hover {
     background: lightgreen;
     border: 1px solid darkgreen;
     color: black;
-}
-
-input[type="checkbox"] + label {
-    cursor: hand;
 }
 
 p {
@@ -60,11 +70,13 @@ p {
     width: 100%;
 }
 
-#filters-help {
+#filters-help-1,
+#filters-help-2 {
     display: none;
 }
 
-#filters-help-icon {
+#filters-help-icon-1,
+#filters-help-icon-2 {
     cursor: hand;
     font-size: medium;
     vertical-align: super;
@@ -183,7 +195,7 @@ p {
 
 .pane-title {
     color: #333;
-    font-size: x-large;
+    font-size: large;
     padding-bottom: 10px;
 }
 
@@ -192,7 +204,8 @@ p {
 }
 
 .pane-title > i {
-    color: gray;
+    color: #aaa;
+    margin-right: 10px;
 }
 
 .pane-subtitle {
