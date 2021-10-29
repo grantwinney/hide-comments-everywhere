@@ -15,7 +15,7 @@ function addToExclusion(tabId) {
                 let url = new URL(urlToInclude);
                 let regexUrl = '^' + (url.origin + url.pathname).replace(/\./g, '\\.');
                 let updatedUrls = excludedUrls + (excludedUrls[excludedUrls.length - 1] === '\n' ? '' : '\r\n') + regexUrl + '\r\n';
-                if (validateExcludedUrls([regexUrl])) {
+                if (validateCustomUrls([regexUrl])) {
                     chrome.storage.sync.set({'excluded_urls': updatedUrls});
                     chrome.tabs.sendMessage(tabId, { event: 'tab_updated' });
                     window.close();

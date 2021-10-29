@@ -16,7 +16,6 @@ function setOneClick() {
 
 function loadWhitelist() {
     chrome.storage.sync.get('excluded_urls', function (result) {
-        console.log(JSON.stringify(result?.excluded_urls));
         if (result?.excluded_urls != undefined) {
             document.getElementById('excluded_urls').value = result.excluded_urls;
         }
@@ -66,7 +65,7 @@ function submitBlacklist() {
                        .catch(error => function() {
                            window.open("https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Blacklisted sites to consider adding&body=Here's my list of blacklisted sites to consider blocking by default.%0A%0A(Copy them from the Options page and paste them here.)", '_blank');
                            toastr.warning("Copying the blacklist to your clipboard failed, so you'll have to copy and paste them into the GitHub issue manually.", "Submit Blacklist", {timeOut: 120000});
-                           console.error(error.message)
+                           logError(error.message)
                        });
 }
 
