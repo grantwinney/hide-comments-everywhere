@@ -33,7 +33,7 @@
         <div class="pane-title"><i class="fa fa-filter" aria-hidden="true"></i>Filters</div>
         <div>
             <p>
-                Specify a list of URLs that comments should <em>never</em> be blocked on.
+                Specify a list of URLs (one per line) that comments should <em>never</em> be blocked on.
                 <a id="filters-help-hint-1">See examples.</a>
             </p>
         </div>
@@ -76,12 +76,18 @@
         </div>
         <div style="margin-top: 20px">
             <p>
-                Specify a list of URLs that comments should <em>always</em> be blocked on. If a site matches a pattern
-                in both lists, the whitelist takes precedence and comments will be hidden.
+                Specify a list of URLs (one per line) that comments should <em>always</em> be blocked on, along with their associated CSS selectors.
+                If a site matches a pattern in both lists, the blacklist takes precedence and comments will be hidden.
                 <a id="filters-help-hint-2">See examples.</a>
             </p>
         </div>
         <div id="filters-help-2">
+            <p>
+                It's not enough to just specify a URL to block comments on. You have to specify how to locate the
+                comments on the page too, which can be accomplished with <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors">CSS Selectors</a>.
+                You can <a href="https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json">check out the selectors I've defined</a>
+                if you want examples, then (on a single line) enter the pattern for the URL, followed by a semicolon, and then the CSS Selector (without surrounding quotes).
+            </p>
             <p>Each URL must be a <a
                     href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions"
                     target="_blank">regex pattern</a>, one per line. Here are some examples:</p>
@@ -111,6 +117,36 @@
                     <td><code>.*</code></td>
                 </tr>
             </table>
+            <br>
+            <p>
+                Each <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors">CSS Selector</a> should
+                be on the same line, separated from the URL by a single semicolon. Here are some examples:
+            </p>
+            <table id="regex-samples">
+                <tr>
+                    <td>id of an element</td>
+                    <td><code>#comments</code></td>
+                </tr>
+                <tr>
+                    <td>class of an element</td>
+                    <td><code>.comments</code></td>
+                </tr>
+                <tr>
+                    <td>an element with a certain attribute defined</td>
+                    <td><code>i[aria-label='Open replies']</code></td>
+                </tr>
+                <tr>
+                    <td>a child element under another element</td>
+                    <td><code>.item-action-bar > div:nth-child(2)</code></td>
+                </tr>
+            </table>
+            <br>
+            <p>
+                Then enter each site on its own line like this:
+            </p>
+            <p>
+                <code>^http://example\.com; #comments, .commentcount, .stats > div:nth-child(4)</code>
+            </p>
         </div>
         <div>
             <textarea id="blacklist_urls"></textarea>

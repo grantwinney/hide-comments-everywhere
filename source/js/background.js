@@ -6,16 +6,28 @@
 // https://developer.chrome.com/extensions/background_pages
 
 
+// Fires when a tab is updated.
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/Tabs/onUpdated
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, _tab) {
+    if (changeInfo.status === 'complete') {
+        chrome.tabs.sendMessage(tabId, { event: 'tab_updated' });
+    }
+});
+
 // Listens for messages from content script.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/Runtime/onMessage
 chrome.runtime.onMessage.addListener(function(message, sender, _sendResponse) {
+    if (!sender.tab) {
+        return;
+    }
     switch(message.event) {
-        case 'elements_modified':
-            if (message.hideComments) {
-                showEnabledIcon(sender.tab.id);
-            } else {
-                showDisabledIcon(sender.tab.id);
-            }
+        case 'comments_hidden':
+            chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: sender.tab.id });
+            chrome.browserAction.setTitle({ title: '', tabId: sender.tab.id });
+            break;
+        case 'comments_shown':
+            chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: sender.tab.id });
+            chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled)', tabId: sender.tab.id });
             break;
         default:
             logError(`background script: ${message.event}`);
