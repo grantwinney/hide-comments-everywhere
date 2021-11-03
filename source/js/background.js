@@ -22,12 +22,14 @@ chrome.runtime.onMessage.addListener(function(message, sender, _sendResponse) {
     }
     switch(message.event) {
         case 'comments_hidden':
-            chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: sender.tab.id });
-            chrome.browserAction.setTitle({ title: '', tabId: sender.tab.id });
+            chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: sender.tab.id }, function() {
+                chrome.browserAction.setTitle({ title: '', tabId: sender.tab.id });
+            });
             break;
         case 'comments_shown':
-            chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: sender.tab.id });
-            chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled)', tabId: sender.tab.id });
+            chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: sender.tab.id }, function() {
+                chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled)', tabId: sender.tab.id });
+            });
             break;
         default:
             logError(`background script: ${message.event}`);
@@ -47,7 +49,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 chrome.windows.onCreated.addListener(function() {
     getUpdatedDefinitions();
     chrome.storage.local.get('one_click_option', function(result) {
-        chrome.browserAction.setPopup({popup: (result?.one_click_option === true) ? "" : "../popup.html"});
+        chrome.browserAction.setPopup({popup: (result?.one_click_option === true) ? '' : '../popup.html'});
     });
 })
 
@@ -58,5 +60,8 @@ chrome.windows.onCreated.addListener(function() {
 chrome.runtime.onInstalled.addListener(function(details) {
     if (details.reason === 'install' || details.reason === 'update') {
         getUpdatedDefinitions();
-    }
+        chrome.storage.local.get('one_click_option', function(result) {
+            chrome.browserAction.setPopup({popup: (result?.one_click_option === true) ? '' : '../popup.html'});
+        });
+     }
 });

@@ -55,7 +55,7 @@ function hideCommentsAsPageLoads(updateIconOnly = false) {
             }
         }
 
-        // If nothing else, apply the generic "catchall" styles
+        // If no site match, apply the generic "catchall" selector
         if (!elementsToHide) {
             elementsToHide = definitions.catchall;
             isCommentsHidden = true;
@@ -67,7 +67,7 @@ function hideCommentsAsPageLoads(updateIconOnly = false) {
                 isCommentsHidden = false;
             }
 
-            // Check user blacklist; hide comments if match found
+            // Check user blacklist; hide comments if match found (takes precedence over user whitelist)
             chrome.storage.sync.get('blacklist_urls', function(bl_result) {
                 let blacklistedElementsToHide = getBlacklistedElementsToHide(location.hostname, bl_result.blacklist_urls);
                 if (blacklistedElementsToHide) {
@@ -75,12 +75,12 @@ function hideCommentsAsPageLoads(updateIconOnly = false) {
                     isCommentsHidden = true;
                 }
 
-                // Check hard-coded whitelist; show comments if match found
+                // Check hard-coded whitelist; show comments if match found (takes precedence over everything)
                 if (definitions.exclusions) {
                     for (let i = 0; i < definitions.exclusions.length; i++) {
                         if (urlMatchesPattern(location.hostname, definitions.exclusions[i])) {
+                            elementsToHide = '';
                             isCommentsHidden = false;
-                            return;
                         }
                     }
                 }
@@ -90,7 +90,7 @@ function hideCommentsAsPageLoads(updateIconOnly = false) {
                     let style = document.createElement('style');
                     style.title = "hide_comments_everywhere";
                     document.documentElement.prepend(style);
-                    style.textContent = `${elementsToHide} { display: none !important } pre .comment, code .comment, textarea.comments { display: inherit }`;
+                    style.textContent = elementsToHide ? `${elementsToHide} { display: none !important } pre .comment, code .comment, textarea.comments { display: inherit }` : '';
                     style.disabled = !isCommentsHidden;
                 }
                 chrome.runtime.sendMessage({event: isCommentsHidden ? 'comments_hidden' : 'comments_shown' });
@@ -109,9 +109,10 @@ chrome.runtime.onMessage.addListener(function(message, _sender, _sendResponse) {
         case 'toggle':
             // document.styleSheets.item(0).disabled = !document.styleSheets.item(0).disabled;
             for (let i=0; i < document.styleSheets.length; i++) {
-                if (document.styleSheets.item(i).title === 'hide_comments_everywhere') {
-                    document.styleSheets.item(i).disabled = !document.styleSheets.item(i).disabled;
-                    chrome.runtime.sendMessage({event: document.styleSheets.item(i).disabled ? 'comments_shown' : 'comments_hidden' });
+                let stylesheet = document.styleSheets.item(i);
+                if (stylesheet.title === 'hide_comments_everywhere') {
+                    stylesheet.disabled = !stylesheet.disabled;
+                    chrome.runtime.sendMessage({event: stylesheet.disabled || stylesheet.cssRules.length === 0 ? 'comments_shown' : 'comments_hidden' });
                     break;
                 }
             }

@@ -9,7 +9,7 @@ function loadSettings() {
 function setOneClick() {
     let oneClickEnabled = document.getElementById('one_click_option').checked;
     chrome.storage.local.set({ 'one_click_option': oneClickEnabled });
-    chrome.browserAction.setPopup({ popup: oneClickEnabled ? "" : "../popup.html" });
+    chrome.browserAction.setPopup({ popup: oneClickEnabled ? '' : '../popup.html' });
 }
 
 // FILTERS
@@ -58,15 +58,15 @@ function saveBlacklist() {
 function submitBlacklist() {
     let blacklistUrls = document.getElementById('blacklist_urls').value;
     navigator.clipboard.writeText(blacklistUrls)
-                       .then(function() {
-                           window.open("https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Blacklisted sites to consider adding&body=Here's my list of blacklisted sites to consider blocking by default.%0A%0A(THEY'RE ON YOUR CLIPBOARD.. JUST PASTE THEM.)", '_blank');
-                           toastr.success("Another tab should open to GitHub, where you can paste the blacklist as a new issue.", "Submit Blacklist");
-                       })
-                       .catch(error => function() {
-                           window.open("https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Blacklisted sites to consider adding&body=Here's my list of blacklisted sites to consider blocking by default.%0A%0A(Copy them from the Options page and paste them here.)", '_blank');
-                           toastr.warning("Copying the blacklist to your clipboard failed, so you'll have to copy and paste them into the GitHub issue manually.", "Submit Blacklist", {timeOut: 120000});
-                           logError(error.message)
-                       });
+        .then(function() {
+            window.open("https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Blacklisted sites to consider adding&body=Here's my list of blacklisted sites to consider blocking by default.%0A%0A(THEY'RE ON YOUR CLIPBOARD.. JUST PASTE THEM.)", '_blank');
+            toastr.success("Another tab should open to GitHub, where you can paste the blacklist as a new issue.", "Submit Blacklist");
+        })
+        .catch(error => function() {
+            window.open("https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Blacklisted sites to consider adding&body=Here's my list of blacklisted sites to consider blocking by default.%0A%0A(Copy them from the Options page and paste them here.)", '_blank');
+            toastr.warning("Copying the blacklist to your clipboard failed, so you'll have to copy and paste them into the GitHub issue manually.", "Submit Blacklist", {timeOut: 120000});
+            logError(error.message)
+        });
 }
 
 // FOOTER
