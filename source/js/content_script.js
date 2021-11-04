@@ -69,7 +69,7 @@ function hideCommentsAsPageLoads(updateIconOnly = false) {
 
             // Check user blacklist; hide comments if match found (takes precedence over user whitelist)
             chrome.storage.sync.get('blacklist_urls', function(bl_result) {
-                let blacklistedElementsToHide = getBlacklistedElementsToHide(location.hostname, bl_result.blacklist_urls);
+                let blacklistedElementsToHide = getBlacklistedElementsToHide(location.href, bl_result.blacklist_urls);
                 if (blacklistedElementsToHide) {
                     elementsToHide = blacklistedElementsToHide;
                     isCommentsHidden = true;
