@@ -1,5 +1,4 @@
 function addToExclusion(tabId) {
-    toggleWaitCursor(true);
     let selection = document.querySelector('input[name="url"]:checked');
     if (selection !== null) {
         let urlToInclude = selection.value;
@@ -8,7 +7,6 @@ function addToExclusion(tabId) {
         }
         if (urlToInclude === '') {
             displayMessage("Enter a valid URL")
-            toggleWaitCursor(false);
             return;
         }
         chrome.storage.sync.get('excluded_urls', function(result) {
@@ -17,7 +15,7 @@ function addToExclusion(tabId) {
                 let url = new URL(urlToInclude);
                 let regexUrl = '^' + (url.origin + url.pathname).replace(/\./g, '\\.');
                 let updatedUrls = excludedUrls + (excludedUrls[excludedUrls.length - 1] === '\n' ? '' : '\r\n') + regexUrl + '\r\n';
-                if (validateExcludedUrls([regexUrl])) {
+                if (validateCustomUrls([regexUrl])) {
                     chrome.storage.sync.set({'excluded_urls': updatedUrls});
                     chrome.tabs.sendMessage(tabId, { event: 'tab_updated' });
                     window.close();
@@ -30,13 +28,10 @@ function addToExclusion(tabId) {
                 } else {
                     displayMessage('An error occurred: ' + e.message);
                 }
-            } finally {
-                toggleWaitCursor(false);
             }
 
         });
     }
-    toggleWaitCursor(false);
 }
 
 function displayMessage(message) {
@@ -55,7 +50,6 @@ function submitUrlForInclusion() {
         }
         if (urlToInclude === '') {
             displayMessage("Enter a valid URL")
-            toggleWaitCursor(false);
             return;
         }
         let title = "Here's a new site I'd like you to consider blocking";

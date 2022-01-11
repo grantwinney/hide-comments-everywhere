@@ -1,5 +1,3 @@
-![](https://grantwinney.com/content/images/2017/10/Hide-Comments-Everywhere.jpg)
-
 # Hide Comments Everywhere
 
 Fed up with the vitriol left in comments, many sites are dumping their comment systems completely. It's just too costly to monitor them, so they tend to devolve into a cess pool. Personally, I just want the content most of the time. _YouTube anyone?_
