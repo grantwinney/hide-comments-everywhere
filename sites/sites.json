@@ -20,6 +20,7 @@
         "www.facebook.com": ".commentable_item > div > div > div > div > div:nth-of-type(3) > span:first-child, .commentable_item > div > div > div:nth-of-type(3), .commentable_item > div > div:nth-of-type(3), a[title='Leave a comment'], [data-testid='Keycommand_wrapper_feed_story'] > div > div > div > div > div > div > div > div:nth-child(2) > div > div:nth-child(4) > div > div > div > div > div > div > div:nth-child(2), [data-testid='Keycommand_wrapper_feed_story'] > div > div > div > div > div > div > div > div:nth-child(2) > div > div:nth-child(4) > div > div > div:nth-child(2), [role='complementary'] > div:nth-child(2) > div > div > div > div:nth-child(2) > div > div > div > div:nth-child(2), [role='complementary'] > div > div > div > div > div:nth-child(4), [role='complementary'] > div > div > div > div > div:nth-child(2) > div > div > div > div:nth-child(2), [aria-label='Leave a comment']",
         "www.fmkorea.com": ".fdb_lst_wrp, .btm_area > div:nth-child(2) > span:nth-child(3)",
         "folha.uol.com.br": "#comentarios",
+        "gazeta.pl": "#commentsApp",
         "gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
             "io9.gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
             "earther.gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
@@ -54,6 +55,7 @@
         "www.vijesti.me": ".dataComments, .artViews > span:nth-child(3), .commWrap",
         "vk.com": ".replies, .post_replies_header, .wl_replies_wrap, .wl_reply_form_wrap, #pv_comments",
         "www.washingtonpost.com": ".comments-btn, .comments, a[href='#comments-wrapper'], #comments-wrapper",
-        "www.wykop.pl": "div.grid-main div.fix-b-border, div.grid-main > ul.comments-stream, div.grid-main > div:not(:first-child)"
+        "www.wykop.pl": "div.grid-main div.fix-b-border, div.grid-main > ul.comments-stream, div.grid-main > div:not(:first-child)",
+        "wydarzenia.interia.pl": "a.is-comment, #commentsZoneList, div.comments-placeholder"
     }
 }
