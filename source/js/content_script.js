@@ -90,7 +90,7 @@ function hideCommentsAsPageLoads(updateIconOnly = false) {
                     let style = document.createElement('style');
                     style.title = "hide_comments_everywhere";
                     document.documentElement.prepend(style);
-                    style.textContent = elementsToHide ? `${elementsToHide} { display: none !important } pre .comment, code .comment, textarea.comments { display: inherit }` : '';
+                    style.textContent = elementsToHide ? `${elementsToHide} { display: none } pre .comment, code .comment, textarea.comments { display: unset }` : '';
                     style.disabled = !isCommentsHidden;
                 }
                 chrome.runtime.sendMessage({event: isCommentsHidden ? 'comments_hidden' : 'comments_shown' });

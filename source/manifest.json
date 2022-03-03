@@ -5,7 +5,7 @@
 
     "name": "Hide Comments Everywhere",
     "description": "An anti-social social extension to hide commenting systems across the web, including Disqus, YouTube, etc.",
-    "version": "1.5.1",
+    "version": "1.5.2",
 
     "options_ui": {
         "page": "options.html",
@@ -33,9 +33,9 @@
 
     "background": {
         "scripts": [
-            "js/jquery-3.6.0.min.js",
-            "js/axios.min.js",
-            "js/toastr.min.js",
+            "js/third-party/jquery-3.6.0.min.js",
+            "js/third-party/axios.min.js",
+            "js/third-party/toastr.min.js",
             "js/shared.js",
             "js/background.js"
         ],
@@ -53,7 +53,7 @@
     "content_scripts": [
         {
             "js": [
-                "js/axios.min.js",
+                "js/third-party/axios.min.js",
                 "js/shared.js",
                 "js/content_script.js"
             ],
