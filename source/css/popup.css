@@ -1,115 +1,131 @@
 body {
-    width: 600px;
+    background: #eee;
+    font-size: 10pt;
     margin: 0px;
+    width: 400px;
 }
 
 input[type=radio] {
-    margin: 10px 10px 5px 10px;
-    cursor: hand;
+    cursor: pointer;
+    margin: 10px;
 }
 
-input[type=text] {
+input[type=text], select {
+    padding: 2px;
     width: 100%;
-    font-size: smaller;
-}
-
-input:read-only {
-    border: 1px solid #f3f3f3;
-    cursor: hand;
-}
-
-input[type=submit], button[type=submit] {
-    padding: 5px 15px;
-    background: #ccc;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    background: lightblue;
-    color: black;
-    border: 1px solid darkblue;
-}
-input[type=submit]:hover, button[type=submit]:hover {
-    cursor: hand;
-    background: #3399ff;
-    color: white;
-    border: 1px solid darkgreen;
-}
-
-p {
-    line-height: 1.6em;
-}
-
-h1 {
-    font-weight: normal;
-}
-
-label {
-    white-space: nowrap;
 }
 
 #alert {
-    position: absolute;
-    display: none;
-    color: white;
     background: #DF0000;
-    left: 0px;
     bottom: 0px;
-    width: 100%;
-    margin: 0px;
-    padding: 5px;
+    color: white;
+    display: none;
     font-size: larger;
+    left: 0px;
+    margin: 0px;
     opacity: 0.7;
+    padding: 5px;
+    position: absolute;
     text-align: center;
+    width: 100%;
     z-index: 100;
 }
 
-#title {
-    background-color: lightgray;
-    padding: 10px;
-    font-size: larger;
-    font-variant: small-caps;
+.caption {
+    background-color: #999;
     box-shadow: 0px 1px 1px #aaa;
+    padding: 10px;
 }
 
-#icon {
-    vertical-align: middle;
+.caption_buttons_container {
+    float: right;
+}
+
+.content {
+    padding: 0px 10px 5px 10px;
+}
+
+.content_title {
+    padding: 5px;
+}
+
+.content_buttons {
+    float: right;
+}
+
+.icon {
     padding-right: 5px;
+    vertical-align: middle;
 }
 
-#body {
-    padding: 0px 10px 10px 10px;
-}
+/* Input Buttons */
 
-#options {
-    background: gray;
-    color: white;
-    border: 1px solid black;
-    margin-left: 50px;
-}
-#options:hover {
-    cursor: hand;
-    background: lightgray;
+input[type=submit], button[type=submit] {
+    -webkit-border-radius: 5px;
+    border: 1px solid darkblue;
+    border-radius: 5px;
     color: black;
+}
+
+input[type=submit]:hover, button[type=submit]:hover {
     border: 1px solid darkgreen;
+    color: white;
+    cursor: pointer;
 }
 
-#toggle_hide {
-    font-size: larger;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-variant: small-caps;
+.caption input[type=submit], .caption button[type=submit] {
+    background: lightgray;
+    margin-left: 5px;
+    padding: 10px 5px;
 }
 
-#customUrlHeading {
-    font-size: smaller;
-    cursor: hand;
+.caption input[type=submit]:hover, .caption button[type=submit]:hover {
+    background: gray;
 }
 
-.instructions {
-    line-height: 1.7em;
+.content input[type=submit], .content button[type=submit] {
+    background: rgb(180, 206, 214);
+    margin: 5px 0px 5px 5px;
+    padding: 2px 5px;
 }
 
-.buttons {
-    margin-top: 5px;
-    margin-right: 20px;
-    margin-bottom: 0px;
+.content input[type=submit]:hover, .content button[type=submit]:hover {
+    background: #3399ff;
+}
+
+.comments_blocked {
+    background: lightblue;
+    margin: 5px 0px 5px 5px;
+    padding: 2px 5px;
+}
+
+.comments_blocked {
+    background: #3399ff;
+}
+
+.comments_unblocked {
+
+}
+
+/* Share box */
+
+#share_box {
+    background: #eee;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+#share_box button {
+    width: 30px;
+}
+
+#share_box_comment {
+    font-family: Arial, Helvetica, sans-serif;
+    height:100%;
+    resize: none;
+    width:100%;
 }
