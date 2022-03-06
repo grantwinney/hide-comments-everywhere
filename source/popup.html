@@ -25,7 +25,7 @@
             <button id="share" type="submit" title="Share">
                 <i class="fa fa-share-alt fa-lg"></i>
             </button>
-            <button id="report" type="submit" title="Report a broken site">
+            <button id="report" type="submit" title="Report a broken site or other issue">
                 <i class="fa-solid fa-exclamation-triangle fa-lg"></i>
             </button>
         </div>
@@ -36,7 +36,8 @@
         <table id="share_box" style="visibility:hidden">
             <tr>
                 <td style="vertical-align:middle; width:100%; height:100%">
-                    <textarea id="share_box_comment">Comment sections contain some of the worst vitriol. Start taking control back with "Hide Comments Everywhere". https://grantwinney.com/hide-comments-everywhere/</textarea>
+                    <textarea
+                        id="share_box_comment">Comment sections contain some of the worst vitriol. Start taking control back with "Hide Comments Everywhere". https://grantwinney.com/hide-comments-everywhere/</textarea>
                 </td>
             </tr>
             <tr>
@@ -77,11 +78,7 @@
                 </td>
                 <td style="width:100%">
                     <label for="currentUrl">
-                        <select id="currentUrlSelection">
-                            <option value="baseUrl">https://w3schools.com</option>
-                            <option value="subdomain">https://blog.w3schools.com</option>
-                            <option value="fullUrl">https://blog.w3schools.com/Css/css_float.asp</option>
-                        </select>
+                        <select id="currentUrlFormatChoices"></select>
                     </label>
                 </td>
             </tr>
@@ -97,15 +94,15 @@
             </tr>
             <td colspan="2">
                 <div class="content_buttons">
-                    <button id="add_to_exclusion" type="submit" class="buttons"
+                    <button id="add_to_whitelist" type="submit" class="buttons"
                         title="Add a site to your personal whitelist, so comments are always allowed.">
                         <i class="fa fa-check"></i> Allow
                     </button>
-                    <button id="add_to_inclusion" type="submit" class="buttons"
+                    <button id="add_to_blacklist" type="submit" class="buttons"
                         title="Configure blacklist entry yourself">
                         <i class="fa fa-close"></i> Block
                     </button>
-                    <button id="submit_for_inclusion" type="submit" class="buttons"
+                    <button id="request_add_to_blacklist" type="submit" class="buttons"
                         title="Submit a site to block (requires a free GitHub account)">
                         <i class="fa fa-external-link"></i> Submit
                     </button>
