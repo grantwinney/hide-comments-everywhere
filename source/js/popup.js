@@ -77,7 +77,7 @@ function displayUrlOptions(url) {
         }
     }
     for (let url of urlOptions) {
-        currentUrlFormatChoices.add(new Option(url, url));
+        currentUrlFormatChoices.add(new Option(url, url, true, true));
     }
   
     // Select the corresponding radio button if one of the url fields has focus
