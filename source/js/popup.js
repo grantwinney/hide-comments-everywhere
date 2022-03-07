@@ -65,28 +65,33 @@ function requestAddToBlacklist() {
 
 function displayUrlOptions(url) {
     let currentUrlFormatChoices = document.getElementById('currentUrlFormatChoices');
+ 
+    // Populate dropdown with suggestions
     let hostnameParts = url.hostname.split('.');
+    let urlOptions = [];
     if (hostnameParts[0] === 'www') {
-        let newHostname = `${url.protocol}//${url.hostname}`;
-        currentUrlFormatChoices.add(new Option(newHostname, newHostname));
+        urlOptions.push(`${url.protocol}//${url.hostname}`);
     } else {
         for (let i = hostnameParts.length - 2; i >= 0; i--) {
-            let newHostname = `${url.protocol}//${hostnameParts.slice(i, hostnameParts.length).join('.')}`;
-            currentUrlFormatChoices.add(new Option(newHostname, newHostname));
+            urlOptions.push(`${url.protocol}//${hostnameParts.slice(i, hostnameParts.length).join('.')}`);
         }
     }
-    currentUrlFormatChoices.add(new Option(url.origin + url.pathname, url.origin + url.pathname))
-   
-    let currentUrl = document.getElementById('currentUrl');
-    for (let eventName of ['click', 'focus', 'keydown']) {
-        currentUrlFormatChoices.addEventListener(eventName, function () { currentUrl.checked = true; });
+    for (let url of urlOptions) {
+        currentUrlFormatChoices.add(new Option(url, url));
     }
-
-    let customUrl = document.getElementById('customUrl');
+  
+    // Prepopulate custom url field with hostname value
     let customUrlDesc = document.getElementById('customUrlDesc');
-    customUrlDesc.value = url.origin + url.pathname;
+    customUrlDesc.value = `${url.protocol}//${url.hostname}`;
+
+    // Select the corresponding radio button if one of the url fields has focus
+    let currentUrlOpt = document.getElementById('currentUrlOpt');
     for (let eventName of ['click', 'focus', 'keydown']) {
-        customUrlDesc.addEventListener(eventName, function () { customUrl.checked = true; });
+        currentUrlFormatChoices.addEventListener(eventName, function () { currentUrlOpt.checked = true; });
+    }
+    let customUrlOpt = document.getElementById('customUrlOpt');
+    for (let eventName of ['click', 'focus', 'keydown']) {
+        customUrlDesc.addEventListener(eventName, function () { customUrlOpt.checked = true; });
     }
 }
 
