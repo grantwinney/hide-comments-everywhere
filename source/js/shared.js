@@ -14,7 +14,7 @@ function getUpdatedDefinitions(updatedAction = undefined, notUpdatedAction = und
                 if (localVersionResult?.definition_version == undefined|| !Number.isInteger(localVersionResult.definition_version) || localVersionResult.definition_version < cloudVersionResult.data.version) {
                     axios.get(sitesJson)
                          .then(function(cloudSitesResult) {
-                            chrome.storage.local.set({'definitions': cloudSitesResult.data});
+                            chrome.storage.local.set({'definitions': JSON.stringify(cloudSitesResult.data)});
                             chrome.storage.local.set({'definition_version': cloudVersionResult.data.version});
                             if (updatedAction) {
                                 updatedAction(cloudVersionResult.data.version);
@@ -35,7 +35,7 @@ function getUpdatedDefinitions(updatedAction = undefined, notUpdatedAction = und
 // User chose to toggle comments (temporary), so adjust the addon icon/title and send a message
 //  to the content script to toggle whether or not comments are hidden on the page.
 function toggleComments(tabId, postAction) {
-    chrome.browserAction.getTitle({tabId: tabId}, function(title) {
+    chrome.browserAction.getTitle({tabId: tabId}, function(_title) {
         chrome.tabs.sendMessage(tabId, { event: 'toggle' });
         if (postAction) {
             postAction();

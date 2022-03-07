@@ -40,7 +40,11 @@ function hideCommentsAsPageLoads(updateIconOnly = false) {
 
     // Load addon site definitions
     chrome.storage.local.get('definitions', function(def_result) {
-        let definitions = def_result.definitions;
+        if (!def_result.definitions) {
+            logError("Missing site patterns.");
+            return;
+        }
+        let definitions = JSON.parse(def_result.definitions);
         if (!definitions?.sites) {
             logError("Missing site patterns.");
             return;

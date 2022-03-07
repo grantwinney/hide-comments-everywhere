@@ -44,6 +44,7 @@
         "stackexchange.com": ".comments, .comments-link, .js-link-separator",
             "askubuntu.com": ".comments, .comments-link, .js-link-separator",
             "stackoverflow.blog": ".comments-wrapper",
+            "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
             "superuser.com": ".comments, .comments-link, .js-link-separator",
         "www.techdirt.com": ".storylinks, .comments",
         "www.tiktok.com": ".item-action-bar > div:nth-child(2), .comment-text, .comment, .comment-container",

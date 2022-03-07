@@ -85,10 +85,6 @@ function displayUrlOptions(url) {
     for (let eventName of ['click', 'focus', 'keydown']) {
         currentUrlFormatChoices.addEventListener(eventName, function () { currentUrlOpt.checked = true; });
     }
-    let customUrlOpt = document.getElementById('customUrlOpt');
-    for (let eventName of ['click', 'focus', 'keydown']) {
-        customUrlDesc.addEventListener(eventName, function () { customUrlOpt.checked = true; });
-    }
 }
 
 window.addEventListener('DOMContentLoaded', function load(_event) {
