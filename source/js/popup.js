@@ -80,10 +80,6 @@ function displayUrlOptions(url) {
         currentUrlFormatChoices.add(new Option(url, url));
     }
   
-    // Prepopulate custom url field with hostname value
-    let customUrlDesc = document.getElementById('customUrlDesc');
-    customUrlDesc.value = `${url.protocol}//${url.hostname}`;
-
     // Select the corresponding radio button if one of the url fields has focus
     let currentUrlOpt = document.getElementById('currentUrlOpt');
     for (let eventName of ['click', 'focus', 'keydown']) {

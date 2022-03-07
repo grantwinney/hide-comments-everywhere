@@ -5,8 +5,8 @@ function logError(errorMessage) {
 
 // Get the current site definitions.
 function getUpdatedDefinitions(updatedAction = undefined, notUpdatedAction = undefined) {
-    let versionJson = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json';
-    let sitesJson = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
+    let versionJson = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/version.json';
+    let sitesJson = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/sites.json';
     
     axios.get(versionJson)
          .then(function(cloudVersionResult) {
