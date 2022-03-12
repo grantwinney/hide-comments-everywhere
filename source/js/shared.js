@@ -1,6 +1,6 @@
 // Write an error to the console, prepended with the addon name.
 function logError(errorMessage) {
-    console.error(`${chrome.runtime.getManifest().name}: ${errorMessage}`);
+    console.error(`[${chrome.runtime.getManifest().name}]: ${errorMessage}`);
 }
 
 // Get the current site definitions.

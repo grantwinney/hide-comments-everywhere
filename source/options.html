@@ -23,14 +23,18 @@
         </span>
     </div>
     <div id="options">
-        <div class="pane-title"><i class="fa fa-cog" aria-hidden="true"></i>Settings</div>
+        <div id="options-nav">
+            <a href="#settings">SETTINGS</a> | <a href="#filters">FILTERS</a> | <a href="#updates">UPDATES</a> | <a href="#submit">SUBMIT A SITE</a> | <a href="#report">REPORT A PROBLEM</a>
+        </div>
+
+        <div id="settings" class="pane-title"><i class="fa fa-cog" aria-hidden="true"></i>Settings</div>
         <div class="checkbox-container">
             <input id="one_click_option" type="checkbox">
             <label for="one_click_option">Press the icon in the toolbar to toggle comment visibility, instead of
                 displaying a popup</label>
         </div>
 
-        <div class="pane-title"><i class="fa fa-filter" aria-hidden="true"></i>Filters</div>
+        <div id="filters" class="pane-title"><i class="fa fa-filter" aria-hidden="true"></i>Filters</div>
         <div>
             <p>
                 Specify a list of URLs (one per line) that comments should <em>never</em> be blocked on.
@@ -164,7 +168,7 @@
             </p>
         </div>
 
-        <div class="pane-title"><i class="fa fa-cloud-download" aria-hidden="true"></i>Updates</div>
+        <div id="updates" class="pane-title"><i class="fa fa-cloud-download" aria-hidden="true"></i>Updates</div>
         <p style="margin: 0px">The <a
                 href="https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json">master
                 list of blocked sites</a> is occasionally updated, and when it is, you'll see a notification on this
@@ -176,7 +180,7 @@
             <input id="update-definitions" type="submit" value="Update Definitions">
         </div>
 
-        <div class="pane-title"><i class="fa fa-cloud-upload" aria-hidden="true"></i>Submit a Site</div>
+        <div id="submit" class="pane-title"><i class="fa fa-cloud-upload" aria-hidden="true"></i>Submit a Site</div>
         <p style="margin: 0px">
             If you have a site you think should be blocked by default, <a
                 href="https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)"
@@ -186,7 +190,7 @@
                 account.)</em>
         </p>
 
-        <div class="pane-title"><i class="fa fa-question-circle" aria-hidden="true"></i>Questions? Problems?</div>
+        <div id="report" class="pane-title"><i class="fa fa-question-circle" aria-hidden="true"></i>Questions? Problems?</div>
         <p>Just <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new" target="_blank">open a new
                 issue</a> <em>(requires signing up for a free GitHub account)</em> and I'll address it as time permits,
             or <a href="https://github.com/grantwinney/hide-comments-everywhere/compare" target="_blank">create a pull

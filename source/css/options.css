@@ -28,6 +28,10 @@ div.pane-title {
     display: flex;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 input[type=checkbox] {
     margin-right: 12px;
 }
@@ -148,6 +152,14 @@ p {
     line-height: 1.6em;
 }
 
+#options-nav {
+    text-align: center !important;
+}
+
+#options-nav > a {
+    padding: 0px 5px;
+}
+
 #regex-samples {
     font-size: smaller;
     min-width: 300px;
@@ -205,7 +217,6 @@ p {
 
 .pane-title > i {
     color: #aaa;
-    margin-right: 10px;
 }
 
 .pane-subtitle {

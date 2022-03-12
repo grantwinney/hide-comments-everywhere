@@ -84,7 +84,7 @@ input[type=submit]:hover, button[type=submit]:hover {
 }
 
 .content input[type=submit], .content button[type=submit] {
-    background: rgb(180, 206, 214);
+    background: lightgray;
     margin: 5px 0px 5px 5px;
     padding: 2px 5px;
 }
@@ -103,9 +103,7 @@ input[type=submit]:hover, button[type=submit]:hover {
     background: #3399ff;
 }
 
-.comments_unblocked {
-
-}
+.comments_unblocked {}
 
 /* Share box */
 
@@ -125,7 +123,7 @@ input[type=submit]:hover, button[type=submit]:hover {
 
 #share_box_comment {
     font-family: Arial, Helvetica, sans-serif;
-    height:100%;
+    height: 100%;
     resize: none;
-    width:100%;
+    width: 100%;
 }

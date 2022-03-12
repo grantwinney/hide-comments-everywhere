@@ -13,9 +13,6 @@
     <div id="alert"></div>
     <div class="caption">
         <div class="caption_buttons_container">
-            <!-- <button id="options" type="submit" title="Options">
-                    <i class="fa fa-comment fa-lg"></i>
-                </button> -->
             <button id="toggle_hide" type="submit" title="Comments currently hidden for this site. Show?">
                 <i id="toggle_hide_icon" class="fa-solid fa-comment-slash fa-lg"></i>
             </button>
@@ -62,39 +59,26 @@
             </tr>
         </table>
 
-        <table>
+        <table style="width:100%">
             <tr>
-                <td colspan="2" style="vertical-align:middle;">
-                    <p class="content_title">Allow / Block Current URL
-                        <i class="fa fa-question-circle fa-lg"
-                            style="font-size:smaller; vertical-align:middle; cursor:help"
-                            title="Choose a URL from the dropdown, or specify your own."></i>
-                    </p>
+                <td style="vertical-align:middle;">
+                    <p class="content_title">Block this site:</p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input id="currentUrlOpt" type="radio" name="url" checked="true">
-                </td>
-                <td style="width:100%">
-                    <label for="currentUrlOpt">
-                        <select id="currentUrlFormatChoices"></select>
-                    </label>
+                    <input id="currentHostname" type="text" readonly disabled>
                 </td>
             </tr>
-            <td colspan="2">
+            <td>
                 <div class="content_buttons">
-                    <button id="add_to_whitelist" type="submit" class="buttons"
-                        title="Add a site to your personal whitelist, so comments are always allowed.">
-                        <i class="fa fa-check"></i> Allow
-                    </button>
                     <button id="add_to_blacklist" type="submit" class="buttons"
                         title="Configure blacklist entry yourself">
-                        <i class="fa fa-close"></i> Block
+                        <i class="fa fa-screwdriver-wrench"></i> Configure Block
                     </button>
                     <button id="request_add_to_blacklist" type="submit" class="buttons"
                         title="Submit a site to block (requires a free GitHub account)">
-                        <i class="fa fa-external-link"></i> Submit
+                        <i class="fa fa-external-link"></i> Request Block
                     </button>
                 </div>
             </td>
