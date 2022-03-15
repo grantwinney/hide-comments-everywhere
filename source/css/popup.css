@@ -2,7 +2,7 @@ body {
     background: #eee;
     font-size: 10pt;
     margin: 0px;
-    width: 400px;
+    width: 425px;
 }
 
 input[type=radio] {
@@ -93,17 +93,10 @@ input[type=submit]:hover, button[type=submit]:hover {
     background: #3399ff;
 }
 
-.comments_blocked {
-    background: lightblue;
-    margin: 5px 0px 5px 5px;
-    padding: 2px 5px;
+.disabled_button, .disabled_button:hover {
+    border: 1px solid #999 !important;
+    color: #999 !important;
 }
-
-.comments_blocked {
-    background: #3399ff;
-}
-
-.comments_unblocked {}
 
 /* Share box */
 

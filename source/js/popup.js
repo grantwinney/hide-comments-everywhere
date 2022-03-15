@@ -1,7 +1,19 @@
-let invalidProtocols = ['chrome-extension', 'edge'];
+function disableFieldsForUnsupportedUrl() {
+    let addToBlacklistButton = document.getElementById('add_to_blacklist');
+    let requestAddToBlacklistButton = document.getElementById('request_add_to_blacklist');
+    let toggleHideButton = document.getElementById('toggle_hide');
+    let currentHostname = document.getElementById('currentHostname');
 
-function isCurrentUrlSupported(tabUrl) {
-    return !invalidProtocols.some(p => tabUrl.protocol.startsWith(p))
+    addToBlacklistButton.classList.add('disabled_button');
+    addToBlacklistButton.disabled = true;
+    requestAddToBlacklistButton.classList.add('disabled_button');
+    requestAddToBlacklistButton.disabled = true;
+    toggleHideButton.classList.add('disabled_button');
+    toggleHideButton.disabled = true;
+    toggleHideButton.title = "This URL is not supported.";
+    currentHostname.style.color = '#999';
+    currentHostname.style.fontStyle = 'italic';
+    currentHostname.value = 'This URL is not supported.';
 }
 
 function displayCorrectButtonsBasedOnUserWhitelist(tabUrl) {
@@ -19,52 +31,7 @@ function displayCorrectButtonsBasedOnUserWhitelist(tabUrl) {
     });
 }
 
-function addCurrentUrlToInputBox(tabUrl) {
-    document.getElementById('currentHostname').value =
-        isCurrentUrlSupported(tabUrl) ? tabUrl.hostname : 'This URL is not supported.'
-}
-
-function allowCommentsOnCurrentUrl(tabId, tabUrl) {
-    if (!isCurrentUrlSupported(tabUrl)) {
-        return;
-    }
-
-    chrome.storage.sync.get('user_whitelist', function (result) {
-        let userWhitelist = JSON.parse(result?.user_whitelist ?? '{}');
-        try {
-            userWhitelist[tabUrl.hostname] = 1;
-            chrome.storage.sync.set({ 'user_whitelist': JSON.stringify(userWhitelist) });
-            chrome.tabs.sendMessage(tabId, { event: 'tab_updated' });
-            window.close();
-        } catch (e) {
-            logError(e);
-        }
-    });
-}
-
-function toggleCommentsOnCurrentUrl(tabId, tabUrl) {
-    if (!isCurrentUrlSupported(tabUrl)) {
-        return;
-    }
-
-    chrome.storage.sync.get('user_whitelist', function (result) {
-        let userWhitelist = JSON.parse(result?.user_whitelist ?? '{}');
-        try {
-            if (userWhitelist[tabUrl.hostname] === 1) {
-                delete userWhitelist[tabUrl.hostname];
-            } else {
-                userWhitelist[tabUrl.hostname] = 1;
-            }
-            chrome.storage.sync.set({ 'user_whitelist': JSON.stringify(userWhitelist) });
-            chrome.tabs.sendMessage(tabId, { event: 'tab_updated' });
-            window.close();
-        } catch (e) {
-            logError(e);
-        }
-    });
-}
-
-function blockCommentsOnCurrentUrl(tabId, tabUrl) {
+function addUrlToUserBlacklist(tabId, tabUrl) {
     chrome.storage.sync.get('user_blacklist', function (result) {
         let userBlacklist = JSON.parse(result?.user_blacklist ?? '{}');
         try {
@@ -79,11 +46,10 @@ function blockCommentsOnCurrentUrl(tabId, tabUrl) {
     });
 }
 
-function requestAdditionToBlacklist(tabUrl) {
-    if (invalidProtocols.some(p => tabUrl.protocol.startsWith(p))) {
+function requestAdditionToGlobalBlacklist(tabUrl) {
+    if (!isCurrentUrlSupported(tabUrl)) {
         return;
     }
-
     let title = "Here's a new site I'd like you to consider blocking";
     let body = encodeURIComponent(title + ":\n\n" + tabUrl.hostname + '\n\n(please include any other relevant details)');
     let url = `https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=${title}&body=${body}`;
@@ -109,7 +75,7 @@ function wireUpNavBarButtons(tabId, tabUrl) {
 }
 
 function wireUpAddBlockButtons(tabId, tabUrl) {
-    document.getElementById('add_to_blacklist').addEventListener('click', function () { blockCommentsOnCurrentUrl(tabId, tabUrl); });
+    document.getElementById('add_to_blacklist').addEventListener('click', function () { addUrlToUserBlacklist(tabId, tabUrl); });
     document.getElementById('request_add_to_blacklist').addEventListener('click', function () { requestAdditionToGlobalBlacklist(tabUrl); });
 }
 
@@ -136,26 +102,26 @@ function wireUpShareButtons() {
 }
 
 window.addEventListener('DOMContentLoaded', function load(_event) {
-    /* ONE TIME UPDATE STUFF */
-
-    // TODO: Convert the current whitelist to a dictionary - 'excluded_urls' -> 'user_whitelist'
-    // let regexUrl = '^' + currentUrl.hostname.replace(/\./g, '\\.');
-    // let updatedUrls = userWhitelist + (userWhitelist[userWhitelist.length - 1] === '\n' ? '' : '\r\n') + regexUrl + '\r\n';
-
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
         let tabId = tabs[0].id;
         let tabUrl = new URL(tabs[0].url);
 
-        addCurrentUrlToInputBox(tabUrl);
+        /* ONE TIME UPDATE STUFF */
+
+        // TODO: Convert the current whitelist to a dictionary - 'excluded_urls' -> 'user_whitelist'
+        // let regexUrl = '^' + currentUrl.hostname.replace(/\./g, '\\.');
+        // let updatedUrls = userWhitelist + (userWhitelist[userWhitelist.length - 1] === '\n' ? '' : '\r\n') + regexUrl + '\r\n';
+
+        if (isCurrentUrlSupported(tabUrl)) {
+            document.getElementById('currentHostname').value = tabUrl.hostname;
+        } else {
+            disableFieldsForUnsupportedUrl();
+        }
 
         wireUpNavBarButtons(tabId, tabUrl);
         wireUpAddBlockButtons(tabId, tabUrl);
         wireUpShareButtons();
 
         displayCorrectButtonsBasedOnUserWhitelist(tabUrl);
-
-        if (!isCurrentUrlSupported(tabUrl)) {
-            //TODO: disable addblock buttons and one nav button
-        }
     });
 });

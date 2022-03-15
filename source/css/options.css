@@ -171,6 +171,10 @@ p {
     padding: 0px 10px;
 }
 
+.checkbox-container {
+    margin-top: 10px;
+}
+
 .header-title {
     font-size: x-large;
     margin-left: 20px;

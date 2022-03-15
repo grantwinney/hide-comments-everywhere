@@ -34,70 +34,106 @@ function getBlacklistedElementsToHide(url, patterns) {
     return undefined;
 };
 
-function hideCommentsAsPageLoads(updateIconOnly = false) {
+function findStylesheet() {
+    for (let i = 0; i < document.styleSheets.length; i++) {
+        let stylesheet = document.styleSheets.item(i);
+        if (stylesheet.title === 'hide_comments_everywhere') {
+            return stylesheet;
+        }
+    }
+    return undefined;
+}
+
+// Insert applicable styles into page. Decide whether to disable them later.
+function insertStylesIntoPage() {
+    if (findStylesheet()) {
+        return;
+    }
+
     let elementsToHide = '';
-    let isCommentsHidden = false;
 
-    // Load addon site definitions
-    chrome.storage.local.get('definitions', function(def_result) {
-        if (!def_result.definitions) {
-            logError("Missing site patterns.");
-            return;
-        }
-        let definitions = JSON.parse(def_result.definitions);
-        if (!definitions?.sites) {
-            logError("Missing site patterns.");
-            return;
-        }
+    // Load global site definitions
+    chrome.storage.local.get('definitions', function (def_result) {
+        let definitions = JSON.parse(def_result.definitions ?? '{}');
 
-        // Check addon site definitions; hide comments if match found
-        for (let site of Object.keys(definitions.sites)) {
-            if (site === location.hostname) {
-                elementsToHide = definitions.sites[site];
-                isCommentsHidden = true;
-                break;
+        if (definitions?.sites) {
+            // Check global site definitions for current site
+            for (let site of Object.keys(definitions.sites)) {
+                if (site === location.hostname) {
+                    elementsToHide = definitions.sites[site];
+                    break;
+                }
             }
+            // If current site not found, apply the global catchall definition
+            if (!elementsToHide) {
+                elementsToHide = definitions.catchall_selectors;
+            }
+        } else {
+            logError("Missing site patterns.");
+            return;
         }
 
-        // If no site match, apply the generic "catchall" selector
-        if (!elementsToHide) {
-            elementsToHide = definitions.catchall;
-            isCommentsHidden = true;
+        // Check user blacklist (takes precedence over user whitelist)
+        chrome.storage.sync.get('blacklist_urls', function (bl_result) {
+            let blacklistedElementsToHide = bl_result.blacklist_urls !== undefined && getBlacklistedElementsToHide(location.hostname, bl_result.blacklist_urls);
+            if (blacklistedElementsToHide) {
+                elementsToHide = blacklistedElementsToHide;
+            }
+
+            // Inject the styles into the page
+            let style = document.createElement('style');
+            style.title = "hide_comments_everywhere";
+            document.documentElement.prepend(style);
+            style.textContent = elementsToHide ? `${elementsToHide} { display: none; visibility: hidden } ${definitions.excluded_selectors} { display: unset; visibility: unset }` : '';
+
+            adjustCommentsVisibility();
+        });
+    });
+};
+
+
+function adjustCommentsVisibility() {
+    let isCommentsHidden = true;
+
+    chrome.storage.sync.get('user_whitelist', function (uw_result) {
+        // Check if 'hide comments' button was clicked for site
+        let userWhitelist = JSON.parse(uw_result?.user_whitelist ?? '{}');
+        if (userWhitelist[location.hostname] === 1) {
+            isCommentsHidden = false;
         }
 
         // Check user whitelist; show comments if match found
-        chrome.storage.sync.get('excluded_urls', function(wh_result) {
-            if (wh_result?.excluded_urls !== undefined && urlMatchesAnyWhitelistPattern(location.href, wh_result.excluded_urls)) {
+        chrome.storage.sync.get('whitelist_urls', function (wh_result) {
+            if (wh_result?.user_whitelist !== undefined && urlMatchesAnyWhitelistPattern(location.href, wh_result.whitelist_urls)) {
                 isCommentsHidden = false;
             }
 
             // Check user blacklist; hide comments if match found (takes precedence over user whitelist)
-            chrome.storage.sync.get('blacklist_urls', function(bl_result) {
+            chrome.storage.sync.get('blacklist_urls', function (bl_result) {
                 let blacklistedElementsToHide = bl_result.blacklist_urls !== undefined && getBlacklistedElementsToHide(location.href, bl_result.blacklist_urls);
                 if (blacklistedElementsToHide) {
-                    elementsToHide = blacklistedElementsToHide;
                     isCommentsHidden = true;
                 }
 
-                // Check hard-coded whitelist; show comments if match found (takes precedence over everything)
-                if (definitions.exclusions) {
-                    for (let i = 0; i < definitions.exclusions.length; i++) {
-                        if (urlMatchesPattern(location.hostname, definitions.exclusions[i])) {
-                            elementsToHide = '';
-                            isCommentsHidden = false;
+                // Load global site definitions
+                chrome.storage.local.get('definitions', function (def_result) {
+                    let definitions = JSON.parse(def_result.definitions ?? '{}');
+
+                    // Check global whitelist for current site
+                    if (definitions?.excluded_sites) {
+                        for (let i = 0; i < definitions.excluded_sites.length; i++) {
+                            if (urlMatchesPattern(location.hostname, definitions.excluded_sites[i])) {
+                                isCommentsHidden = false;
+                            }
                         }
                     }
-                }
 
-                if (!updateIconOnly) {
-                    // Injects a style sheet that can be used to show or hide a set of elements (defined by CSS selectors) on the page.
-                    let style = document.createElement('style');
-                    style.title = "hide_comments_everywhere";
-                    document.documentElement.prepend(style);
-                    style.textContent = elementsToHide ? `${elementsToHide} { display: none; visibility: hidden } pre .comment, code .comment, textarea.comments { display: unset; visibility: unset }` : '';
-                    style.disabled = !isCommentsHidden;
-                }
-                chrome.runtime.sendMessage({event: isCommentsHidden ? 'comments_hidden' : 'comments_shown' });
+                    let stylesheet = findStylesheet();
+                    if (stylesheet) {
+                        stylesheet.disabled = !isCommentsHidden;
+                    }
+                    chrome.runtime.sendMessage({ event: isCommentsHidden ? 'comments_hidden' : 'comments_shown' });
+                });
             });
         });
     });
@@ -105,25 +141,14 @@ function hideCommentsAsPageLoads(updateIconOnly = false) {
 
 // Listens for messages from background script.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/Runtime/onMessage
-chrome.runtime.onMessage.addListener(function(message, _sender, _sendResponse) {
-    switch(message.event) {
-        case 'tab_updated':
-            hideCommentsAsPageLoads(true);
-            break;
-        case 'toggle':
-            // document.styleSheets.item(0).disabled = !document.styleSheets.item(0).disabled;
-            for (let i=0; i < document.styleSheets.length; i++) {
-                let stylesheet = document.styleSheets.item(i);
-                if (stylesheet.title === 'hide_comments_everywhere') {
-                    stylesheet.disabled = !stylesheet.disabled;
-                    chrome.runtime.sendMessage({event: stylesheet.disabled || stylesheet.cssRules.length === 0 ? 'comments_shown' : 'comments_hidden' });
-                    break;
-                }
-            }
+chrome.runtime.onMessage.addListener(function (message, _sender, _sendResponse) {
+    switch (message.event) {
+        case 'update_tab':
+            adjustCommentsVisibility();
             break;
         default:
             logError(`content script: ${message.event}`);
     }
 });
 
-hideCommentsAsPageLoads();
+insertStylesIntoPage();

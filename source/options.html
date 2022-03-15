@@ -24,7 +24,11 @@
     </div>
     <div id="options">
         <div id="options-nav">
-            <a href="#settings">SETTINGS</a> | <a href="#filters">FILTERS</a> | <a href="#updates">UPDATES</a> | <a href="#submit">SUBMIT A SITE</a> | <a href="#report">REPORT A PROBLEM</a>
+            <a href="#settings">SETTINGS</a> |
+            <a href="#filters">FILTERS</a> |
+            <a href="#updates">UPDATES</a> |
+            <a href="#submit">SUBMIT A SITE</a> |
+            <a href="#report">REPORT A PROBLEM</a>
         </div>
 
         <div id="settings" class="pane-title"><i class="fa fa-cog" aria-hidden="true"></i>Settings</div>
@@ -32,6 +36,10 @@
             <input id="one_click_option" type="checkbox">
             <label for="one_click_option">Press the icon in the toolbar to toggle comment visibility, instead of
                 displaying a popup</label>
+        </div>
+        <div class="checkbox-container">
+            <input id="remember_toggle_option" type="checkbox">
+            <label for="remember_toggle_option">When toggling comments for a site, remember setting in the future (uncheck this to make toggling comments temporary)</label>
         </div>
 
         <div id="filters" class="pane-title"><i class="fa fa-filter" aria-hidden="true"></i>Filters</div>
@@ -80,7 +88,8 @@
         </div>
         <div style="margin-top: 20px">
             <p>
-                Specify a list of URLs (one per line) that comments should <em>always</em> be blocked on, along with their associated CSS selectors.
+                Specify a list of URLs (one per line) that comments should <em>always</em> be blocked on, along with
+                their associated CSS selectors.
                 If a site matches a pattern in both lists, the blacklist takes precedence and comments will be hidden.
                 <a id="filters-help-hint-2">See examples.</a>
             </p>
@@ -88,9 +97,13 @@
         <div id="filters-help-2">
             <p>
                 It's not enough to just specify a URL to block comments on. You have to specify how to locate the
-                comments on the page too, which can be accomplished with <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors">CSS Selectors</a>.
-                You can <a href="https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json">check out the selectors I've defined</a>
-                if you want examples, then (on a single line) enter the pattern for the URL, followed by a semicolon, and then the CSS Selector (without surrounding quotes).
+                comments on the page too, which can be accomplished with <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors">CSS Selectors</a>.
+                You can <a
+                    href="https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json">check
+                    out the selectors I've defined</a>
+                if you want examples, then (on a single line) enter the pattern for the URL, followed by a semicolon,
+                and then the CSS Selector (without surrounding quotes).
             </p>
             <p>Each URL must be a <a
                     href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions"
@@ -190,7 +203,8 @@
                 account.)</em>
         </p>
 
-        <div id="report" class="pane-title"><i class="fa fa-question-circle" aria-hidden="true"></i>Questions? Problems?</div>
+        <div id="report" class="pane-title"><i class="fa fa-question-circle" aria-hidden="true"></i>Questions? Problems?
+        </div>
         <p>Just <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new" target="_blank">open a new
                 issue</a> <em>(requires signing up for a free GitHub account)</em> and I'll address it as time permits,
             or <a href="https://github.com/grantwinney/hide-comments-everywhere/compare" target="_blank">create a pull

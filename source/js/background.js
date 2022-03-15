@@ -6,14 +6,6 @@
 // https://developer.chrome.com/extensions/background_pages
 
 
-// Fires when a tab is updated.
-// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/Tabs/onUpdated
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, _tab) {
-    if (changeInfo.status === 'complete') {
-        chrome.tabs.sendMessage(tabId, { event: 'tab_updated' });
-    }
-});
-
 // Listens for messages from content script.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/Runtime/onMessage
 chrome.runtime.onMessage.addListener(function(message, sender, _sendResponse) {
@@ -28,18 +20,18 @@ chrome.runtime.onMessage.addListener(function(message, sender, _sendResponse) {
             break;
         case 'comments_shown':
             chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: sender.tab.id }, function() {
-                chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled)', tabId: sender.tab.id });
+                chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled for this site)', tabId: sender.tab.id });
             });
             break;
         default:
-            logError(`background script: ${message.event}`);
+            logError(`background script not configured to run for message event: '${message.event}'`);
     }
 });
 
 // Fires when user clicks the addon icon in the browser toolbar.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction/onClicked
 chrome.browserAction.onClicked.addListener(function(tab) {
-    toggleComments(tab.id);
+    toggleCommentsOnCurrentUrl(tab.id, new URL(tab.url));
 });
 
 
@@ -47,11 +39,12 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 // Gets latest definitions and enables/disables the popup.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows/onCreated
 chrome.windows.onCreated.addListener(function() {
+    // TODO: Replace this with a mechanism that just checks a timestamp?
     getUpdatedDefinitions();
     chrome.storage.local.get('one_click_option', function(result) {
         chrome.browserAction.setPopup({popup: (result?.one_click_option === true) ? '' : '../popup.html'});
     });
-})
+});
 
 
 // Fires when addon is installed or updated.

@@ -15,8 +15,8 @@
     "permissions": [
         "activeTab",
         "storage",
-        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json",
-        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json"
+        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/sites.json",
+        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/version.json"
     ],
 
     "browser_action": {
@@ -42,6 +42,20 @@
         "persistent": false
     },
 
+    "content_scripts": [
+        {
+            "js": [
+                "js/third-party/axios.min.js",
+                "js/shared.js",
+                "js/comments.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+
     "icons": {
         "16": "images/hide-comments-16.png",
         "32": "images/hide-comments-32.png",
@@ -50,17 +64,12 @@
         "128": "images/hide-comments-128.png"
     },
 
-    "content_scripts": [
-        {
-            "js": [
-                "js/third-party/axios.min.js",
-                "js/shared.js",
-                "js/content_script.js"
-            ],
-            "matches": [
-                "<all_urls>"
-            ],
-            "run_at": "document_start"
+    "commands": {
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+H",
+                "mac": "Command+Shift+H"
+            }
         }
-    ]
+    }
 }
