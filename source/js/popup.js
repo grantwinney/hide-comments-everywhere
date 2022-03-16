@@ -1,48 +1,78 @@
 function disableFieldsForUnsupportedUrl() {
+    let addToWhitelistButton = document.getElementById('add_to_whitelist');
     let addToBlacklistButton = document.getElementById('add_to_blacklist');
     let requestAddToBlacklistButton = document.getElementById('request_add_to_blacklist');
-    let toggleHideButton = document.getElementById('toggle_hide');
-    let currentHostname = document.getElementById('currentHostname');
 
+    addToWhitelistButton.classList.add('disabled_button');
+    addToWhitelistButton.disabled = true;
     addToBlacklistButton.classList.add('disabled_button');
     addToBlacklistButton.disabled = true;
     requestAddToBlacklistButton.classList.add('disabled_button');
     requestAddToBlacklistButton.disabled = true;
+
+    let toggleHideButton = document.getElementById('toggle_hide');
     toggleHideButton.classList.add('disabled_button');
     toggleHideButton.disabled = true;
     toggleHideButton.title = "This URL is not supported.";
+
+    let currentHostname = document.getElementById('currentHostname');
     currentHostname.style.color = '#999';
     currentHostname.style.fontStyle = 'italic';
     currentHostname.value = 'This URL is not supported.';
 }
 
-function displayCorrectButtonsBasedOnUserWhitelist(tabUrl) {
-    chrome.storage.sync.get('user_whitelist', function (result) {
-        let userWhitelist = JSON.parse(result?.user_whitelist ?? '{}');
-        try {
-            if (userWhitelist[tabUrl.hostname] === 1) {
-                let toggleHideIcon = document.getElementById('toggle_hide_icon');
-                toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment');
-                toggleHideIcon.title = 'Comments currently allowed for this site. Hide?';
+function displayCorrectToggleIconForCurrentSite(tabUrl) {
+    performActionBasedOnCommentVisibility(tabUrl, function (isCommentsHidden, overrideReason) {
+        let toggleHideIcon = document.getElementById('toggle_hide_icon');
+        if (!isCommentsHidden) {
+            toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment');
+            toggleHideIcon.title = 'Comments currently allowed for this site. Hide?';
+        }
+        if (overrideReason) {
+            if (overrideReason === 'user_whitelist') {
+                toggleHideIcon.title = 'Comments always allowed, per your custom whitelist. Toggle is temporary.';
+            } else if (overrideReason === 'user_blacklist') {
+                toggleHideIcon.title = 'Comments always blocked, per your custom whitelist. Toggle is temporary.';
+            } else if (overrideReason === 'global_whitelist') {
+                toggleHideIcon.title = 'Comments always allowed, per the global whitelist. Toggle is disabled.';
+                let toggleHideButton = document.getElementById('toggle_hide');
+                toggleHideButton.classList.add('disabled_button');
+                toggleHideButton.disabled = true;
             }
-        } catch (e) {
-            logError(e);
         }
     });
 }
 
-function addUrlToUserBlacklist(tabId, tabUrl) {
-    chrome.storage.sync.get('user_blacklist', function (result) {
-        let userBlacklist = JSON.parse(result?.user_blacklist ?? '{}');
-        try {
-            if (!userBlacklist[tabUrl.hostname]) {
-                userBlacklist[tabUrl.hostname] = '';  // Configuration happens on Options page
-                chrome.storage.sync.set({ 'user_blacklist': JSON.stringify(userBlacklist) });
-            }
-            chrome.runtime.openOptionsPage();  // TODO: How to jump to blacklist section, preferably to this key?
-        } catch (e) {
-            logError(e);
+function addUrlToUserWhitelist(tabId, tabUrl) {
+    chrome.storage.sync.get('user_whitelist', function (result) {
+        let userWhitelist = result?.user_whitelist;
+        let regexUrl = tabUrl.hostname.replace(/\./g, '\\.');
+        if (userWhitelist) {
+            userWhitelist += `\r\n${regexUrl}`;
+        } else {
+            userWhitelist += regexUrl;
         }
+        chrome.storage.sync.set({ 'user_whitelist': userWhitelist }, function () {
+            chrome.tabs.sendMessage(tabId, { event: 'update_tab' }, function () {
+                chrome.runtime.openOptionsPage();
+            });
+        });
+    });
+}
+
+function addUrlToUserBlacklist(tabUrl) {
+    chrome.storage.sync.get('user_blacklist', function (result) {
+        let userBlacklist = result?.user_blacklist;
+        let regexUrl = tabUrl.hostname.replace(/\./g, '\\.');
+        if (userBlacklist) {
+            userBlacklist += `\r\n${regexUrl}`;
+        } else {
+            userBlacklist += regexUrl;
+        }
+        userBlacklist += `; ${starter_selector}`;
+        chrome.storage.sync.set({ 'user_blacklist': userBlacklist }, function () {
+            chrome.runtime.openOptionsPage();
+        });
     });
 }
 
@@ -75,7 +105,8 @@ function wireUpNavBarButtons(tabId, tabUrl) {
 }
 
 function wireUpAddBlockButtons(tabId, tabUrl) {
-    document.getElementById('add_to_blacklist').addEventListener('click', function () { addUrlToUserBlacklist(tabId, tabUrl); });
+    document.getElementById('add_to_whitelist').addEventListener('click', function () { addUrlToUserWhitelist(tabId, tabUrl); });
+    document.getElementById('add_to_blacklist').addEventListener('click', function () { addUrlToUserBlacklist(tabUrl); });
     document.getElementById('request_add_to_blacklist').addEventListener('click', function () { requestAdditionToGlobalBlacklist(tabUrl); });
 }
 
@@ -106,12 +137,6 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
         let tabId = tabs[0].id;
         let tabUrl = new URL(tabs[0].url);
 
-        /* ONE TIME UPDATE STUFF */
-
-        // TODO: Convert the current whitelist to a dictionary - 'excluded_urls' -> 'user_whitelist'
-        // let regexUrl = '^' + currentUrl.hostname.replace(/\./g, '\\.');
-        // let updatedUrls = userWhitelist + (userWhitelist[userWhitelist.length - 1] === '\n' ? '' : '\r\n') + regexUrl + '\r\n';
-
         if (isCurrentUrlSupported(tabUrl)) {
             document.getElementById('currentHostname').value = tabUrl.hostname;
         } else {
@@ -122,6 +147,6 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
         wireUpAddBlockButtons(tabId, tabUrl);
         wireUpShareButtons();
 
-        displayCorrectButtonsBasedOnUserWhitelist(tabUrl);
+        displayCorrectToggleIconForCurrentSite(tabUrl);
     });
 });

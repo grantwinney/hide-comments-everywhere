@@ -1,4 +1,5 @@
 let invalidProtocols = ['chrome-extension', 'edge'];
+const starter_selector = '#place_your_selectors_here';
 
 // Write an error to the console, prepended with the addon name.
 function logError(errorMessage) {
@@ -16,7 +17,7 @@ function getUpdatedDefinitions(updatedAction = undefined, notUpdatedAction = und
                 if (localVersionResult?.definition_version == undefined || !Number.isInteger(localVersionResult.definition_version) || localVersionResult.definition_version < cloudVersionResult.data.version) {
                     axios.get(sitesJson)
                         .then(function (cloudSitesResult) {
-                            chrome.storage.local.set({ 'definitions': JSON.stringify(cloudSitesResult.data) });
+                            chrome.storage.local.set({ 'global_definitions': JSON.stringify(cloudSitesResult.data) });
                             chrome.storage.local.set({ 'definition_version': cloudVersionResult.data.version });
                             if (updatedAction) {
                                 updatedAction(cloudVersionResult.data.version);
@@ -44,15 +45,15 @@ function toggleCommentsOnCurrentUrl(tabId, tabUrl) {
     if (!isCurrentUrlSupported(tabUrl)) {
         return;
     }
-    chrome.storage.sync.get('user_whitelist', function (result) {
-        let userWhitelist = JSON.parse(result?.user_whitelist ?? '{}');
+    chrome.storage.sync.get('user_whitelist_flags', function (result) {
+        let userWhitelistFlags = JSON.parse(result?.user_whitelist_flags ?? '{}');
         try {
-            if (userWhitelist[tabUrl.hostname] === 1) {
-                delete userWhitelist[tabUrl.hostname];
+            if (userWhitelistFlags[tabUrl.hostname] === 1) {
+                delete userWhitelistFlags[tabUrl.hostname];
             } else {
-                userWhitelist[tabUrl.hostname] = 1;
+                userWhitelistFlags[tabUrl.hostname] = 1;
             }
-            chrome.storage.sync.set({ 'user_whitelist': JSON.stringify(userWhitelist) }, function () {
+            chrome.storage.sync.set({ 'user_whitelist_flags': JSON.stringify(userWhitelistFlags) }, function () {
                 chrome.tabs.sendMessage(tabId, { event: 'update_tab' });
                 window.close();
             });
@@ -73,4 +74,91 @@ function validateCustomUrls(urls) {
     catch (e) {
         return false;
     }
+}
+
+// Determines whether a URL matches a given regex pattern.
+function urlMatchesPattern(url, pattern) {
+    let re = new RegExp(pattern);
+    return re.test(url);
+}
+
+// Test whether a given URL matches any entries in the whitelist.
+function urlMatchesAnyWhitelistPattern(url, patterns) {
+    let patternsArray = patterns.split(/\r?\n/);
+    for (let i = 0; i < patternsArray.length; i++) {
+        if (patternsArray[i] === '') {
+            continue;
+        }
+        if (urlMatchesPattern(url, patternsArray[i])) {
+            return true;
+        }
+    }
+    return false;
+};
+
+// Test whether a given URL matches any entries in the blacklist, and return the elements to hide, if any.
+function getBlacklistedElementsToHide(url, patterns) {
+    let patternsArray = patterns.split(/\r?\n/);
+    for (let i = 0; i < patternsArray.length; i++) {
+        if (patternsArray[i] === '') {
+            continue;
+        }
+        let parts = patternsArray[i].split(";");
+        let urlPart = parts[0];
+        let selectorPart = parts[1];
+        if (selectorPart.trim() === '' || selectorPart.trim() === starter_selector) {
+            continue;
+        } else if (urlMatchesPattern(url, urlPart)) {
+            return selectorPart;
+        }
+    }
+    return undefined;
+};
+
+function performActionBasedOnCommentVisibility(url, action) {
+    let isCommentsHidden = true;
+    let overrideReason = '';
+
+    chrome.storage.sync.get('user_whitelist_flags', function (uwf_result) {
+        // Check if 'hide comments' button was clicked for site
+        let userWhitelistFlags = JSON.parse(uwf_result?.user_whitelist_flags ?? '{}');
+        if (userWhitelistFlags[url.hostname] === 1) {
+            isCommentsHidden = false;
+            overrideReason = "user_whitelist_flag";
+        }
+
+        // Check user whitelist; show comments if match found
+        chrome.storage.sync.get('user_whitelist', function (wh_result) {
+            if (wh_result?.user_whitelist !== undefined && urlMatchesAnyWhitelistPattern(url.href, wh_result.user_whitelist)) {
+                isCommentsHidden = false;
+                overrideReason = 'user_whitelist';
+            }
+
+            // Check user blacklist; hide comments if match found (takes precedence over user whitelist)
+            chrome.storage.sync.get('user_blacklist', function (bl_result) {
+                let blacklistedElementsToHide = bl_result.user_blacklist !== undefined && getBlacklistedElementsToHide(url.href, bl_result.user_blacklist);
+                if (blacklistedElementsToHide) {
+                    isCommentsHidden = true;
+                    overrideReason = 'user_blacklist';
+                }
+
+                // Load global site definitions
+                chrome.storage.local.get('global_definitions', function (def_result) {
+                    let globalDefinitions = JSON.parse(def_result.global_definitions ?? '{}');
+
+                    // Check global whitelist for current site
+                    if (globalDefinitions?.excluded_sites) {
+                        for (let i = 0; i < globalDefinitions.excluded_sites.length; i++) {
+                            if (urlMatchesPattern(url.hostname, globalDefinitions.excluded_sites[i])) {
+                                isCommentsHidden = false;
+                                overrideReason = 'global_whitelist';
+                            }
+                        }
+                    }
+
+                    action(isCommentsHidden, overrideReason);
+                });
+            });
+        });
+    });
 }

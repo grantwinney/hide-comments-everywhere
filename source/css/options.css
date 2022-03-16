@@ -62,7 +62,7 @@ p {
     margin-top: 0px;
 }
 
-#excluded_urls, #blacklist_urls {
+textarea {
     border: 1px solid lightgray;
     border-radius: 4px;
     box-shadow: 1px 1px 1px #ccc, 2px 2px 2px #eee;
@@ -161,7 +161,7 @@ p {
 }
 
 #regex-samples {
-    font-size: smaller;
+    font-size: small;
     min-width: 300px;
     line-height: 1.6em;
     text-align: left;

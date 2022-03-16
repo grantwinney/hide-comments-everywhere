@@ -33,13 +33,19 @@
 
         <div id="settings" class="pane-title"><i class="fa fa-cog" aria-hidden="true"></i>Settings</div>
         <div class="checkbox-container">
-            <input id="one_click_option" type="checkbox">
-            <label for="one_click_option">Press the icon in the toolbar to toggle comment visibility, instead of
-                displaying a popup</label>
+            <input id="one_click_toggle" type="checkbox">
+            <label for="one_click_toggle">Press the icon in the toolbar to toggle comment visibility, instead of
+                displaying a popup.</label>
         </div>
         <div class="checkbox-container">
-            <input id="remember_toggle_option" type="checkbox">
-            <label for="remember_toggle_option">When toggling comments for a site, remember setting in the future (uncheck this to make toggling comments temporary)</label>
+            <input id="remember_toggle" type="checkbox">
+            <label for="remember_toggle">When toggling comments for a site, remember setting in the future
+                (uncheck this to make toggling comments temporary).</label>
+        </div>
+        <div class="checkbox-container">
+            <input id="show_placeholder" type="checkbox">
+            <label for="show_placeholder">Show a placeholder image, to make it obvious where comments were
+                removed.</label>
         </div>
 
         <div id="filters" class="pane-title"><i class="fa fa-filter" aria-hidden="true"></i>Filters</div>
@@ -81,7 +87,7 @@
             </table>
         </div>
         <div>
-            <textarea id="excluded_urls"></textarea>
+            <textarea id="user_whitelist"></textarea>
         </div>
         <div>
             <input id="save-whitelist" type="submit" value="Save Whitelist">
@@ -166,7 +172,7 @@
             </p>
         </div>
         <div>
-            <textarea id="blacklist_urls"></textarea>
+            <textarea id="user_blacklist"></textarea>
         </div>
         <div>
             <input id="save-blacklist" type="submit" value="Save Blacklist">
@@ -187,7 +193,7 @@
                 list of blocked sites</a> is occasionally updated, and when it is, you'll see a notification on this
             page.
             Updates are applied automatically when the browser is restarted, or manually by clicking on the
-            notification.
+            button below.
         </p>
         <div>
             <input id="update-definitions" type="submit" value="Update Definitions">

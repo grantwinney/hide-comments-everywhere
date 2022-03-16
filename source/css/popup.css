@@ -93,9 +93,14 @@ input[type=submit]:hover, button[type=submit]:hover {
     background: #3399ff;
 }
 
-.disabled_button, .disabled_button:hover {
+.disabled_button {
     border: 1px solid #999 !important;
     color: #999 !important;
+}
+
+.disabled_button:hover {
+    background: darkgray !important;
+    color: #ccc !important;
 }
 
 /* Share box */

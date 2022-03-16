@@ -1,31 +1,47 @@
 // SETTINGS
 
-function loadSettings() {
-    chrome.storage.local.get('one_click_option', function (result) {
-        document.getElementById('one_click_option').checked = (result?.one_click_option === true);
+function loadAllSettings() {
+    chrome.storage.sync.get('one_click_toggle', function (result) {
+        document.getElementById('one_click_toggle').checked = (result.one_click_toggle === true);
+    });
+    chrome.storage.sync.get('remember_toggle', function (result) {
+        document.getElementById('remember_toggle').checked = (result.remember_toggle === true);
+    });
+    chrome.storage.sync.get('show_placeholder', function (result) {
+        document.getElementById('show_placeholder').checked = (result.show_placeholder === true);
     });
 }
 
-function setOneClick() {
-    let oneClickEnabled = document.getElementById('one_click_option').checked;
-    chrome.storage.local.set({ 'one_click_option': oneClickEnabled });
+function saveOneClickSetting() {
+    let oneClickEnabled = document.getElementById('one_click_toggle').checked;
+    chrome.storage.sync.set({ 'one_click_toggle': oneClickEnabled });
     chrome.browserAction.setPopup({ popup: oneClickEnabled ? '' : '../popup.html' });
+}
+
+function saveRememberToggleSetting() {
+    let rememberToggleEnabled = document.getElementById('remember_toggle').checked;
+    chrome.storage.sync.set({ 'remember_toggle': rememberToggleEnabled });
+}
+
+function saveShowPlaceholderSetting() {
+    let showPlaceholderEnabled = document.getElementById('show_placeholder').checked;
+    chrome.storage.sync.set({ 'show_placeholder': showPlaceholderEnabled });
 }
 
 // FILTERS
 
 function loadWhitelist() {
-    chrome.storage.sync.get('excluded_urls', function (result) {
-        if (result?.excluded_urls != undefined) {
-            document.getElementById('excluded_urls').value = result.excluded_urls;
+    chrome.storage.sync.get('user_whitelist', function (result) {
+        if (result?.user_whitelist != undefined) {
+            document.getElementById('user_whitelist').value = result.user_whitelist;
         }
     });
 }
 
 function loadBlacklist() {
-    chrome.storage.sync.get('blacklist_urls', function (result) {
-        if (result?.blacklist_urls != undefined) {
-            document.getElementById('blacklist_urls').value = result.blacklist_urls;
+    chrome.storage.sync.get('user_blacklist', function (result) {
+        if (result?.user_blacklist != undefined) {
+            document.getElementById('user_blacklist').value = result.user_blacklist;
         }
     });
 }
@@ -48,23 +64,23 @@ function saveUrlList(urlTextAreaId, savedItem) {
 }
 
 function saveWhitelist() {
-    saveUrlList('excluded_urls', 'Whitelist');
+    saveUrlList('user_whitelist', 'Whitelist');
 }
 
 function saveBlacklist() {
-    saveUrlList('blacklist_urls', 'Blacklist');
+    saveUrlList('user_blacklist', 'Blacklist');
 }
 
 function submitBlacklist() {
-    let blacklistUrls = document.getElementById('blacklist_urls').value;
+    let blacklistUrls = document.getElementById('user_blacklist').value;
     navigator.clipboard.writeText(blacklistUrls)
-        .then(function() {
+        .then(function () {
             window.open("https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Blacklisted sites to consider adding&body=Here's my list of blacklisted sites to consider blocking by default.%0A%0A```%0A(THEY'RE ON YOUR CLIPBOARD. Just paste them here and replace this line.)%0A```%0A", '_blank');
             toastr.success("Another tab should open to GitHub, where you can paste the blacklist as a new issue.", "Submit Blacklist");
         })
-        .catch(error => function() {
+        .catch(error => function () {
             window.open("https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Blacklisted sites to consider adding&body=Here's my list of blacklisted sites to consider blocking by default.%0A%0A```%0A(Copy them from the Options page, and paste them here replacing this line.)%0A```%0A", '_blank');
-            toastr.warning("Copying the blacklist to your clipboard failed, so you'll have to copy and paste them into the GitHub issue manually.", "Submit Blacklist", {timeOut: 120000});
+            toastr.warning("Copying the blacklist to your clipboard failed, so you'll have to copy and paste them into the GitHub issue manually.", "Submit Blacklist", { timeOut: 120000 });
             logError(error.message)
         });
 }
@@ -85,26 +101,30 @@ function showVersion() {
 
 window.addEventListener('DOMContentLoaded', function load(_event) {
     // Settings
-    loadSettings();
-    document.getElementById('one_click_option').addEventListener('click', function () { setOneClick(); });
+    loadAllSettings();
+    document.getElementById('one_click_toggle').addEventListener('click', function () { saveOneClickSetting(); });
+    document.getElementById('remember_toggle').addEventListener('click', function () { saveRememberToggleSetting(); });
+    document.getElementById('show_placeholder').addEventListener('click', function () { saveShowPlaceholderSetting(); });
 
     // Filters
     loadWhitelist();
     loadBlacklist();
-    $("#save-whitelist").click(function () { saveWhitelist(); });
-    $("#save-blacklist").click(function () { saveBlacklist(); });
-    $("#submit-blacklist").click(function () { submitBlacklist(); });
-    $("#filters-help-hint-1").click(function () { $("#filters-help-1").slideToggle(500); });
-    $("#filters-help-hint-2").click(function () { $("#filters-help-2").slideToggle(500); });
+    $('#save-whitelist').click(function () { saveWhitelist(); });
+    $('#save-blacklist').click(function () { saveBlacklist(); });
+    $('#submit-blacklist').click(function () { submitBlacklist(); });
+    $('#filters-help-hint-1').click(function () { $('#filters-help-1').slideToggle(500); });
+    $('#filters-help-hint-2').click(function () { $('#filters-help-2').slideToggle(500); });
 
     // Updates
     getUpdatedDefinitions((version) => {
-        toastr.info(`Updated site definitions (#${version}) were found and have been applied.`, "Updated Sites Available", {timeOut: 10000});
+        toastr.info(`Updated site definitions (#${version}) were found and have been applied.`, "Updated Sites Available", { timeOut: 10000 });
     });
-    $("#update-definitions").click(function () { getUpdatedDefinitions(
+    $("#update-definitions").click(function () {
+        getUpdatedDefinitions(
             (version) => { toastr.info(`Updated site definitions (#${version}) were found and have been applied.`, "Updated Sites Available"); },
             (version) => { toastr.info(`The latest site definitions (#${version}) are already applied.`, "No Updates Available"); }
-        ); });
+        );
+    });
 
     showVersion();
 });

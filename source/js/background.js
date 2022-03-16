@@ -8,18 +8,18 @@
 
 // Listens for messages from content script.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/Runtime/onMessage
-chrome.runtime.onMessage.addListener(function(message, sender, _sendResponse) {
+chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
     if (!sender.tab) {
         return;
     }
-    switch(message.event) {
+    switch (message.event) {
         case 'comments_hidden':
-            chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: sender.tab.id }, function() {
+            chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: sender.tab.id }, function () {
                 chrome.browserAction.setTitle({ title: '', tabId: sender.tab.id });
             });
             break;
         case 'comments_shown':
-            chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: sender.tab.id }, function() {
+            chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: sender.tab.id }, function () {
                 chrome.browserAction.setTitle({ title: chrome.runtime.getManifest().name + ' (disabled for this site)', tabId: sender.tab.id });
             });
             break;
@@ -30,7 +30,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, _sendResponse) {
 
 // Fires when user clicks the addon icon in the browser toolbar.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction/onClicked
-chrome.browserAction.onClicked.addListener(function(tab) {
+chrome.browserAction.onClicked.addListener(function (tab) {
     toggleCommentsOnCurrentUrl(tab.id, new URL(tab.url));
 });
 
@@ -38,23 +38,53 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 // Fires when a new browser window is opened.
 // Gets latest definitions and enables/disables the popup.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows/onCreated
-chrome.windows.onCreated.addListener(function() {
+chrome.windows.onCreated.addListener(function () {
     // TODO: Replace this with a mechanism that just checks a timestamp?
     getUpdatedDefinitions();
-    chrome.storage.local.get('one_click_option', function(result) {
-        chrome.browserAction.setPopup({popup: (result?.one_click_option === true) ? '' : '../popup.html'});
+    chrome.storage.local.get('one_click_option', function (result) {
+        chrome.browserAction.setPopup({ popup: (result?.one_click_option === true) ? '' : '../popup.html' });
     });
 });
+
+
+// Anything that needs to be done during an upgrade
+function oneTimeUpgradeWork() {
+    // Rename excluded_urls to user_whitelist in storage (1.5.2 -> 1.5.3)
+    chrome.storage.sync.get('excluded_urls', function (result) {
+        if (result?.excluded_urls != undefined) {
+            chrome.storage.sync.set({ 'user_whitelist': result.excluded_urls }, function () {
+                chrome.storage.sync.remove('excluded_urls');
+            });
+        }
+    });
+    // Rename blacklist_urls to user_blacklist in storage (1.5.2 -> 1.5.3)
+    chrome.storage.sync.get('blacklist_urls', function (result) {
+        if (result?.blacklist_urls != undefined) {
+            chrome.storage.sync.set({ 'user_blacklist': result.blacklist_urls }, function () {
+                chrome.storage.sync.remove('blacklist_urls');
+            });
+        }
+    });
+    // Definitions will be re-downloaded, stored in different storage key (1.5.2 -> 1.5.3)
+    chrome.storage.sync.remove('definitions');
+    // Move setting to sync'd storage and rename (1.5.2 -> 1.5.3)
+    chrome.storage.local.get('one_click_option', function (result) {
+        chrome.storage.sync.set({'one_click_toggle': result?.one_click_option}, function() {
+            chrome.storage.local.remove('one_click_option');
+        });
+    });
+}
 
 
 // Fires when addon is installed or updated.
 // Gets latest definitions.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/onInstalled
-chrome.runtime.onInstalled.addListener(function(details) {
+chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason === 'install' || details.reason === 'update') {
+        oneTimeUpgradeWork();
         getUpdatedDefinitions();
-        chrome.storage.local.get('one_click_option', function(result) {
-            chrome.browserAction.setPopup({popup: (result?.one_click_option === true) ? '' : '../popup.html'});
+        chrome.storage.local.get('one_click_option', function (result) {
+            chrome.browserAction.setPopup({ popup: (result?.one_click_option === true) ? '' : '../popup.html' });
         });
-     }
+    }
 });
