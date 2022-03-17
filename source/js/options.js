@@ -23,7 +23,7 @@ function saveRememberToggleSetting() {
     chrome.storage.sync.set({ 'remember_toggle': rememberToggleEnabled });
 }
 
-// TODO: need to implement this, and show a placeholder image
+// TODO: Implement this to show a placeholder image
 function saveShowPlaceholderSetting() {
     let showPlaceholderEnabled = document.getElementById('show_placeholder').checked;
     chrome.storage.sync.set({ 'show_placeholder': showPlaceholderEnabled });
