@@ -13,41 +13,48 @@ chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
         return;
     }
 
-    // If the user's toggle setting is overridden by something, either their own white or black list,
-    // or the global whitelist, then give them an indication as to why it is, and warn them that if
-    // they try to override anything by clicking toggle that it's only temporary (because the next
-    // time they reload the page and all this logic runs (again), their toggle setting will be overridden (again)).
-    let title = '';
-    if (message.overrideReason) {
-        if (message.overrideReason === 'user_whitelist') {
-            title = `${chrome.runtime.getManifest().name} (Site in your whitelist. Toggle is temporary.)`;
-        } else if (message.overrideReason === 'user_blacklist') {
-            title = `${chrome.runtime.getManifest().name} (Site in your blacklist. Toggle is temporary.)`;
-        } else if (message.overrideReason === 'global_whitelist') {
-            title = `${chrome.runtime.getManifest().name} (Site in global whitelist. Toggle is temporary.)`;
+    chrome.storage.sync.get('remember_toggle', function (rememberToggleResult) {
+        // If the user's toggle setting is overridden by something, either their own white or black list,
+        // or the global whitelist, then give them an indication as to why it is, and warn them that if
+        // they try to override anything by clicking toggle that it's only temporary (because the next
+        // time they reload the page and all this logic runs (again), their toggle setting will be overridden (again)).
+        let title = '';
+        if (message.overrideReason) {
+            if (message.overrideReason === 'user_whitelist') {
+                title = `${chrome.runtime.getManifest().name} (Site in your whitelist.`;
+            } else if (message.overrideReason === 'user_blacklist') {
+                title = `${chrome.runtime.getManifest().name} (Site in your blacklist.`;
+            } else if (message.overrideReason === 'global_whitelist') {
+                title = `${chrome.runtime.getManifest().name} (Site in global whitelist.`;
+            }
+            if (rememberToggleResult?.remember_toggle === true) {
+                title += ' Toggle is temporary.)';
+            } else {
+                title += ')';
+            }
+        } else {
+            if (message.event == 'comments_hidden') {
+                title = chrome.runtime.getManifest().name;
+            } else if (message.event == 'comments_shown') {
+                title = `${chrome.runtime.getManifest().name} (disabled for this site)`;
+            }
         }
-    } else {
-        if (message.event == 'comments_hidden') {
-            title = chrome.runtime.getManifest().name;
-        } else if (message.event == 'comments_shown') {
-            title = `${chrome.runtime.getManifest().name} (disabled for this site)`;
-        }
-    }
 
-    switch (message.event) {
-        case 'comments_hidden':
-            chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: sender.tab.id }, function () {
-                chrome.browserAction.setTitle({ title: title, tabId: sender.tab.id });
-            });
-            break;
-        case 'comments_shown':
-            chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: sender.tab.id }, function () {
-                chrome.browserAction.setTitle({ title: title, tabId: sender.tab.id });
-            });
-            break;
-        default:
-            logError(`background script not configured to run for message event: '${message.event}'`);
-    }
+        switch (message.event) {
+            case 'comments_hidden':
+                chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: sender.tab.id }, function () {
+                    chrome.browserAction.setTitle({ title: title, tabId: sender.tab.id });
+                });
+                break;
+            case 'comments_shown':
+                chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: sender.tab.id }, function () {
+                    chrome.browserAction.setTitle({ title: title, tabId: sender.tab.id });
+                });
+                break;
+            default:
+                logError(`background script not configured to run for message event: '${message.event}'`);
+        }
+    });
 });
 
 

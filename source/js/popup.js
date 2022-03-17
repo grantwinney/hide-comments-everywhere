@@ -22,28 +22,34 @@ function disableFieldsForUnsupportedUrl() {
 }
 
 function displayCorrectToggleIconForCurrentSite(tabUrl) {
-    let toggleHide = document.getElementById('toggle_hide');
-    let toggleHideIcon = document.getElementById('toggle_hide_icon');
     performActionBasedOnCommentVisibility(tabUrl, function (isCommentsHidden, overrideReason) {
-        // If the user's toggle setting is overridden by something, either their own white or black list,
-        // or the global whitelist, then give them an indication as to why it is, and warn them that if
-        // they try to override anything by clicking toggle that it's only temporary (because the next
-        // time they reload the page and all this logic runs (again), their toggle setting will be overridden (again)).
-        if (overrideReason) {
-            toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment-dots');
-            if (overrideReason === 'user_whitelist') {
-                toggleHide.title = 'Comments always allowed, per your custom whitelist. Toggle is temporary.';
-            } else if (overrideReason === 'user_blacklist') {
-                toggleHide.title = 'Comments always blocked, per your custom blacklist. Toggle is temporary.';
-            } else if (overrideReason === 'global_whitelist') {
-                toggleHide.title = 'Comments always allowed, per the global whitelist. Toggle is temporary.';
+        chrome.storage.sync.get('remember_toggle', function (rememberToggleResult) {
+            let toggleHideIcon = document.getElementById('toggle_hide_icon');
+            let updatedTitle = '';
+            // If the user's toggle setting is overridden by something, either their own white or black list,
+            // or the global whitelist, then give them an indication as to why it is, and warn them that if
+            // they try to override anything by clicking toggle that it's only temporary (because the next
+            // time they reload the page and all this logic runs (again), their toggle setting will be overridden (again)).
+            if (overrideReason) {
+                toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment-dots');
+                if (overrideReason === 'user_whitelist') {
+                    updatedTitle = 'Comments always allowed, per your custom whitelist.';
+                } else if (overrideReason === 'user_blacklist') {
+                    updatedTitle = 'Comments always blocked, per your custom blacklist.';
+                } else if (overrideReason === 'global_whitelist') {
+                    updatedTitle = 'Comments always allowed, per the global whitelist.';
+                }
+                if (rememberToggleResult?.remember_toggle === true) {
+                    updatedTitle += ' Toggle is temporary.';
+                }
+            } else if (!isCommentsHidden) {
+                // By default, the 'comments hidden' image and title are displayed, so if comments
+                // are actually being displayed, adjust the image and title as needed.
+                toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment');
+                updatedTitle = 'Comments currently allowed for this site. Hide?';
             }
-        } else if (!isCommentsHidden) {
-            // By default, the 'comments hidden' image and title are displayed, so if comments
-            // are actually being displayed, adjust the image and title as needed.
-            toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment');
-            toggleHide.title = 'Comments currently allowed for this site. Hide?';
-        }
+            document.getElementById('toggle_hide').title = updatedTitle;
+        });
     });
 }
 

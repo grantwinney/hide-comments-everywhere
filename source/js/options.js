@@ -18,7 +18,6 @@ function saveOneClickSetting() {
     chrome.browserAction.setPopup({ popup: oneClickEnabled ? '' : '../popup.html' });
 }
 
-// TODO: need to implement this, and not save toggling
 function saveRememberToggleSetting() {
     let rememberToggleEnabled = document.getElementById('remember_toggle').checked;
     chrome.storage.sync.set({ 'remember_toggle': rememberToggleEnabled });
