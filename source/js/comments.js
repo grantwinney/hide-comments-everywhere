@@ -60,14 +60,17 @@ function insertStylesIntoPage() {
 };
 
 function adjustCommentsVisibility() {
-    performActionBasedOnCommentVisibility(location, function (isCommentsHidden, _overrideReason) {
+    performActionBasedOnCommentVisibility(location, function (isCommentsHidden, overrideReason) {
         // Enable or disable the injected style sheet as appropriate.
         let stylesheet = findStylesheet();
         if (stylesheet) {
             stylesheet.disabled = !isCommentsHidden;
         }
         // Adjust the toolbar icon to show the correct image and title.
-        chrome.runtime.sendMessage({ event: isCommentsHidden ? 'comments_hidden' : 'comments_shown' });
+        chrome.runtime.sendMessage({
+            event: isCommentsHidden ? 'comments_hidden' : 'comments_shown',
+            overrideReason: overrideReason
+        });
     });
 }
 
@@ -75,18 +78,26 @@ function toggleCommentVisibility() {
     let stylesheet = findStylesheet();
     if (stylesheet) {
         stylesheet.disabled = !stylesheet.disabled;
-        chrome.storage.sync.get('user_whitelist_flags', function (result) {
-            let userWhitelistFlags = JSON.parse(result?.user_whitelist_flags ?? '{}');
-            if (stylesheet.disabled) {
-                userWhitelistFlags[location.hostname] = 1;
-            } else {
-                delete userWhitelistFlags[location.hostname];
-            }
-            // Save the user's preference for the current site in here, instead of when they click it in the popup,
-            // to avoid the case where the toggle flag was set to hide comments but the whitelists caused comments to be shown,
-            // and when the user attempts to toggle comments for the current site, the flag is set to 1 (in the popup) but this code hides the comments (causing a mismatch).
-            chrome.storage.sync.set({ 'user_whitelist_flags': JSON.stringify(userWhitelistFlags) }, function () {
-                chrome.runtime.sendMessage({ event: userWhitelistFlags[location.hostname] === 1 ? 'comments_shown' : 'comments_hidden' });
+
+        // Adjust the toolbar icon to show the correct image and title.
+        performActionBasedOnCommentVisibility(location, function (_isCommentsHidden, overrideReason) {
+            chrome.runtime.sendMessage({
+                event: stylesheet.disabled ? 'comments_shown' : 'comments_hidden',
+                overrideReason: overrideReason
+            });
+        });
+
+        // Save the toggle setting for the current site in here, instead of when it's clicked in the popup,
+        // since there's more context here as to what's going on in the page, and last-minute adjustments can be made.
+        chrome.storage.sync.get('user_whitelist_flags', function (whiteListResult) {
+            chrome.storage.sync.get('remember_toggle', function (result) {
+                let userWhitelistFlags = JSON.parse(whiteListResult?.user_whitelist_flags ?? '{}');
+                if (stylesheet.disabled && result?.remember_toggle === true) {
+                    userWhitelistFlags[location.hostname] = 1;
+                } else {
+                    delete userWhitelistFlags[location.hostname];
+                }
+                chrome.storage.sync.set({ 'user_whitelist_flags': JSON.stringify(userWhitelistFlags) });
             });
         });
     }
@@ -94,7 +105,7 @@ function toggleCommentVisibility() {
 
 // Listens for messages from background script.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/Runtime/onMessage
-chrome.runtime.onMessage.addListener(function (message, _sender, _sendResponse) {
+chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
     switch (message.event) {
         case 'update_tab':
             adjustCommentsVisibility();

@@ -5,10 +5,6 @@ const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
 const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/version.json';
 const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/sites.json';
 
-if (typeof browser === "undefined") {
-    var browser = chrome;
-}
-
 // Write an error to the console, prepended with the addon name.
 function logError(errorMessage) {
     console.error(`[${chrome.runtime.getManifest().name}]: ${errorMessage}`);
@@ -75,17 +71,11 @@ function toggleCommentsOnCurrentUrl(tabId, tabUrl) {
     if (!isCurrentUrlSupported(tabUrl)) {
         return;
     }
-    chrome.storage.sync.get('user_whitelist_flags', function (result) {
-        try {
-            // The value of the toggle setting is stored from the toggleCommentVisibility
-            // method in the content script, after the comments are displayed/hidden, to
-            // avoid a buggy situation described in more detail in there.
-            chrome.tabs.sendMessage(tabId, { event: 'toggle_tab' });
-            window.close();
-        } catch (e) {
-            logError(e);
-        }
-    });
+    // The value of the toggle setting is stored from the toggleCommentVisibility
+    // method in the content script, after the comments are displayed/hidden, to
+    // avoid a buggy situation described in more detail in there.
+    chrome.tabs.sendMessage(tabId, { event: 'toggle_tab' });
+    window.close();
 }
 
 // Check that all custom URLs are valid regex patterns
@@ -146,6 +136,7 @@ function performActionBasedOnCommentVisibility(url, action) {
 
     chrome.storage.sync.get('user_whitelist_flags', function (uwf_result) {
         // Check if toggle button was previously clicked to allow comments
+
         let userWhitelistFlags = JSON.parse(uwf_result?.user_whitelist_flags ?? '{}');
         if (userWhitelistFlags[url.hostname] === 1) {
             isCommentsHidden = false;
@@ -154,14 +145,14 @@ function performActionBasedOnCommentVisibility(url, action) {
 
         // Check user whitelist; show comments if match found
         chrome.storage.sync.get('user_whitelist', function (wh_result) {
-            if (wh_result?.user_whitelist !== undefined && urlMatchesAnyWhitelistPattern(url.href, wh_result.user_whitelist)) {
+        if (wh_result?.user_whitelist !== undefined && urlMatchesAnyWhitelistPattern(url.href, wh_result.user_whitelist)) {
                 isCommentsHidden = false;
                 overrideReason = 'user_whitelist';
             }
 
             // Load global site definitions
             chrome.storage.local.get('global_definitions', function (def_result) {
-                let globalDefinitions = JSON.parse(def_result.global_definitions ?? '{}');
+        let globalDefinitions = JSON.parse(def_result.global_definitions ?? '{}');
 
                 // Check global whitelist for current site; show comments if match found
                 if (globalDefinitions?.excluded_sites) {

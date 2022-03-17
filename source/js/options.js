@@ -2,13 +2,13 @@
 
 function loadAllSettings() {
     chrome.storage.sync.get('one_click_toggle', function (result) {
-        document.getElementById('one_click_toggle').checked = (result.one_click_toggle === true);
+        document.getElementById('one_click_toggle').checked = (result?.one_click_toggle === true);
     });
     chrome.storage.sync.get('remember_toggle', function (result) {
-        document.getElementById('remember_toggle').checked = (result.remember_toggle === true);
+        document.getElementById('remember_toggle').checked = (result?.remember_toggle === true);
     });
     chrome.storage.sync.get('show_placeholder', function (result) {
-        document.getElementById('show_placeholder').checked = (result.show_placeholder === true);
+        document.getElementById('show_placeholder').checked = (result?.show_placeholder === true);
     });
 }
 
