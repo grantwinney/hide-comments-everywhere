@@ -137,11 +137,8 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
     wireUpSaveButtonsToTextAreas();
 
     // Updates
-    getUpdatedDefinitions((version) => {
-        toastr.info(`Updated site definitions (#${version}) were found and have been applied.`, "Updated Sites Available", { timeOut: 10000 });
-    });
     $("#update-definitions").click(function () {
-        getUpdatedDefinitions(
+        getUpdatedDefinitions(true,
             (version) => { toastr.info(`Updated site definitions (#${version}) were found and have been applied.`, "Updated Sites Available"); },
             (version) => { toastr.info(`The latest site definitions (#${version}) are already applied.`, "No Updates Available"); }
         );

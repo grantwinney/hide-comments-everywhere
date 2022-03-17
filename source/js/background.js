@@ -35,18 +35,15 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 });
 
 
-// Fires when a new browser window is opened.
-// Gets latest definitions and enables/disables the popup.
-// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows/onCreated
-chrome.windows.onCreated.addListener(function () {
-    // TODO: Replace this with a mechanism that just checks a timestamp?
-    getUpdatedDefinitions();
-    chrome.storage.local.get('one_click_option', function (result) {
-        chrome.browserAction.setPopup({ popup: (result?.one_click_option === true) ? '' : '../popup.html' });
-    });
+// Fires when a new browser tab is opened.
+// Gets latest site definitions, 
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/onCreated
+chrome.tabs.onCreated.addListener(function () {
+    getUpdatedDefinitions(false);
 });
 
 
+// TODO: Test out all this logic
 // Anything that needs to be done during an upgrade
 function oneTimeUpgradeWork() {
     // Rename excluded_urls to user_whitelist in storage (1.5.2 -> 1.5.3)
@@ -69,9 +66,15 @@ function oneTimeUpgradeWork() {
     chrome.storage.sync.remove('definitions');
     // Move setting to sync'd storage and rename (1.5.2 -> 1.5.3)
     chrome.storage.local.get('one_click_option', function (result) {
-        chrome.storage.sync.set({'one_click_toggle': result?.one_click_option}, function() {
+        chrome.storage.sync.set({ 'one_click_toggle': result?.one_click_option }, function () {
             chrome.storage.local.remove('one_click_option');
         });
+    });
+    // By default, remember the toggle setting per site; can be disabled in options
+    chrome.storage.sync.get('remember_toggle', function (result) {
+        if (result?.remember_toggle === undefined) {
+            chrome.storage.sync.set({ 'remember_toggle': true });
+        }
     });
 }
 
@@ -82,9 +85,9 @@ function oneTimeUpgradeWork() {
 chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason === 'install' || details.reason === 'update') {
         oneTimeUpgradeWork();
-        getUpdatedDefinitions();
-        chrome.storage.local.get('one_click_option', function (result) {
-            chrome.browserAction.setPopup({ popup: (result?.one_click_option === true) ? '' : '../popup.html' });
+        getUpdatedDefinitions(true);
+        chrome.storage.sync.get('one_click_toggle', function (result) {
+            chrome.browserAction.setPopup({ popup: (result?.one_click_toggle === true) ? '' : '../popup.html' });
         });
     }
 });

@@ -6,6 +6,7 @@ a {
 
 a:hover {
     color: red;
+    text-decoration: underline;
 }
 
 body {
@@ -22,10 +23,6 @@ body > div {
 
 div.pane-title {
     padding-bottom: 20px;
-}
-
-.checkbox-container {
-    display: flex;
 }
 
 html {
@@ -48,8 +45,8 @@ input[type=submit] {
     padding: 5px 10px;
 }
 
-#save-blacklist, #submit-blacklist {
-    margin-bottom: 20px;
+i {
+    padding-right: 10px;
 }
 
 input[type=submit]:hover {
@@ -102,7 +99,6 @@ textarea {
 
 #footer a {
     color: black;
-    text-decoration: none;
 }
 
 #footer a,
@@ -112,14 +108,13 @@ textarea {
 
 #footer a:hover {
     color: #38d;
-    text-decoration: underline;
 }
 
 #footer a.fa {
     padding: 0px 5px;
 }
 
-#footer a.fa:hover {
+#footer a.fa:hover, #footer a.fa-brands:hover {
     text-decoration: none;
 }
 
@@ -171,7 +166,12 @@ textarea {
     padding: 0px 10px;
 }
 
+#save-blacklist, #submit-blacklist {
+    margin-bottom: 20px;
+}
+
 .checkbox-container {
+    display: flex;
     margin-top: 10px;
 }
 

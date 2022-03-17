@@ -66,7 +66,7 @@ function adjustCommentsVisibility() {
         if (stylesheet) {
             stylesheet.disabled = !isCommentsHidden;
         }
-        // Adjust the toolbar icon to show the correct image.
+        // Adjust the toolbar icon to show the correct image and title.
         chrome.runtime.sendMessage({ event: isCommentsHidden ? 'comments_hidden' : 'comments_shown' });
     });
 }

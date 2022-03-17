@@ -77,7 +77,7 @@ function addUrlToUserBlacklist(tabUrl) {
         } else {
             userBlacklist += regexUrl;
         }
-        userBlacklist += `; ${starter_selector}`;
+        userBlacklist += `; ${STARTER_SELECTOR}`;
         chrome.storage.sync.set({ 'user_blacklist': userBlacklist }, function () {
             chrome.runtime.openOptionsPage();
         });

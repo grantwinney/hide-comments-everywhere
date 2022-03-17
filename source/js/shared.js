@@ -1,39 +1,68 @@
 let invalidProtocols = ['chrome-extension', 'edge'];
-const starter_selector = '#place_your_selectors_here';
+const STARTER_SELECTOR = '#place_your_selectors_here';
+const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
+// TODO: Change these values back, here and in manifest file, before uploading to store
+const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/version.json';
+const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/sites.json';
+
+if (typeof browser === "undefined") {
+    var browser = chrome;
+}
 
 // Write an error to the console, prepended with the addon name.
 function logError(errorMessage) {
     console.error(`[${chrome.runtime.getManifest().name}]: ${errorMessage}`);
 }
 
-// Get the current site definitions.
-function getUpdatedDefinitions(updatedAction = undefined, notUpdatedAction = undefined) {
-    // TODO: Change these values back, here and in manifest file, before uploading to store
-    let versionJson = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/version.json';
-    let sitesJson = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/sites.json';
+function getCurrentSeconds() {
+    return new Date().getTime() / 1000 | 0;
+}
 
-    axios.get(versionJson)
-        .then(function (cloudVersionResult) {
-            chrome.storage.local.get('definition_version', function (localVersionResult) {
-                if (localVersionResult?.definition_version == undefined || !Number.isInteger(localVersionResult.definition_version) || localVersionResult.definition_version < cloudVersionResult.data.version) {
-                    axios.get(sitesJson)
-                        .then(function (cloudSitesResult) {
-                            chrome.storage.local.set({ 'global_definitions': JSON.stringify(cloudSitesResult.data) });
-                            chrome.storage.local.set({ 'definition_version': cloudVersionResult.data.version });
-                            if (updatedAction) {
-                                updatedAction(cloudVersionResult.data.version);
+// Get the latest site definitions.
+function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdatedAction = undefined) {
+    chrome.storage.local.get('definition_version', function (localVersionResult) {
+        chrome.storage.local.get('definition_version_last_check', function (lastCheckResult) {
+            // If the definition version or last update time is missing, or we're forcing an update, check for new definitions
+            if (localVersionResult?.definition_version === undefined
+                || !Number.isInteger(localVersionResult.definition_version)
+                || lastCheckResult.definition_version_last_check === undefined
+                || !Number.isInteger(lastCheckResult.definition_version_last_check)
+                || getCurrentSeconds() - lastCheckResult.definition_version_last_check > GLOBAL_DEFINITION_EXPIRATION_SEC
+                || forceUpdate) {
+
+                axios.get(VERSION_JSON)
+                    .then(function (cloudVersionResult) {
+                        // Even if forcing an update, if the definition version is available locally and matches what's
+                        // on GitHub, there's no point in wasting the bandwidth to get the definitions again.
+                        if (localVersionResult?.definition_version === undefined
+                            || !Number.isInteger(localVersionResult.definition_version)
+                            || localVersionResult.definition_version < cloudVersionResult.data.version) {
+                            axios.get(SITES_JSON)
+                                .then(function (cloudSitesResult) {
+                                    chrome.storage.local.set({ 'global_definitions': JSON.stringify(cloudSitesResult.data) });
+                                    chrome.storage.local.set({ 'definition_version': cloudVersionResult.data.version });
+                                    chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
+                                    if (updatedAction) {
+                                        updatedAction(cloudVersionResult.data.version);
+                                    }
+                                })
+                                .catch(function (error) {
+                                    logError(JSON.stringify(error));
+                                });
+                        } else {
+                            chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
+                            if (notUpdatedAction) {
+                                notUpdatedAction(localVersionResult.definition_version);
                             }
-                        })
-                        .catch(function (error) {
-                            logError(JSON.stringify(error));
-                        });
-                } else {
-                    if (notUpdatedAction) {
-                        notUpdatedAction(localVersionResult.definition_version);
-                    }
+                        }
+                    });
+            } else {
+                if (notUpdatedAction) {
+                    notUpdatedAction(localVersionResult.definition_version);
                 }
-            });
+            }
         });
+    });
 }
 
 function isCurrentUrlSupported(tabUrl) {
@@ -102,7 +131,7 @@ function getBlacklistedElementsToHide(url, patterns) {
         let parts = patternsArray[i].split(";");
         let urlPart = parts[0];
         let selectorPart = parts[1];
-        if (selectorPart.trim() === '' || selectorPart.trim() === starter_selector) {
+        if (selectorPart.trim() === '' || selectorPart.trim() === STARTER_SELECTOR) {
             continue;
         } else if (urlMatchesPattern(url, urlPart)) {
             return selectorPart;
