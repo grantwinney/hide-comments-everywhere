@@ -24,17 +24,25 @@ function disableFieldsForUnsupportedUrl() {
 function displayCorrectToggleIconForCurrentSite(tabUrl) {
     performActionBasedOnCommentVisibility(tabUrl, function (isCommentsHidden, overrideReason) {
         let toggleHideIcon = document.getElementById('toggle_hide_icon');
+        // By default, the 'comments hidden' image and title are displayed, so if comments
+        // are actually being displayed, adjust the image and title as needed.
         if (!isCommentsHidden) {
             toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment');
             toggleHideIcon.title = 'Comments currently allowed for this site. Hide?';
         }
+        // If the user's toggle setting is overridden by something, either their own white or black list,
+        // or the global whitelist, then give them an indication as to why it is, and warn them that if
+        // they try to override anything by clicking toggle that it's only temporary (because the next
+        // time they reload the page and all this logic runs (again), their toggle setting will be overridden (again)).
         if (overrideReason) {
+            toggleHideIcon.classList.replace('fa-comment', 'fa-comment-dots');
+            toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment-dots');
             if (overrideReason === 'user_whitelist') {
                 toggleHideIcon.title = 'Comments always allowed, per your custom whitelist. Toggle is temporary.';
             } else if (overrideReason === 'user_blacklist') {
                 toggleHideIcon.title = 'Comments always blocked, per your custom whitelist. Toggle is temporary.';
             } else if (overrideReason === 'global_whitelist') {
-                toggleHideIcon.title = 'Comments always allowed, per the global whitelist. Toggle is disabled.';
+                toggleHideIcon.title = 'Comments always allowed, per the global whitelist. Toggle is temporary.';
                 let toggleHideButton = document.getElementById('toggle_hide');
                 toggleHideButton.classList.add('disabled_button');
                 toggleHideButton.disabled = true;

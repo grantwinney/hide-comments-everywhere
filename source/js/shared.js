@@ -8,6 +8,7 @@ function logError(errorMessage) {
 
 // Get the current site definitions.
 function getUpdatedDefinitions(updatedAction = undefined, notUpdatedAction = undefined) {
+    // TODO: Change these values back, here and in manifest file, before uploading to store
     let versionJson = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/version.json';
     let sitesJson = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/sites.json';
 
@@ -46,17 +47,12 @@ function toggleCommentsOnCurrentUrl(tabId, tabUrl) {
         return;
     }
     chrome.storage.sync.get('user_whitelist_flags', function (result) {
-        let userWhitelistFlags = JSON.parse(result?.user_whitelist_flags ?? '{}');
         try {
-            if (userWhitelistFlags[tabUrl.hostname] === 1) {
-                delete userWhitelistFlags[tabUrl.hostname];
-            } else {
-                userWhitelistFlags[tabUrl.hostname] = 1;
-            }
-            chrome.storage.sync.set({ 'user_whitelist_flags': JSON.stringify(userWhitelistFlags) }, function () {
-                chrome.tabs.sendMessage(tabId, { event: 'update_tab' });
-                window.close();
-            });
+            // The value of the toggle setting is stored from the toggleCommentVisibility
+            // method in the content script, after the comments are displayed/hidden, to
+            // avoid a buggy situation described in more detail in there.
+            chrome.tabs.sendMessage(tabId, { event: 'toggle_tab' });
+            window.close();
         } catch (e) {
             logError(e);
         }
@@ -120,7 +116,7 @@ function performActionBasedOnCommentVisibility(url, action) {
     let overrideReason = '';
 
     chrome.storage.sync.get('user_whitelist_flags', function (uwf_result) {
-        // Check if 'hide comments' button was clicked for site
+        // Check if toggle button was previously clicked to allow comments
         let userWhitelistFlags = JSON.parse(uwf_result?.user_whitelist_flags ?? '{}');
         if (userWhitelistFlags[url.hostname] === 1) {
             isCommentsHidden = false;
@@ -134,26 +130,26 @@ function performActionBasedOnCommentVisibility(url, action) {
                 overrideReason = 'user_whitelist';
             }
 
-            // Check user blacklist; hide comments if match found (takes precedence over user whitelist)
-            chrome.storage.sync.get('user_blacklist', function (bl_result) {
-                let blacklistedElementsToHide = bl_result.user_blacklist !== undefined && getBlacklistedElementsToHide(url.href, bl_result.user_blacklist);
-                if (blacklistedElementsToHide) {
-                    isCommentsHidden = true;
-                    overrideReason = 'user_blacklist';
+            // Load global site definitions
+            chrome.storage.local.get('global_definitions', function (def_result) {
+                let globalDefinitions = JSON.parse(def_result.global_definitions ?? '{}');
+
+                // Check global whitelist for current site; show comments if match found
+                if (globalDefinitions?.excluded_sites) {
+                    for (let i = 0; i < globalDefinitions.excluded_sites.length; i++) {
+                        if (urlMatchesPattern(url.hostname, globalDefinitions.excluded_sites[i])) {
+                            isCommentsHidden = false;
+                            overrideReason = 'global_whitelist';
+                        }
+                    }
                 }
 
-                // Load global site definitions
-                chrome.storage.local.get('global_definitions', function (def_result) {
-                    let globalDefinitions = JSON.parse(def_result.global_definitions ?? '{}');
-
-                    // Check global whitelist for current site
-                    if (globalDefinitions?.excluded_sites) {
-                        for (let i = 0; i < globalDefinitions.excluded_sites.length; i++) {
-                            if (urlMatchesPattern(url.hostname, globalDefinitions.excluded_sites[i])) {
-                                isCommentsHidden = false;
-                                overrideReason = 'global_whitelist';
-                            }
-                        }
+                // Check user blacklist; hide comments if match found (trumps all whitelists)
+                chrome.storage.sync.get('user_blacklist', function (bl_result) {
+                    let blacklistedElementsToHide = bl_result.user_blacklist !== undefined && getBlacklistedElementsToHide(url.href, bl_result.user_blacklist);
+                    if (blacklistedElementsToHide) {
+                        isCommentsHidden = true;
+                        overrideReason = 'user_blacklist';
                     }
 
                     action(isCommentsHidden, overrideReason);

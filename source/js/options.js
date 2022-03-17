@@ -18,11 +18,13 @@ function saveOneClickSetting() {
     chrome.browserAction.setPopup({ popup: oneClickEnabled ? '' : '../popup.html' });
 }
 
+// TODO: need to implement this, and not save toggling
 function saveRememberToggleSetting() {
     let rememberToggleEnabled = document.getElementById('remember_toggle').checked;
     chrome.storage.sync.set({ 'remember_toggle': rememberToggleEnabled });
 }
 
+// TODO: need to implement this, and show a placeholder image
 function saveShowPlaceholderSetting() {
     let showPlaceholderEnabled = document.getElementById('show_placeholder').checked;
     chrome.storage.sync.set({ 'show_placeholder': showPlaceholderEnabled });
@@ -99,6 +101,22 @@ function showVersion() {
     });
 }
 
+function wireUpSaveButtonsToTextAreas() {
+    function wireUpListToSaveButton(listId, saveButtonId) {
+        document.getElementById(listId).addEventListener('keydown', function (event) {
+            if ((event.key === 's') && (event.metaKey || event.ctrlKey)) {
+                let saveButton = document.getElementById(saveButtonId);
+                if (saveButton && typeof saveButton.click === 'function') {
+                    event.preventDefault();
+                    saveButton.click();
+                }
+            }
+        });
+    }
+    wireUpListToSaveButton('user_whitelist', 'save-whitelist');
+    wireUpListToSaveButton('user_blacklist', 'save-blacklist');
+}
+
 window.addEventListener('DOMContentLoaded', function load(_event) {
     // Settings
     loadAllSettings();
@@ -114,6 +132,9 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
     $('#submit-blacklist').click(function () { submitBlacklist(); });
     $('#filters-help-hint-1').click(function () { $('#filters-help-1').slideToggle(500); });
     $('#filters-help-hint-2').click(function () { $('#filters-help-2').slideToggle(500); });
+
+    // Save Buttons
+    wireUpSaveButtonsToTextAreas();
 
     // Updates
     getUpdatedDefinitions((version) => {
