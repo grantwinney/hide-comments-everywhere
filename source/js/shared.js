@@ -135,8 +135,8 @@ function performActionBasedOnCommentVisibility(url, action) {
     let overrideReason = '';
 
     chrome.storage.sync.get('user_whitelist_flags', function (uwf_result) {
-        // Check if toggle button was previously clicked to allow comments
 
+        // Check if toggle button was previously clicked to allow comments
         let userWhitelistFlags = JSON.parse(uwf_result?.user_whitelist_flags ?? '{}');
         if (userWhitelistFlags[url.hostname] === 1) {
             isCommentsHidden = false;
@@ -145,14 +145,14 @@ function performActionBasedOnCommentVisibility(url, action) {
 
         // Check user whitelist; show comments if match found
         chrome.storage.sync.get('user_whitelist', function (wh_result) {
-        if (wh_result?.user_whitelist !== undefined && urlMatchesAnyWhitelistPattern(url.href, wh_result.user_whitelist)) {
+            if (wh_result?.user_whitelist !== undefined && urlMatchesAnyWhitelistPattern(url.href, wh_result.user_whitelist)) {
                 isCommentsHidden = false;
                 overrideReason = 'user_whitelist';
             }
 
             // Load global site definitions
             chrome.storage.local.get('global_definitions', function (def_result) {
-        let globalDefinitions = JSON.parse(def_result.global_definitions ?? '{}');
+                let globalDefinitions = JSON.parse(def_result.global_definitions ?? '{}');
 
                 // Check global whitelist for current site; show comments if match found
                 if (globalDefinitions?.excluded_sites) {

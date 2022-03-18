@@ -147,6 +147,8 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
         let tabId = tabs[0].id;
         let tabUrl = new URL(tabs[0].url);
 
+        displayCorrectToggleIconForCurrentSite(tabUrl);
+
         if (isCurrentUrlSupported(tabUrl)) {
             document.getElementById('currentHostname').value = tabUrl.hostname;
         } else {
@@ -156,7 +158,5 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
         wireUpNavBarButtons(tabId, tabUrl);
         wireUpAddBlockButtons(tabId, tabUrl);
         wireUpShareButtons();
-
-        displayCorrectToggleIconForCurrentSite(tabUrl);
     });
 });

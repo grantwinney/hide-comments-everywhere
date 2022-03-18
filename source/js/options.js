@@ -19,8 +19,18 @@ function saveOneClickSetting() {
 }
 
 function saveRememberToggleSetting() {
-    let rememberToggleEnabled = document.getElementById('remember_toggle').checked;
-    chrome.storage.sync.set({ 'remember_toggle': rememberToggleEnabled });
+    let rememberToggleCheckbox = document.getElementById('remember_toggle');
+    if (rememberToggleCheckbox.checked) {
+        chrome.storage.sync.set({ 'remember_toggle': true });
+    } else {
+        let sure = confirm("This will clear toggle settings for all sites that you've previously set them for. Continue?");
+        if (!sure) {
+            rememberToggleCheckbox.checked = true;
+        } else {
+            chrome.storage.sync.remove('user_whitelist_flags');
+            chrome.storage.sync.set({ 'remember_toggle': false });
+        }
+    }
 }
 
 // TODO: Implement this to show a placeholder image
