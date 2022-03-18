@@ -140,7 +140,7 @@ function performActionBasedOnCommentVisibility(url, action) {
         let userWhitelistFlags = JSON.parse(uwf_result?.user_whitelist_flags ?? '{}');
         if (userWhitelistFlags[url.hostname] === 1) {
             isCommentsHidden = false;
-            overrideReason = "user_whitelist_flag";
+            overrideReason = 'user_whitelist_flag';
         }
 
         // Check user whitelist; show comments if match found

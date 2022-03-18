@@ -30,7 +30,7 @@ function displayCorrectToggleIconForCurrentSite(tabUrl) {
             // or the global whitelist, then give them an indication as to why it is, and warn them that if
             // they try to override anything by clicking toggle that it's only temporary (because the next
             // time they reload the page and all this logic runs (again), their toggle setting will be overridden (again)).
-            if (overrideReason) {
+            if (overrideReason && overrideReason !== 'user_whitelist_flag') {
                 toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment-dots');
                 if (overrideReason === 'user_whitelist') {
                     updatedTitle = 'Comments always allowed, per your custom whitelist.';

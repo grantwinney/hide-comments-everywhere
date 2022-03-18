@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
         // they try to override anything by clicking toggle that it's only temporary (because the next
         // time they reload the page and all this logic runs (again), their toggle setting will be overridden (again)).
         let title = '';
-        if (message.overrideReason) {
+        if (message.overrideReason && message.overrideReason !== 'user_whitelist_flag') {
             if (message.overrideReason === 'user_whitelist') {
                 title = `${chrome.runtime.getManifest().name} (Site in your whitelist.`;
             } else if (message.overrideReason === 'user_blacklist') {
