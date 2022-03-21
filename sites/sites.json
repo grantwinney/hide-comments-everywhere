@@ -6,7 +6,7 @@
         "developercommunity2.visualstudio.com"
     ],
     "excluded_selectors": "code .comment, pre .comment, textarea.comments",
-    "catchall_selectors": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comment_area, .comments_area, .comment-area, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper, #hyvor-talk-view, #spotim-specific, .guestbook, #guestbook, #replybox",
+    "catchall_selectors": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comment_area, .comments_area, .comment-area, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #add_comment, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper, #hyvor-talk-view, #spotim-specific, .guestbook, #guestbook, #replybox",
     "sites": {
         "abcnews.go.com": ".CommentButton",
         "askubuntu.com": ".comments, .comments-link, .js-link-separator",
