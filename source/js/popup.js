@@ -48,7 +48,9 @@ function displayCorrectToggleIconForCurrentSite(tabUrl) {
                 toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment');
                 updatedTitle = 'Comments currently allowed for this site. Hide?';
             }
-            document.getElementById('toggle_hide').title = updatedTitle;
+            if (updatedTitle) {
+                document.getElementById('toggle_hide').title = updatedTitle;
+            }
         });
     });
 }
