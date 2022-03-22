@@ -175,6 +175,10 @@ textarea {
     margin-top: 10px;
 }
 
+.checkbox-container > label li {
+    padding-bottom: 5px;
+}
+
 .header-title {
     font-size: x-large;
     margin-left: 20px;
