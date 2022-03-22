@@ -43,7 +43,7 @@ function insertStylesIntoPage() {
 
         // Apply selectors from user blacklist if any (trumps site definitions)
         chrome.storage.sync.get('user_blacklist', function (bl_result) {
-            let blacklistedElementsToHide = bl_result.user_blacklist !== undefined && getBlacklistedElementsToHide(location.hostname, bl_result.user_blacklist);
+            let blacklistedElementsToHide = bl_result.user_blacklist !== undefined && getBlacklistedElementsToHide(location.href, bl_result.user_blacklist);
             if (blacklistedElementsToHide) {
                 elementsToHide = blacklistedElementsToHide;
             }
