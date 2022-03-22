@@ -34,7 +34,7 @@
     "background": {
         "scripts": [
             "js/third-party/jquery-3.6.0.min.js",
-            "js/third-party/axios.js",
+            "js/third-party/axios.min.js",
             "js/third-party/toastr.min.js",
             "js/shared.js",
             "js/background.js"
@@ -45,7 +45,7 @@
     "content_scripts": [
         {
             "js": [
-                "js/third-party/axios.js",
+                "js/third-party/axios.min.js",
                 "js/shared.js",
                 "js/comments.js"
             ],
