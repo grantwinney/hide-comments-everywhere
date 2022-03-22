@@ -122,7 +122,7 @@ function getBlacklistedElementsToHide(url, patterns) {
         let parts = patternsArray[i].split(";");
         let urlPart = parts[0];
         let selectorPart = parts[1];
-        if (selectorPart.trim() === '' || selectorPart.trim() === STARTER_SELECTOR) {
+        if (!selectorPart || selectorPart.trim() === '' || selectorPart.trim() === STARTER_SELECTOR) {
             continue;
         } else if (urlMatchesPattern(url, urlPart)) {
             return selectorPart;
