@@ -1,7 +1,6 @@
 a {
     color: blue;
     cursor: hand !important;
-    text-decoration: none;
 }
 
 a:hover {
@@ -108,17 +107,16 @@ textarea {
 #footer a,
 #footer span {
     padding: 0px 10px;
+    text-decoration: none;
 }
 
 #footer a:hover {
     color: #38d;
+    text-decoration: underline;
 }
 
-#footer a.fa {
+#footer a.fa, #footer a.fa-brands {
     padding: 0px 5px;
-}
-
-#footer a.fa:hover, #footer a.fa-brands:hover {
     text-decoration: none;
 }
 
@@ -157,6 +155,7 @@ textarea {
 
 #options-nav > a {
     padding: 0px 5px;
+    text-decoration: none;
 }
 
 #regex-samples {

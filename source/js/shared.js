@@ -1,4 +1,4 @@
-let invalidProtocols = ['chrome-extension', 'edge'];
+let invalidProtocols = ['chrome-extension', 'edge', 'moz-extension', 'about'];
 const STARTER_SELECTOR = '#place_your_selectors_here';
 const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
 
