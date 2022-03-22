@@ -163,6 +163,8 @@ function showVersion() {
     chrome.storage.local.get('definition_version', function (result) {
         document.getElementById('definitions-version').innerText = result?.definition_version ?? "N/A";
     });
+    document.getElementById('user-agent').innerText = navigator.userAgent;
+    document.getElementById('platform').innerText = navigator.userAgentData?.platform ?? navigator.platform;
 }
 
 // FOOTER
