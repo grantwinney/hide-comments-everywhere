@@ -63,5 +63,10 @@
                 "mac": "Command+Shift+H"
             }
         }
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{c39bcadb-15e8-46e0-b853-780e4bb0de6e}"
+        }
     }
 }
