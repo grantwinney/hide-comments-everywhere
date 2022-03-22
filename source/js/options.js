@@ -128,9 +128,21 @@ function wireUpSaveButtonsToTextAreas() {
 // INFORMATIONAL
 
 function showUsedStorage() {
-    chrome.storage.local.getBytesInUse(null, function (bytes) {
-        document.getElementById('local-storage-used').innerText = bytes;
-    });
+    try {
+        chrome.storage.local.getBytesInUse(null, function (bytes) {
+            document.getElementById('local-storage-used').innerText = bytes;
+        });
+    } catch (error) {
+        // Fails in Firefox due to this bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1385832
+        chrome.storage.local.get(function(items) {
+            document.getElementById('local-storage-used').innerText = new TextEncoder().encode(
+                Object.entries(items)
+                    .map(([key, value]) => key + JSON.stringify(value))
+                    .join('')
+                ).length;
+        });
+    }
+
     chrome.storage.sync.getBytesInUse(null, function (bytes) {
         document.getElementById('sync-storage-used').innerText = bytes;
     });
