@@ -73,12 +73,11 @@ chrome.tabs.onCreated.addListener(function () {
 });
 
 
-// TODO: Test out all this logic
 // Anything that needs to be done during an upgrade
 function oneTimeUpgradeWork() {
     // Rename excluded_urls to user_whitelist in storage (1.5.2 -> 1.5.3)
     chrome.storage.sync.get('excluded_urls', function (result) {
-        if (result?.excluded_urls != undefined) {
+        if (result?.excluded_urls !== undefined) {
             chrome.storage.sync.set({ 'user_whitelist': result.excluded_urls }, function () {
                 chrome.storage.sync.remove('excluded_urls');
             });
@@ -86,7 +85,7 @@ function oneTimeUpgradeWork() {
     });
     // Rename blacklist_urls to user_blacklist in storage (1.5.2 -> 1.5.3)
     chrome.storage.sync.get('blacklist_urls', function (result) {
-        if (result?.blacklist_urls != undefined) {
+        if (result?.blacklist_urls !== undefined) {
             chrome.storage.sync.set({ 'user_blacklist': result.blacklist_urls }, function () {
                 chrome.storage.sync.remove('blacklist_urls');
             });
@@ -94,11 +93,21 @@ function oneTimeUpgradeWork() {
     });
     // Definitions will be re-downloaded, stored in different storage key (1.5.2 -> 1.5.3)
     chrome.storage.sync.remove('definitions');
+
     // Move setting to sync'd storage and rename (1.5.2 -> 1.5.3)
     chrome.storage.local.get('one_click_option', function (result) {
-        chrome.storage.sync.set({ 'one_click_toggle': result?.one_click_option }, function () {
-            chrome.storage.local.remove('one_click_option');
-        });
+        if (result?.one_click_option !== undefined) {
+            chrome.storage.sync.set({ 'one_click_toggle': result?.one_click_option }, function () {
+                chrome.browserAction.setPopup({ popup: (result?.one_click_option === true) ? '' : '../popup.html' });
+                chrome.storage.local.remove('one_click_option');
+            });
+        } else {
+            // TODO: This needs to move back into the chrome.runtime.onInstalled.addListener event handler below
+            // when this upgrade code is eventually removed
+            chrome.storage.sync.get('one_click_toggle', function (result) {
+                chrome.browserAction.setPopup({ popup: (result?.one_click_toggle === true) ? '' : '../popup.html' });
+            });
+        }
     });
     // By default, remember the toggle setting per site; can be disabled in options
     chrome.storage.sync.get('remember_toggle', function (result) {
@@ -116,8 +125,5 @@ chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason === 'install' || details.reason === 'update') {
         oneTimeUpgradeWork();
         getUpdatedDefinitions(true);
-        chrome.storage.sync.get('one_click_toggle', function (result) {
-            chrome.browserAction.setPopup({ popup: (result?.one_click_toggle === true) ? '' : '../popup.html' });
-        });
     }
 });

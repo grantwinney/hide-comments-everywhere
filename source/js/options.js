@@ -7,9 +7,9 @@ function loadAllSettings() {
     chrome.storage.sync.get('remember_toggle', function (result) {
         document.getElementById('remember_toggle').checked = (result?.remember_toggle === true);
     });
-    chrome.storage.sync.get('show_placeholder', function (result) {
-        document.getElementById('show_placeholder').checked = (result?.show_placeholder === true);
-    });
+    // chrome.storage.sync.get('show_placeholder', function (result) {
+    //     document.getElementById('show_placeholder').checked = (result?.show_placeholder === true);
+    // });
 }
 
 function saveOneClickSetting() {
@@ -131,7 +131,7 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
     loadAllSettings();
     document.getElementById('one_click_toggle').addEventListener('click', function () { saveOneClickSetting(); });
     document.getElementById('remember_toggle').addEventListener('click', function () { saveRememberToggleSetting(); });
-    document.getElementById('show_placeholder').addEventListener('click', function () { saveShowPlaceholderSetting(); });
+    // document.getElementById('show_placeholder').addEventListener('click', function () { saveShowPlaceholderSetting(); });
 
     // Filters
     loadWhitelist();
