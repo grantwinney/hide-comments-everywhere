@@ -5,7 +5,7 @@
 
     "name": "Hide Comments Everywhere",
     "description": "An anti-social social extension to hide commenting systems across the web, including Disqus, YouTube, etc.",
-    "version": "1.5.2",
+    "version": "1.6.0",
 
     "options_ui": {
         "page": "options.html",
