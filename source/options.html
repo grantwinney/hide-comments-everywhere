@@ -217,23 +217,37 @@
             are welcome. <em>(Note that both actions require signing up for a free GitHub account.)</em>
         </p>
 
-        <div id="report" class="pane-title"><i class="fa fa-question-circle" aria-hidden="true"></i>Questions? Problems?
-        </div>
+        <div id="report" class="pane-title"><i class="fa fa-question-circle" aria-hidden="true"></i>Questions? Problems?</div>
         <p>There's a few different ways to reach out if you have a problem, question, suggestion, etc.</p>
         <ul style="text-align:left">
-            <li style="padding-bottom: 5px;"><a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new" target="_blank">Open a new
+            <li><a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new" target="_blank">Open a new
                 issue</a> <em>(requires a free GitHub account)</em> and I'll address it when I can,
                 or <a href="https://github.com/grantwinney/hide-comments-everywhere/pulls" target="_blank">create a
                 pull request</a> if you have a fix.</li>
-            <li style="padding-bottom: 5px;">Use the contact/support links in each of the
+            <li>Use the contact/support links in each of the
                 <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/support" target="_blank">Chrome</a>
                 or <a href="https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere/" target="_blank">Firefox</a> stores,
                 or <a href="mailto:browser-extensions@grantwinney.com">send me an email</a>.</li>
-            <li style="padding-bottom: 5px;">Lastly, feel free to leave a comment <a href="https://grantwinney.com/hide-comments-everywhere#comments" target="_blank">on my blog</a>.</li>
+            <li>Lastly, feel free to leave a comment <a href="https://grantwinney.com/hide-comments-everywhere#comments" target="_blank">on my blog</a>.</li>
         </ul>
         <p>If you've been using this extension for awhile and enjoy it, please leave a rating for
             <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/reviews" target="_blank">Chrome</a>
             or <a href="https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere/reviews" target="_blank">Firefox</a>. Thanks!
+
+        <div id="report" class="pane-title"><i class="fa fa-info-circle" aria-hidden="true"></i>Info</div>
+        <p>If you run into a problem, I may ask for the information here, or you can just include it when you contact me.</p>
+        <ul style="text-align:left">
+            <li>Addon version: <span id="addon-version"></span></li>
+            <li>Definitions version: <span id="definitions-version"></span></li>
+            <li>Local storage used: <span id="local-storage-used"></span> bytes</li>
+            <li>Sync storage used: <span id="sync-storage-used"></span> bytes
+                <ul>
+                    <li style="padding-top: 5px">Toggle flag settings: <span id="sync-storage-used-toggles"></span> bytes</li>
+                    <li>Personal whitelist: <span id="sync-storage-used-personal-whitelist"></span> bytes</li>
+                    <li>Personal blacklist: <span id="sync-storage-used-personal-blacklist"></span> bytes</li>
+                </ul>
+            </li>
+        </ul>
     </div>
 
     <div id="footer">
@@ -246,8 +260,7 @@
                 Issue</a> |
             <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)"
                 target="_blank">Submit URL</a> |
-            <span id="version"></span>
-            <span style="padding-left:5px">|</span>
+            <span id="copyright"></span>
             <a href="https://github.com/grantwinney" class="fa-brands fa-github fa-lg" aria-hidden="true" title="GitHub"
                 target="_blank"></a>
             <a href="https://grantwinney.com/" class="fa fa-globe fa-lg" aria-hidden="true" title="Blog"

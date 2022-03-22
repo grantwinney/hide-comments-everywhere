@@ -1,3 +1,16 @@
+function alertIfNewerDefinitions() {
+    chrome.storage.local.get('definition_version', function (localVersionResult) {
+        axios.get(VERSION_JSON)
+            .then(function (cloudVersionResult) {
+                if (localVersionResult?.definition_version === undefined
+                    || !Number.isInteger(localVersionResult.definition_version)
+                    || localVersionResult.definition_version < cloudVersionResult.data.version) {
+                    toastr.info(`New definitions (#${cloudVersionResult.data.version}) are available.<br>Click <a href="#updates" style="font-weight:bold">Update Definitions</a> to get them.`, "Updated Sites Available", { timeOut: 10000 });
+                };
+            });
+    });
+}
+
 // SETTINGS
 
 function loadAllSettings() {
@@ -96,20 +109,6 @@ function submitBlacklist() {
         });
 }
 
-// FOOTER
-
-function showVersion() {
-    let manifest = chrome.runtime.getManifest();
-    let version = document.getElementById('version');
-    version.innerHTML = `&copy; 2018 - ${(new Date()).getFullYear()}, ver ${manifest.version}`
-
-    chrome.storage.local.get('definition_version', function (result) {
-        if (result?.definition_version) {
-            version.innerHTML += ` (${result.definition_version})`;
-        }
-    });
-}
-
 function wireUpSaveButtonsToTextAreas() {
     function wireUpListToSaveButton(listId, saveButtonId) {
         document.getElementById(listId).addEventListener('keydown', function (event) {
@@ -126,18 +125,42 @@ function wireUpSaveButtonsToTextAreas() {
     wireUpListToSaveButton('user_blacklist', 'save-blacklist');
 }
 
-function alertIfNewerDefinitions() {
-    chrome.storage.local.get('definition_version', function (localVersionResult) {
-        axios.get(VERSION_JSON)
-            .then(function (cloudVersionResult) {
-                if (localVersionResult?.definition_version === undefined
-                    || !Number.isInteger(localVersionResult.definition_version)
-                    || localVersionResult.definition_version < cloudVersionResult.data.version) {
-                    toastr.info(`New definitions (#${cloudVersionResult.data.version}) are available.<br>Click <a href="#updates" style="font-weight:bold">Update Definitions</a> to get them.`, "Updated Sites Available", { timeOut: 10000 });
-                };
-            });
+// INFORMATIONAL
+
+function showUsedStorage() {
+    chrome.storage.local.getBytesInUse(null, function (bytes) {
+        document.getElementById('local-storage-used').innerText = bytes;
+    });
+    chrome.storage.sync.getBytesInUse(null, function (bytes) {
+        document.getElementById('sync-storage-used').innerText = bytes;
+    });
+    chrome.storage.sync.getBytesInUse('user_whitelist_flags', function (bytes) {
+        document.getElementById('sync-storage-used-toggles').innerText = bytes;
+    });
+    chrome.storage.sync.getBytesInUse('user_whitelist', function (bytes) {
+        document.getElementById('sync-storage-used-personal-whitelist').innerText = bytes;
+    });
+    chrome.storage.sync.getBytesInUse('user_blacklist', function (bytes) {
+        document.getElementById('sync-storage-used-personal-blacklist').innerText = bytes;
     });
 }
+
+function showVersion() {
+    let manifest = chrome.runtime.getManifest();
+    document.getElementById('addon-version').innerText = manifest.version;
+    chrome.storage.local.get('definition_version', function (result) {
+        document.getElementById('definitions-version').innerText = result?.definition_version ?? "N/A";
+    });
+}
+
+// FOOTER
+
+function showFooter() {
+    let copyright = document.getElementById('copyright');
+    copyright.innerText = `© 2018 - ${(new Date()).getFullYear()}`
+}
+
+
 
 window.addEventListener('DOMContentLoaded', function load(_event) {
     // Settings
@@ -167,5 +190,8 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
         );
     });
 
+    // Info
+    showUsedStorage();
     showVersion();
+    showFooter();
 });

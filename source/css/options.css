@@ -55,6 +55,10 @@ input[type=submit]:hover {
     color: black;
 }
 
+li {
+    padding-bottom: 5px;
+}
+
 p {
     margin-top: 0px;
 }
@@ -173,10 +177,6 @@ textarea {
 .checkbox-container {
     display: flex;
     margin-top: 10px;
-}
-
-.checkbox-container > label li {
-    padding-bottom: 5px;
 }
 
 .header-title {
