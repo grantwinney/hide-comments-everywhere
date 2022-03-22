@@ -128,17 +128,14 @@ function wireUpSaveButtonsToTextAreas() {
 
 function alertIfNewerDefinitions() {
     chrome.storage.local.get('definition_version', function (localVersionResult) {
-        if (localVersionResult?.definition_version === undefined
-            || !Number.isInteger(localVersionResult.definition_version)) {
-            axios.get(VERSION_JSON)
-                .then(function (cloudVersionResult) {
-                    if (localVersionResult?.definition_version === undefined
-                        || !Number.isInteger(localVersionResult.definition_version)
-                        || localVersionResult.definition_version < cloudVersionResult.data.version) {
-                        toastr.info(`Updated site definitions (#${cloudVersionResult.data.version}) are available. Click 'Update Definitions' below to get them.`, "Updated Sites Available", { timeOut: 10000 });
-                    }
-                });
-        }
+        axios.get(VERSION_JSON)
+            .then(function (cloudVersionResult) {
+                if (localVersionResult?.definition_version === undefined
+                    || !Number.isInteger(localVersionResult.definition_version)
+                    || localVersionResult.definition_version < cloudVersionResult.data.version) {
+                    toastr.info(`New definitions (#${cloudVersionResult.data.version}) are available.<br>Click <a href="#updates" style="font-weight:bold">Update Definitions</a> to get them.`, "Updated Sites Available", { timeOut: 10000 });
+                };
+            });
     });
 }
 
