@@ -1,7 +1,8 @@
 let invalidProtocols = ['chrome-extension', 'edge'];
 const STARTER_SELECTOR = '#place_your_selectors_here';
 const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
-// TODO: Change these values back, here and in manifest file, before uploading to store
+
+// TODO: Change these back to point to master, after a reasonable amount of time has passed for everyone to get the updated code
 const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/version.json';
 const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/sites.json';
 
