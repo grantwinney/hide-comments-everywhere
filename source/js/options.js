@@ -167,13 +167,6 @@ function showVersion() {
     document.getElementById('platform').innerText = navigator.userAgentData?.platform ?? navigator.platform;
 }
 
-// FOOTER
-
-function showFooter() {
-    let copyright = document.getElementById('copyright');
-    copyright.innerText = `© 2018 - ${(new Date()).getFullYear()}`
-}
-
 
 
 window.addEventListener('DOMContentLoaded', function load(_event) {
@@ -207,5 +200,7 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
     // Info
     showUsedStorage();
     showVersion();
-    showFooter();
+
+    // Footer
+    document.getElementById('copyright').innerText = `© 2018 - ${(new Date()).getFullYear()}`
 });
