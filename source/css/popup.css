@@ -134,7 +134,8 @@ input[type=submit]:hover, button[type=submit]:hover {
 
 #share_box_comment {
     font-family: Arial, Helvetica, sans-serif;
-    height: 100%;
+    font-size: small;
+    height: 40px;
     resize: none;
     width: 100%;
 }
