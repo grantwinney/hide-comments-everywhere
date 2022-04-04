@@ -51,8 +51,14 @@ function insertStylesIntoPage() {
             // Finally, inject the styles into the page
             let style = document.createElement('style');
             style.title = "hide_comments_everywhere";
-            document.documentElement.prepend(style);
             style.textContent = elementsToHide ? `${elementsToHide} { display: none; visibility: hidden } ${globalDefinitions.excluded_selectors} { display: unset; visibility: unset }` : '';
+
+            var header = document.querySelector('head');
+            if (header) {
+                header.appendChild(style);
+            } else {
+                document.documentElement.prepend(style);
+            }
 
             adjustCommentsVisibility();
         });
