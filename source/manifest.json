@@ -3,8 +3,8 @@
     "author": "Grant Winney",
     "homepage_url": "https://github.com/grantwinney/chrome-extension-block-comments",
     "name": "Hide Comments Everywhere",
-    "description": "An anti-social social extension to hide commenting systems across the web, including Disqus, YouTube, etc.",
-    "version": "1.6.4",
+    "description": "Block comments across the web. Show the ones you want. You're in control!",
+    "version": "1.6.5",
     "options_ui": {
         "page": "options.html",
         "open_in_tab": true
@@ -12,8 +12,8 @@
     "permissions": [
         "activeTab",
         "storage",
-        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/sites.json",
-        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/version.json"
+        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json",
+        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json"
     ],
     "browser_action": {
         "default_icon": {

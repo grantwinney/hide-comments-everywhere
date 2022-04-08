@@ -2,9 +2,8 @@ let invalidProtocols = ['chrome-extension', 'edge', 'moz-extension', 'about'];
 const STARTER_SELECTOR = '#place_your_selectors_here';
 const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
 
-// TODO: Change these back to point to master, after a reasonable amount of time has passed for everyone to get the updated code
-const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/version.json';
-const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/upgrade/sites/sites.json';
+const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json';
+const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
 
 // Write an error to the console, prepended with the addon name.
 function logError(errorMessage) {
