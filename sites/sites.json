@@ -1,16 +1,15 @@
 {
-    "exclusions": [
+    "excluded_sites": [
         "github.com",
         "help.republicwireless.com",
         "talk.hyvor.com",
         "developercommunity2.visualstudio.com"
     ],
-    "excluded_selectors" : [
-        "code .comment"
-    ],
-    "catchall": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comment_area, .comments_area, .comment-area, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper, #hyvor-talk-view, #spotim-specific, .guestbook, #guestbook, #replybox",
+    "excluded_selectors": "code .comment, pre .comment, textarea.comments",
+    "catchall_selectors": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comment_area, .comments_area, .comment-area, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #add_comment, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper, #hyvor-talk-view, #spotim-specific, .guestbook, #guestbook, #replybox",
     "sites": {
         "abcnews.go.com": ".CommentButton",
+        "askubuntu.com": ".comments, .comments-link, .js-link-separator",
         "www.boredpanda.com": ".comments-count, #post-comments-area",
         "www.buzzfeed.com": ".contributions, #mod-defer-user-contributions-1, #mod-defer-user-contributions-2",
         "www.crunchyroll.com": ".comment-more, div.comments",
@@ -20,13 +19,9 @@
         "devblogs.microsoft.com": ".post-comment-count, .post-comments, .dpr-wrap, #comments",
         "dev.to": ".crayons-story__details > a:nth-child(2), #comments",
         "einthusan.tv": "#UIDiscussionCompact, .stats > p:nth-child(3), a[data-blink='#UIDiscussionCompact']",
-        "www.facebook.com": ".commentable_item > div > div > div > div > div:nth-of-type(3) > span:first-child, .commentable_item > div > div > div:nth-of-type(3), .commentable_item > div > div:nth-of-type(3), a[title='Leave a comment'], [data-testid='Keycommand_wrapper_feed_story'] > div > div > div > div > div > div > div > div:nth-child(2) > div > div:nth-child(4) > div > div > div > div > div > div > div:nth-child(2), [data-testid='Keycommand_wrapper_feed_story'] > div > div > div > div > div > div > div > div:nth-child(2) > div > div:nth-child(4) > div > div > div:nth-child(2), [role='complementary'] > div:nth-child(2) > div > div > div > div:nth-child(2) > div > div > div > div:nth-child(2), [role='complementary'] > div > div > div > div > div:nth-child(4), [role='complementary'] > div > div > div > div > div:nth-child(2) > div > div > div > div:nth-child(2), [aria-label='Leave a comment']",
         "www.fmkorea.com": ".fdb_lst_wrp, .btm_area > div:nth-child(2) > span:nth-child(3)",
         "folha.uol.com.br": "#comentarios",
         "gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
-            "io9.gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
-            "earther.gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
-            "paleofuture.gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]']",
         "gogoanime.sh": ".anime_video_body_comment",
         "www.google.com": "[data-tab_type='LIVE_COMMENTS']",
         "www.haaretz.co.il": "a[href='#commentsSection'], #commentsSection, div[data-test='commentsContainer'], form[data-test='newCommentForm'], form[data-test='newCommentForm'] ~ div",
@@ -46,10 +41,9 @@
         "www.reddit.com": "[data-click-id='comments'], .icon-comment, .icon-comment + span, div.uI_hDmU5GSiudtABRz_37 > div:not(:first-child)",
         "slickdeals.net": "#commentsBox, #joinTheConversationBox, .add-comment, .add-comment + span, a[href='#commentsBox']",
         "stackexchange.com": ".comments, .comments-link, .js-link-separator",
-            "askubuntu.com": ".comments, .comments-link, .js-link-separator",
-            "stackoverflow.blog": ".comments-wrapper",
-            "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
-            "superuser.com": ".comments, .comments-link, .js-link-separator",
+        "stackoverflow.blog": ".comments-wrapper",
+        "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
+        "superuser.com": ".comments, .comments-link, .js-link-separator",
         "www.techdirt.com": ".storylinks, .comments",
         "www.tiktok.com": "[data-e2e$='comment-icon'], [data-e2e$='comment-count'], [class*='DivCommentListContainer'], [class*='DivBottomCommentContainer']",
         "tweakers.net": "#reacties, #articleMeta .commentCount",
