@@ -6,12 +6,13 @@
         "developercommunity2.visualstudio.com"
     ],
     "excluded_selectors": "code .comment, pre .comment, textarea.comments",
-    "catchall_selectors": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comment_area, .comments_area, .comment-area, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #add_comment, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper, #hyvor-talk-view, #spotim-specific, .guestbook, #guestbook, #replybox",
+    "catchall_selectors": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comment_area, .comments_area, .comment-area, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #add_comment, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper, #hyvor-talk-view, #spotim-specific, .guestbook, #guestbook, #replybox, #comment-thread, .comment-thread",
     "sites": {
         "abcnews.go.com": ".CommentButton",
         "askubuntu.com": ".comments, .comments-link, .js-link-separator",
         "www.boredpanda.com": ".comments-count, #post-comments-area",
         "www.buzzfeed.com": ".contributions, #mod-defer-user-contributions-1, #mod-defer-user-contributions-2",
+        "beta.crunchyroll.com": ".series-reviews-section",
         "www.crunchyroll.com": ".comment-more, div.comments",
         "www.dailykos.com": "#react-comments, .dk-social-count, .comment-counts-btn, .stories-grid__story__inner__comment-count.story-associations__comment-count",
         "www.dailymail.co.uk": ".comments-count, .share-count, .comments-link, #reader-comments",
