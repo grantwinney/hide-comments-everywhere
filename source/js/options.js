@@ -6,6 +6,7 @@ function alertIfNewerDefinitions() {
                     || !Number.isInteger(localVersionResult.definition_version)
                     || localVersionResult.definition_version < cloudVersionResult.data.version) {
                     toastr.info(`New definitions (#${cloudVersionResult.data.version}) are available.<br>Click <a href="#updates" style="font-weight:bold">Update Definitions</a> to get them.`, "Updated Sites Available", { timeOut: 10000 });
+                    document.getElementById('definitions-newest-version').innerText = cloudVersionResult.data.version;
                 };
             });
     });
@@ -161,7 +162,10 @@ function showVersion() {
     let manifest = chrome.runtime.getManifest();
     document.getElementById('addon-version').innerText = manifest.version;
     chrome.storage.local.get('definition_version', function (result) {
-        document.getElementById('definitions-version').innerText = result?.definition_version ?? "N/A";
+        document.getElementById('definitions-current-version').innerText = result?.definition_version ?? "N/A";
+    });
+    chrome.storage.local.get('definition_version_last_check', function (result) {
+        document.getElementById('definitions-last-check').innerText = result?.definition_version_last_check === undefined ? "N/A" : new Date(result.definition_version_last_check * 1000);
     });
     document.getElementById('user-agent').innerText = navigator.userAgent;
     document.getElementById('platform').innerText = navigator.userAgentData?.platform ?? navigator.platform;
