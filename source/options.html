@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/toastr.min.css" />
     <link rel="stylesheet" href="css/options.css" />
-    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/font-awesome-6.0.0/css/all.css">
     <script src="js/third-party/jquery-3.6.0.min.js"></script>
     <script src="js/third-party/axios.min.js"></script>
     <script src="js/third-party/toastr.min.js"></script>
@@ -23,18 +23,50 @@
         </span>
     </div>
     <div id="options">
-        <div class="pane-title"><i class="fa fa-cog" aria-hidden="true"></i>Settings</div>
-        <div class="checkbox-container">
-            <input id="one_click_option" type="checkbox">
-            <label for="one_click_option">Press the icon in the toolbar to toggle comment visibility, instead of
-                displaying a popup</label>
+        <div id="options-nav">
+            <a href="#settings">SETTINGS</a> |
+            <a href="#filters">FILTERS</a> |
+            <a href="#updates">UPDATES</a> |
+            <a href="#submit">SUBMIT A SITE</a> |
+            <a href="#report">REPORT A PROBLEM</a> |
+            <a href="#info">INFO</a>
         </div>
 
-        <div class="pane-title"><i class="fa fa-filter" aria-hidden="true"></i>Filters</div>
+        <div id="settings" class="pane-title"><i class="fa fa-cog" aria-hidden="true"></i>Settings</div>
+        <div class="checkbox-container">
+            <input id="one_click_toggle" type="checkbox">
+            <label for="one_click_toggle">Press the icon in the toolbar to toggle comment visibility, instead of
+                displaying a popup.</label>
+        </div>
+        <div class="checkbox-container" style="vertical-align: top;">
+            <div><input id="remember_toggle" type="checkbox" style="vertical-align: top;"></div>
+            <label for="remember_toggle">When toggling comments for a site, remember your setting for the site on future
+                visits.
+                <ul>
+                    <li>Uncheck this to make toggling comments temporary.</li>
+                    <li>Toggling is <em>always</em> temporary (regardless of this setting) if a site is in your
+                        personal white or blacklist, or if it's in the global whitelist.</li>
+                </ul>
+            </label>
+        </div>
+        <!-- <div class="checkbox-container">
+            <input id="show_placeholder" type="checkbox">
+            <label for="show_placeholder">Show a placeholder image, to make it obvious where comments were
+                removed.</label>
+        </div> -->
+        <div>
+            If you want to change or disable the shortcut associated with this addon in:
+            <ul>
+                <li>Chrome, Edge, <a href="https://en.wikipedia.org/wiki/Chromium_(web_browser)#Browsers_based_on_Chromium" target="_blank">etc</a>: Open in a new tab: chrome://extensions/shortcuts</li>
+                <li>Firefox: Open the <a href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox" target="_blank">Manage Extension Shortcuts</a> page</li>
+            </ul> 
+        </div>
+
+        <div id="filters" class="pane-title"><i class="fa fa-filter" aria-hidden="true"></i>Filters</div>
         <div>
             <p>
                 Specify a list of URLs (one per line) that comments should <em>never</em> be blocked on.
-                <a id="filters-help-hint-1">See examples.</a>
+                <a id="filters-help-hint-1" style="cursor:pointer">See examples.</a>
             </p>
         </div>
         <div id="filters-help-1">
@@ -69,24 +101,29 @@
             </table>
         </div>
         <div>
-            <textarea id="excluded_urls"></textarea>
+            <textarea id="user_whitelist"></textarea>
         </div>
         <div>
             <input id="save-whitelist" type="submit" value="Save Whitelist">
         </div>
         <div style="margin-top: 20px">
             <p>
-                Specify a list of URLs (one per line) that comments should <em>always</em> be blocked on, along with their associated CSS selectors.
+                Specify a list of URLs (one per line) that comments should <em>always</em> be blocked on, along with
+                their associated CSS selectors.
                 If a site matches a pattern in both lists, the blacklist takes precedence and comments will be hidden.
-                <a id="filters-help-hint-2">See examples.</a>
+                <a id="filters-help-hint-2" style="cursor:pointer">See examples.</a>
             </p>
         </div>
         <div id="filters-help-2">
             <p>
                 It's not enough to just specify a URL to block comments on. You have to specify how to locate the
-                comments on the page too, which can be accomplished with <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors">CSS Selectors</a>.
-                You can <a href="https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json">check out the selectors I've defined</a>
-                if you want examples, then (on a single line) enter the pattern for the URL, followed by a semicolon, and then the CSS Selector (without surrounding quotes).
+                comments on the page too, which can be accomplished with <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors" target="_blank">CSS Selectors</a>.
+                You can <a
+                    href="https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json" target="_blank">check
+                    out the selectors I've defined</a>
+                if you want examples, then (on a single line) enter the pattern for the URL, followed by a semicolon,
+                and then the CSS Selector (without surrounding quotes).
             </p>
             <p>Each URL must be a <a
                     href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions"
@@ -119,7 +156,7 @@
             </table>
             <br>
             <p>
-                Each <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors">CSS Selector</a> should
+                Each <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors" target="_blank">CSS Selector</a> should
                 be on the same line, separated from the URL by a single semicolon. Here are some examples:
             </p>
             <table id="regex-samples">
@@ -149,7 +186,7 @@
             </p>
         </div>
         <div>
-            <textarea id="blacklist_urls"></textarea>
+            <textarea id="user_blacklist"></textarea>
         </div>
         <div>
             <input id="save-blacklist" type="submit" value="Save Blacklist">
@@ -164,38 +201,69 @@
             </p>
         </div>
 
-        <div class="pane-title"><i class="fa fa-cloud-download" aria-hidden="true"></i>Updates</div>
-        <p style="margin: 0px">The <a
-                href="https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json">master
-                list of blocked sites</a> is occasionally updated, and when it is, you'll see a notification on this
-            page.
-            Updates are applied automatically when the browser is restarted, or manually by clicking on the
-            notification.
+        <div id="updates" class="pane-title"><i class="fa fa-cloud-download" aria-hidden="true"></i>Updates</div>
+        <p style="margin: 0px">The
+            <a href="https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json" target="_blank">master list of blocked sites</a>
+            is occasionally updated, and when it is, you'll see a notification on this page.
+            Updates are applied automatically once a day, or manually by clicking on the button below.
         </p>
         <div>
             <input id="update-definitions" type="submit" value="Update Definitions">
         </div>
 
-        <div class="pane-title"><i class="fa fa-cloud-upload" aria-hidden="true"></i>Submit a Site</div>
+        <div id="submit" class="pane-title"><i class="fa fa-cloud-upload" aria-hidden="true"></i>Submit a Site</div>
         <p style="margin: 0px">
-            If you have a site you think should be blocked by default, <a
-                href="https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)"
-                target="_blank">open an issue</a> with as many details as possible. If you know which element(s) need to
-            be hidden, <a href="https://github.com/grantwinney/hide-comments-everywhere/compare" target="_blank">pull
-                requests</a> are welcome. <em>(Note that both actions require signing up for a free GitHub
-                account.)</em>
+            If you have a site you think should be blocked by default,
+            <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)" target="_blank">open an issue</a>
+            with as many details as possible. If you know which element(s) need to be hidden,
+            <a href="https://github.com/grantwinney/hide-comments-everywhere/pulls" target="_blank">pull requests</a>
+            are welcome. <em>(Note that both actions require signing up for a free GitHub account.)</em>
         </p>
 
-        <div class="pane-title"><i class="fa fa-question-circle" aria-hidden="true"></i>Questions? Problems?</div>
-        <p>Just <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new" target="_blank">open a new
-                issue</a> <em>(requires signing up for a free GitHub account)</em> and I'll address it as time permits,
-            or <a href="https://github.com/grantwinney/hide-comments-everywhere/compare" target="_blank">create a pull
-                request</a> if you have a fix.</p>
-        <p>If you've been using this extension for awhile and enjoy it, please leave a rating for <a
-                href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/reviews"
-                target="_blank">Chrome</a> or <a
-                href="https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere/reviews"
-                target="_blank">Firefox</a>. Thanks!
+        <div id="report" class="pane-title"><i class="fa fa-question-circle" aria-hidden="true"></i>Questions? Problems?</div>
+        <p>There's a few different ways to reach out if you have a problem, question, suggestion, etc.</p>
+        <ul style="text-align:left">
+            <li><a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new" target="_blank">Open a new
+                issue</a> <em>(requires a free GitHub account)</em> or
+                <a href="https://github.com/grantwinney/hide-comments-everywhere/pulls" target="_blank">create a pull request</a> if you have a fix.</li>
+            <li>Use the contact/support links in each of the
+                <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/support" target="_blank">Chrome</a>
+                or <a href="https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere/" target="_blank">Firefox</a> stores,
+                or <a href="mailto:browser-extensions@grantwinney.com">send me an email</a>.</li>
+            <li>Lastly, feel free to leave a comment <a href="https://grantwinney.com/hide-comments-everywhere#comments" target="_blank">on my blog</a>.</li>
+        </ul>
+        <p>If you've been using this extension for awhile and enjoy it, please leave a rating for
+            <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/reviews" target="_blank">Chrome</a>
+            or <a href="https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere/reviews" target="_blank">Firefox</a>. Thanks!
+
+        <div id="info" class="pane-title"><i class="fa fa-info-circle" aria-hidden="true"></i>Info</div>
+        <p>If you run into a problem, the following information might be helpful to include, depending on what you're experiencing.</p>
+        <ul style="text-align:left">
+            <li>Addon version: <span id="addon-version"></span></li>
+            <li>Definitions:
+                <ul>
+                    <li>Local version: <span id="definitions-local-version"></span></li>
+                    <li>Available version: <span id="definitions-newest-version"></span></li>
+                    <li>Last check: <span id="definitions-last-check"></span></li>
+                </ul>
+            </li>
+            <li>Storage:
+                <ul>
+            <li>Local: <span id="local-storage-used"></span> bytes</li>
+            <li>Sync: <span id="sync-storage-used"></span> bytes
+                <ul>
+                    <li style="padding-top: 5px">Toggle flag settings: <span id="sync-storage-used-toggles"></span> bytes</li>
+                    <li>Personal whitelist: <span id="sync-storage-used-personal-whitelist"></span> bytes</li>
+                    <li>Personal blacklist: <span id="sync-storage-used-personal-blacklist"></span> bytes</li>
+                </ul>
+            </li>
+        </ul></li>
+            <li>Environment</li>
+            <ul>
+                <li>User Agent: <span id="user-agent"></span></li>
+                <li>Platform: <span id="platform"></span></li>
+            </ul>
+        </ul>
     </div>
 
     <div id="footer">
@@ -208,9 +276,8 @@
                 Issue</a> |
             <a href="https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Here's a new site I'd like you to consider blocking&body=Here's a new site I'd like you to consider blocking. (include as many details as possible)"
                 target="_blank">Submit URL</a> |
-            <span id="version"></span>
-            <span style="padding-left:5px">|</span>
-            <a href="https://github.com/grantwinney" class="fa fa-github fa-lg" aria-hidden="true" title="GitHub"
+            <span id="copyright"></span>
+            <a href="https://github.com/grantwinney" class="fa-brands fa-github fa-lg" aria-hidden="true" title="GitHub"
                 target="_blank"></a>
             <a href="https://grantwinney.com/" class="fa fa-globe fa-lg" aria-hidden="true" title="Blog"
                 target="_blank"></a>

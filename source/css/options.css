@@ -1,11 +1,11 @@
 a {
     color: blue;
     cursor: hand !important;
-    text-decoration: none;
 }
 
 a:hover {
     color: red;
+    text-decoration: underline;
 }
 
 body {
@@ -24,8 +24,8 @@ div.pane-title {
     padding-bottom: 20px;
 }
 
-.checkbox-container {
-    display: flex;
+html {
+    scroll-behavior: smooth;
 }
 
 input[type=checkbox] {
@@ -44,8 +44,8 @@ input[type=submit] {
     padding: 5px 10px;
 }
 
-#save-blacklist, #submit-blacklist {
-    margin-bottom: 20px;
+i {
+    padding-right: 10px;
 }
 
 input[type=submit]:hover {
@@ -54,11 +54,15 @@ input[type=submit]:hover {
     color: black;
 }
 
+li {
+    padding-bottom: 5px;
+}
+
 p {
     margin-top: 0px;
 }
 
-#excluded_urls, #blacklist_urls {
+textarea {
     border: 1px solid lightgray;
     border-radius: 4px;
     box-shadow: 1px 1px 1px #ccc, 2px 2px 2px #eee;
@@ -98,12 +102,12 @@ p {
 
 #footer a {
     color: black;
-    text-decoration: none;
 }
 
 #footer a,
 #footer span {
     padding: 0px 10px;
+    text-decoration: none;
 }
 
 #footer a:hover {
@@ -111,11 +115,8 @@ p {
     text-decoration: underline;
 }
 
-#footer a.fa {
+#footer a.fa, #footer a.fa-brands {
     padding: 0px 5px;
-}
-
-#footer a.fa:hover {
     text-decoration: none;
 }
 
@@ -148,8 +149,17 @@ p {
     line-height: 1.6em;
 }
 
+#options-nav {
+    text-align: center !important;
+}
+
+#options-nav > a {
+    padding: 0px 5px;
+    text-decoration: none;
+}
+
 #regex-samples {
-    font-size: smaller;
+    font-size: small;
     min-width: 300px;
     line-height: 1.6em;
     text-align: left;
@@ -159,10 +169,20 @@ p {
     padding: 0px 10px;
 }
 
+#save-blacklist, #submit-blacklist {
+    margin-bottom: 20px;
+}
+
+.checkbox-container {
+    display: flex;
+    margin-top: 10px;
+}
+
 .header-title {
     font-size: x-large;
     margin-left: 20px;
     margin-right: 20px;
+    vertical-align: middle;
     white-space: nowrap;
 }
 
@@ -173,10 +193,7 @@ p {
 .header-title > div:first-letter {
     color: #000;
     font-family: arial, sans-serif;
-    font-size: xx-large;
     font-weight: bold;
-    letter-spacing: 2px;
-    vertical-align: middle;
 }
 
 .options-header {
@@ -205,39 +222,9 @@ p {
 
 .pane-title > i {
     color: #aaa;
-    margin-right: 10px;
 }
 
 .pane-subtitle {
     color: #555;
     font-size: x-large;
 }
-
-.saved-notification {
-    animation: fadeInOutSaveNotification 4s;
-    background: #ffd;
-    border: solid 1px orangered;
-    border-radius: 5px;
-    color: orangered;
-    display: none;
-    font-weight: bold;
-    margin: auto;
-    opacity: 0;
-    padding: 2px 10px;
-    width: 100px;
-}
-
-@keyframes fadeInOutSaveNotification {
-    0% {
-      opacity: 0;
-    }
-    5% {
-      opacity: 1;
-    }
-    85% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }

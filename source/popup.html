@@ -1,71 +1,88 @@
 <html>
-    <head>
-        <title>Options</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/popup.css" />
-        <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
-        <script src="js/shared.js"></script>
-        <script src="js/popup.js"></script>
-    </head>
-    <body>
-        <div id="alert"></div>
-        <div id="title">
-            <img src="images/hide-comments-16.png" id="icon">
-            Hide Comments Everywhere
-        </div>
-        <div id="body">
-            <h1>Toggle Comments</h1>
-            <p>Temporarily enable/disable comments on the current browser tab by clicking the button below.
-               Refreshing the tab or navigating to a new URL will run through the filters again, cancelling this action.</p>
-            <button id="toggle_hide" type="submit" class="buttons">
-               <i class="fa fa-toggle-on fa-lg"></i> Toggle Comments
-            </button>
-            <h1>Allow/Block Current URL</h1>
-            <p class="instructions"><em>Allow URL: Add a site to your personal whitelist, so comments are</em> always <em>allowed.
-            <br>Block URL: Submit a site for consideration to be added to the blocked list.</em></p>
-            <table id="urls">
-                <tr>
-                    <td><input id="baseUrl" type="radio" name="url" checked="true"></td>
-                    <td width="100%">
-                        <label for="baseUrl">
-                            <input id="baseUrlDesc" type="text" readonly="true">
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input id="fullUrl" type="radio" name="url"></td>
-                    <td width="100%">
-                        <label for="fullUrl">
-                            <input id="fullUrlDesc" type="text" readonly="true">
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input id="customUrl" type="radio" name="url" value="custom"></td>
-                    <td id="customUrlHeading">Custom: (include http/https)</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td width="100%">
-                        <label for="customUrl">
-                            <input id="customUrlDesc" type="text">
-                        </label>
-                    </td>
-                </tr>
-            </table>
-            <p>
-                <button id="add_to_exclusion" type="submit" class="buttons">
-                    <i class="fa fa-check fa-lg"></i> Allow URL
-                </button>
-                <button id="submit_for_inclusion" type="submit" class="buttons" title="Submit a site to block (requires a free GitHub account)">
-                    <i class="fa fa-close fa-lg"></i> Block URL
-                </button>
-                <button id="options" type="submit" class="buttons" title="Options">
-                    <i class="fa fa-gear fa-lg"></i> Options
-                </button>
-            </p>
-            <p><em>To specify a URL using regular expressions, click "Options" above and then "Filters".</em></p>
-        </div>
-    </body>
-</html>
 
+<head>
+    <title>Options</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/popup.css" />
+    <link rel="stylesheet" href="css/font-awesome-6.0.0/css/all.css">
+    <script src="js/shared.js"></script>
+    <script src="js/popup.js"></script>
+</head>
+
+<body>
+    <div id="alert"></div>
+    <div class="caption">
+        <div class="caption_buttons_container">
+            <button id="toggle_hide" type="submit" title="Comments currently hidden for this site. Show?">
+                <i id="toggle_hide_icon" class="fa-solid fa-comment-slash fa-lg"></i>
+            </button>
+            <button id="options" type="submit" title="Options">
+                <i class="fa fa-gear fa-lg"></i>
+            </button>
+            <button id="share" type="submit" title="Share">
+                <i class="fa fa-share-alt fa-lg"></i>
+            </button>
+            <button id="report" type="submit" title="Report a broken site or other issue">
+                <i class="fa-solid fa-exclamation-triangle fa-lg"></i>
+            </button>
+        </div>
+        <img src="images/hide-comments-16.png" class="icon">
+        <span style="text-shadow: 1px 1px 3px #666">Hide Comments Everywhere</span>
+    </div>
+    <div class="content" style="position:relative">
+        <table id="share_box" style="visibility:hidden">
+            <tr>
+                <td style="vertical-align:middle; width:100%; height:100%">
+                    <textarea
+                        id="share_box_comment">Comment sections contain some of the worst vitriol. Start taking control back with "Hide Comments Everywhere". https://grantwinney.com/hide-comments-everywhere/</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left:5px">
+                    <span style="font-size:smaller">Share:</span>
+                    <button id="share_twitter" type="submit" title="Share on Twitter">
+                        <i class="fa-brands fa-twitter"></i>
+                    </button>
+                    <button id="share_facebook" type="submit" title="Share on Facebook">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </button>
+                    <button id="share_reddit" type="submit" title="Share on Reddit">
+                        <i class="fa-brands fa-reddit-alien"></i>
+                    </button>
+                    <button id="share_email" type="submit" title="Share via Email">
+                        <i class="fa-solid fa-envelope"></i>
+                    </button>
+                    <button id="share_clipboard_copy" type="submit" title="Copy to Clipboard">
+                        <i class="fa-solid fa-copy"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+        <table style="width:100%">
+            <tr>
+                <td style="padding:5px">
+                    <input id="currentHostname" type="text" readonly disabled>
+                </td>
+            </tr>
+            <td>
+                <div class="content_buttons">
+                    <button id="add_to_whitelist" type="submit" class="buttons"
+                        title="Configure whitelist entry yourself">
+                        <i class="fa fa-screwdriver-wrench"></i> Custom Allow
+                    </button>
+                    <button id="add_to_blacklist" type="submit" class="buttons"
+                        title="Configure blacklist entry yourself">
+                        <i class="fa fa-screwdriver-wrench"></i> Custom Block
+                    </button>
+                    <button id="request_add_to_blacklist" type="submit" class="buttons"
+                        title="Submit a site to block (requires a free GitHub account)">
+                        <i class="fa fa-external-link"></i> Request Block
+                    </button>
+                </div>
+            </td>
+        </table>
+    </div>
+</body>
+
+</html>
