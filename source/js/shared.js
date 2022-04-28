@@ -19,10 +19,8 @@ function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdate
     chrome.storage.local.get('definition_version', function (localVersionResult) {
         chrome.storage.local.get('definition_version_last_check', function (lastCheckResult) {
             // If the definition version or last update time is missing, or we're forcing an update, check for new definitions
-            if (localVersionResult?.definition_version === undefined
-                || !Number.isInteger(localVersionResult.definition_version)
-                || lastCheckResult.definition_version_last_check === undefined
-                || !Number.isInteger(lastCheckResult.definition_version_last_check)
+            if (!Number.isInteger(localVersionResult?.definition_version)
+                || !Number.isInteger(lastCheckResult?.definition_version_last_check)
                 || getCurrentSeconds() - lastCheckResult.definition_version_last_check > GLOBAL_DEFINITION_EXPIRATION_SEC
                 || forceUpdate) {
 
