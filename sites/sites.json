@@ -26,6 +26,7 @@
         "gogoanime.sh": ".anime_video_body_comment",
         "www.google.com": "[data-tab_type='LIVE_COMMENTS']",
         "www.haaretz.co.il": "a[href='#commentsSection'], #commentsSection, div[data-test='commentsContainer'], form[data-test='newCommentForm'], form[data-test='newCommentForm'] ~ div",
+        "habr.com": ".tm-article-blocks__comments, .tm-article-comments-counter-link",
         "www.houzz.com": "[scopeid='comments-content'], [data-compid='comment'], [compid='comment'], .hz-editorial-gallery-related-combined__item__comment",
         "www.hwupgrade.it": "#commenti, .commenti",
         "ijr.com": ".author-info ~ div, .article-icons > .ff-comment, #comment-btn",
