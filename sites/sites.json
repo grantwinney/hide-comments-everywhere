@@ -34,7 +34,7 @@
         "www.kickstarter.com": "#react-project-comments, #comments-emoji",
         "www.lefigaro.fr": "#commentsTitle, #commentsTitle + ul, #commentsTitle ~ span",
         "www.lesswrong.com": ".PostsItem2-commentsIcon, .PostsPagePostHeader-commentsLink, .PostsPage-commentsSection, .RecentDiscussionThread-content",
-        "www.linkedin.com": "[data-control-name='comments_count'], .feed-shared-update__comments-container, .feed-shared-update-v2__comments-container, .feed-shared-first-prompt-block, .comment",
+        "www.linkedin.com": "[data-control-name='comments_count'], .feed-shared-update__comments-container, .feed-shared-update-v2__comments-container, .feed-shared-first-prompt-block, .comment, li.social-details-social-counts__comments",
         "www.msn.com": "i[aria-label='Open replies']",
         "www.namecheap.com": ".sds-blog-card__info-comments, .sds-blog-post__comments, #comments, #toggle-comments",
         "news.ycombinator.com": ".comment-tree",
