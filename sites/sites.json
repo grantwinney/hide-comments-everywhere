@@ -1,5 +1,6 @@
 {
     "excluded_sites": [
+        "www.bbb.org",
         "github.com",
         "help.republicwireless.com",
         "talk.hyvor.com",
