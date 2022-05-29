@@ -51,7 +51,7 @@ function insertStylesIntoPage() {
             // Finally, inject the styles into the page
             let style = document.createElement('style');
             style.title = "hide_comments_everywhere";
-            style.textContent = elementsToHide ? `${elementsToHide} { display: none; visibility: hidden } ${globalDefinitions.excluded_selectors} { display: unset; visibility: unset }` : '';
+            style.textContent = elementsToHide ? `${elementsToHide} { display: none !important; visibility: hidden !important } ${globalDefinitions.excluded_selectors} { display: unset; visibility: unset }` : '';
 
             var header = document.querySelector('head');
             if (header) {
