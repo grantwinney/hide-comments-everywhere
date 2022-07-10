@@ -31,7 +31,7 @@
         "www.houzz.com": "[scopeid='comments-content'], [data-compid='comment'], [compid='comment'], .hz-editorial-gallery-related-combined__item__comment",
         "www.hwupgrade.it": "#commenti, .commenti",
         "ijr.com": ".author-info ~ div, .article-icons > .ff-comment, #comment-btn",
-        "www.instagram.com": "ul._abpo > li:nth-child(2), div._aat6 ul._a9ym, [aria-label='Comment'], ._aaoe._aaso, _ab8w._ab94._ab99._ab9h._ab9m._ab9p._abcj",
+        "www.instagram.com": "ul._abpo > li:nth-child(2), div._aat6 ul._a9ym, [aria-label='Comment'], [aria-label='Load more comments']",
         "www.kickstarter.com": "#react-project-comments, #comments-emoji",
         "www.lefigaro.fr": "#commentsTitle, #commentsTitle + ul, #commentsTitle ~ span",
         "www.lesswrong.com": ".PostsItem2-commentsIcon, .PostsPagePostHeader-commentsLink, .PostsPage-commentsSection, .RecentDiscussionThread-content",
