@@ -57,6 +57,7 @@
         "www.washingtonpost.com": ".comments-btn, .comments, a[href='#comments-wrapper'], #comments-wrapper",
         "www.wykop.pl": "div.grid-main div.fix-b-border, div.grid-main > ul.comments-stream, div.grid-main > div:not(:first-child)",
         "wiadomosci.gazeta.pl": "#commentsApp",
+        "www.youtube.com": "#comment-teaser, #comments",
         "wydarzenia.interia.pl": "a.is-comment, #commentsZoneList, div.comments-placeholder"
     }
 }
