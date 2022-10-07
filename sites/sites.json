@@ -37,7 +37,7 @@
         "www.lefigaro.fr": "#commentsTitle, #commentsTitle + ul, #commentsTitle ~ span",
         "www.lesswrong.com": ".PostsItem2-commentsIcon, .PostsPagePostHeader-commentsLink, .PostsPage-commentsSection, .RecentDiscussionThread-content",
         "www.linkedin.com": "[data-control-name='comments_count'], .feed-shared-update__comments-container, .feed-shared-update-v2__comments-container, .feed-shared-first-prompt-block, .comment, li.social-details-social-counts__comments",
-        "www.msn.com": "i[aria-label='Open replies']",
+        "www.msn.com": "i[aria-label='Open replies'], [class=*='commentContainer'], [class=*='commentOverlayContainer']",
         "myanimelist.net": "div.information > p.info > a:nth-child(2), .news-info-block .comment, .comment-list, .comment-list + .mt16",
         "www.namecheap.com": ".sds-blog-card__info-comments, .sds-blog-post__comments, #comments, #toggle-comments",
         "news.ycombinator.com": ".comment-tree",
