@@ -58,7 +58,8 @@
         "www.watson.ch": ".comments_count, .share-go-to-discussion, [class^='watson-discussion'], .standard.comments",
         "www.wykop.pl": "div.grid-main div.fix-b-border, div.grid-main > ul.comments-stream, div.grid-main > div:not(:first-child)",
         "wiadomosci.gazeta.pl": "#commentsApp",
-        "www.yahoo.com": "div[id$='Comments'], div.caas-share-buttons > a:nth-child(1), #spotIm-conversations-module-wrapper, div[id$='spotim-wrapper']",
+        "www.yahoo.com": "div[id$='Comments'], .caas-comment, #spotIm-conversations-module-wrapper, div[id$='spotim-wrapper']",
+        "news.yahoo.com": "div[id$='Comments'], .caas-comment, #spotIm-conversations-module-wrapper, div[id$='spotim-wrapper']",
         "www.youtube.com": "#comment-teaser, #comments",
         "wydarzenia.interia.pl": "a.is-comment, #commentsZoneList, div.comments-placeholder"
     }
