@@ -4,7 +4,7 @@ Fed up with the vitriol left in comments, many sites are dumping their comment s
 
 To help with my own sanity _(and maybe yours?),_ I wrote an extension that hides many comment systems - identifying them is somewhat predictable. It's available for [Chrome](https://chrome.google.com/webstore/detail/hide-comments/bmhkdngdngchlneelllmdennfpmepbnc) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere/), or [you can read more about it here](https://grantwinney.com/hide-comments-everywhere/) too.
 
-## What does this hide?
+## What sites does this work on?
 
 A lot, including but not limited to:
 
@@ -14,7 +14,13 @@ A lot, including but not limited to:
 * Disqus
 * Livefyre
 * WordPress
-* Any other comment system where someone happened to assign the ID or class "comments" or "respond". Hopefully this doesn't hide anything unexpected, like some site that assigned the "comments" ID to the main content of their posts... please [let me know](https://github.com/grantwinney/hide-comments-everywhere/issues/new) if it does.
+* Loads of other comment systems and individual sites. If this is hiding anything unexpected, like some site that assigned the "comments" ID to the main content of their posts, then just [let me know](https://github.com/grantwinney/hide-comments-everywhere/issues/new) and I can make adjustments.
+
+### What doesn't it work with?
+
+Some sites, like Facebook and Instagram, use random element identifiers and class names that change often. It's difficult to manage them and takes a lot of time, so I've thrown in the towel on them.
+
+You might want to check out [Fluff Busting Purity](https://chrome.google.com/webstore/detail/fluff-busting-purity/nmkinhboiljjkhaknpaeaicmdjhagpep) for Facebook or [Antigram](https://chrome.google.com/webstore/detail/antigram-explore-blocker/igbheapdmolhhmmklmkfjjjncmhihfjh) for Instagram. I'm not sure if either blocks comments, but at least you can cut out a lot of time-sucking distractions.
 
 ## How does it work?
 
