@@ -1,11 +1,12 @@
 function alertIfNewerDefinitions() {
     chrome.storage.local.get('definition_version', function (localVersionResult) {
-        axios.get(VERSION_JSON)
-            .then(function (cloudVersionResult) {
-                document.getElementById('definitions-newest-version').innerText = cloudVersionResult.data.version;
+        fetch(VERSION_JSON)
+            .then((response) => response.json())
+            .then((data) => {
+                document.getElementById('definitions-newest-version').innerText = data.version;
                 if (!Number.isInteger(localVersionResult?.definition_version)
-                    || localVersionResult.definition_version < cloudVersionResult.data.version) {
-                    toastr.info(`New definitions (#${cloudVersionResult.data.version}) are available.<br>Click <a href="#updates" style="font-weight:bold">Update Definitions</a> to get them.`, "Updated Sites Available", { timeOut: 10000 });
+                    || localVersionResult.definition_version < data.version) {
+                    toastr.info(`New definitions (#${data.version}) are available.<br>Click <a href="#updates" style="font-weight:bold">Update Definitions</a> to get them.`, "Updated Sites Available", { timeOut: 10000 });
                 };
             });
     });
@@ -18,7 +19,7 @@ function loadAllSettings() {
         document.getElementById('one_click_toggle').checked = (result?.one_click_toggle === true);
     });
     chrome.storage.sync.get('remember_toggle', function (result) {
-        document.getElementById('remember_toggle').checked = (result?.remember_toggle === true);
+        document.getElementById('remember_toggle').checked = (result?.remember_toggle !== false);
     });
     // chrome.storage.sync.get('show_placeholder', function (result) {
     //     document.getElementById('show_placeholder').checked = (result?.show_placeholder === true);
@@ -28,7 +29,7 @@ function loadAllSettings() {
 function saveOneClickSetting() {
     let oneClickEnabled = document.getElementById('one_click_toggle').checked;
     chrome.storage.sync.set({ 'one_click_toggle': oneClickEnabled });
-    chrome.browserAction.setPopup({ popup: oneClickEnabled ? '' : '../popup.html' });
+    chrome.action.setPopup({ popup: oneClickEnabled ? '' : '../popup.html' });
 }
 
 function saveRememberToggleSetting() {
@@ -170,8 +171,6 @@ function showVersion() {
     document.getElementById('platform').innerText = navigator.userAgentData?.platform ?? navigator.platform;
 }
 
-
-
 window.addEventListener('DOMContentLoaded', function load(_event) {
     // Settings
     loadAllSettings();
@@ -193,12 +192,33 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
 
     // Updates
     alertIfNewerDefinitions();
-    $("#update-definitions").click(function () {
+    $('#update-definitions').click(function () {
         getUpdatedDefinitions(true,
             (version) => { toastr.info(`Updated site definitions (#${version}) were found and have been applied.`, "Updated Sites Available"); },
             (version) => { toastr.info(`The latest site definitions (#${version}) are already applied.`, "No Updates Available"); }
         );
     });
+
+    // Danger Zone
+    $('#delete-definitions').click(function() {
+        if (prompt("This will clear out the downloaded site definitions. Afterwards, they'll need to be downloaded again.\r\n\r\nType YES to continue...") === "YES") {
+            chrome.storage.local.remove([ 'global_definitions', 'definition_version', 'definition_version_last_check' ]);
+        }
+    })
+    $('#reset-options').click(function() {
+        if (prompt("This will reset all of your selected options to the default values (unchecked boxes, cleared out whitelist/blacklist, etc).\r\n\r\nType YES to continue...") === "YES") {
+            chrome.storage.sync.remove([ 'one_click_toggle', 'show_placeholder', 'user_whitelist', 'user_blacklist' ], function() {
+                chrome.storage.sync.set({ 'remember_toggle': true }, function() {
+                    location.reload();
+                });
+            });
+        }
+    })
+    $('#delete-site-settings').click(function() {
+        if (prompt("This will clear out all of your site-specific selections. Afterwards, comments will be hidden everywhere again, and you'll have to decide which sites you want to show them on.\r\n\r\nType YES to continue...") === "YES") {
+            chrome.storage.local.remove([ 'user_whitelist_flags' ]);
+        }
+    })
 
     // Info
     showUsedStorage();

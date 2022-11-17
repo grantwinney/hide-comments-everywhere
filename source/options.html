@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="css/options.css" />
     <link rel="stylesheet" href="css/font-awesome-6.0.0/css/all.css">
     <script src="js/third-party/jquery-3.6.0.min.js"></script>
-    <script src="js/third-party/axios.min.js"></script>
     <script src="js/third-party/toastr.min.js"></script>
     <script src="js/shared.js"></script>
     <script src="js/options.js"></script>
@@ -249,21 +248,35 @@
             </li>
             <li>Storage:
                 <ul>
-            <li>Local: <span id="local-storage-used"></span> bytes</li>
-            <li>Sync: <span id="sync-storage-used"></span> bytes
-                <ul>
-                    <li style="padding-top: 5px">Toggle flag settings: <span id="sync-storage-used-toggles"></span> bytes</li>
-                    <li>Personal whitelist: <span id="sync-storage-used-personal-whitelist"></span> bytes</li>
-                    <li>Personal blacklist: <span id="sync-storage-used-personal-blacklist"></span> bytes</li>
+                    <li>Local: <span id="local-storage-used"></span> bytes</li>
+                    <li>Sync: <span id="sync-storage-used"></span> bytes
+                        <ul>
+                            <li style="padding-top: 5px">Toggle flag settings: <span id="sync-storage-used-toggles"></span> bytes</li>
+                            <li>Personal whitelist: <span id="sync-storage-used-personal-whitelist"></span> bytes</li>
+                            <li>Personal blacklist: <span id="sync-storage-used-personal-blacklist"></span> bytes</li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
-        </ul></li>
-            <li>Environment</li>
-            <ul>
-                <li>User Agent: <span id="user-agent"></span></li>
-                <li>Platform: <span id="platform"></span></li>
-            </ul>
+            <li>Environment:
+                <ul>
+                    <li>User Agent: <span id="user-agent"></span></li>
+                    <li>Platform: <span id="platform"></span></li>
+                </ul>
+            </li>
         </ul>
+
+        <div id="caution" class="pane-title"><i class="fa fa-triangle-exclamation" aria-hidden="true"></i>Danger Zone</div>
+        <p style="margin: 0px">
+            If, for some reason, you need or want to clear out the various data stored for this addon, you can do so here.
+            You'll be prompted to confirm (with a description of exactly what each does) by typing "YES" into a field. After that, the data is gone.
+        </p>
+        <div>
+            <input id="delete-definitions" type="submit" value="Delete Definitions">
+            <input id="reset-options" type="submit" value="Reset Options">
+            <input id="delete-site-settings" type="submit" value="Forget site-specific settings">
+        </div>
+        <p>&nbsp;</p>
     </div>
 
     <div id="footer">

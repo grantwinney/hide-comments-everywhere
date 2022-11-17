@@ -5,6 +5,67 @@
 // - Another view in the extension, such as a popup, calls runtime.getBackgroundPage.
 // https://developer.chrome.com/extensions/background_pages
 
+let invalidProtocols = ['chrome-extension', 'edge', 'moz-extension', 'about'];
+const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
+const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json';
+const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
+
+
+// Write an error to the console, prepended with the addon name.
+function logError(errorMessage) {
+    console.error(`[${chrome.runtime.getManifest().name}]: ${errorMessage}`);
+}
+
+function getCurrentSeconds() {
+    return new Date().getTime() / 1000 | 0;
+}
+
+// Get the latest site definitions.
+function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdatedAction = undefined) {
+    chrome.storage.local.get('definition_version', function (localVersionResult) {
+        chrome.storage.local.get('definition_version_last_check', function (lastCheckResult) {
+            // If the definition version or last update time is missing, or we're forcing an update, check for new definitions
+            if (!Number.isInteger(localVersionResult?.definition_version)
+                || !Number.isInteger(lastCheckResult?.definition_version_last_check)
+                || getCurrentSeconds() - lastCheckResult.definition_version_last_check > GLOBAL_DEFINITION_EXPIRATION_SEC
+                || forceUpdate) {
+
+                fetch(VERSION_JSON)
+                    .then((response) => response.json())
+                    .then((verData) => {
+                        // Even if forcing an update, if the definition version is available locally and matches what's
+                        // on GitHub, there's no point in wasting the bandwidth to get the definitions again.
+                        if (localVersionResult?.definition_version === undefined
+                            || !Number.isInteger(localVersionResult.definition_version)
+                            || localVersionResult.definition_version < verData.version) {
+                            fetch(SITES_JSON)
+                                .then((response) => response.json())
+                                .then((sitesData) => {
+                                    chrome.storage.local.set({ 'global_definitions': JSON.stringify(sitesData) });
+                                    chrome.storage.local.set({ 'definition_version': verData.version });
+                                    chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
+                                    if (updatedAction) {
+                                        updatedAction(verData.version);
+                                    }
+                                })
+                                .catch(function (error) {
+                                    logError(JSON.stringify(error));
+                                });
+                        } else {
+                            chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
+                            if (notUpdatedAction) {
+                                notUpdatedAction(localVersionResult.definition_version);
+                            }
+                        }
+                    });
+            } else {
+                if (notUpdatedAction) {
+                    notUpdatedAction(localVersionResult.definition_version);
+                }
+            }
+        });
+    });
+}
 
 // Listens for messages from content script.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/Runtime/onMessage
@@ -42,13 +103,13 @@ chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
 
         switch (message.event) {
             case 'comments_hidden':
-                chrome.browserAction.setIcon({ path: 'images/hide-comments-32.png', tabId: sender.tab.id }, function () {
-                    chrome.browserAction.setTitle({ title: title, tabId: sender.tab.id });
+                chrome.action.setIcon({ path: '../images/hide-comments-32.png', tabId: sender.tab.id }, function () {
+                    chrome.action.setTitle({ title: title, tabId: sender.tab.id });
                 });
                 break;
             case 'comments_shown':
-                chrome.browserAction.setIcon({ path: 'images/hide-comments-bw-32.png', tabId: sender.tab.id }, function () {
-                    chrome.browserAction.setTitle({ title: title, tabId: sender.tab.id });
+                chrome.action.setIcon({ path: '../images/hide-comments-bw-32.png', tabId: sender.tab.id }, function () {
+                    chrome.action.setTitle({ title: title, tabId: sender.tab.id });
                 });
                 break;
             default:
@@ -60,8 +121,14 @@ chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
 
 // Fires when user clicks the addon icon in the browser toolbar, and the popup is disabled.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction/onClicked
-chrome.browserAction.onClicked.addListener(function (tab) {
-    toggleCommentsOnCurrentUrl(tab.id, new URL(tab.url));
+chrome.action.onClicked.addListener(function (tab) {
+    if (invalidProtocols.some(p => new URL(tab.url).protocol.startsWith(p))) {
+        return;
+    }
+    // The value of the toggle setting is stored from the toggleCommentVisibility
+    // method in the content script, after the comments are displayed/hidden, to
+    // avoid a buggy situation described in more detail in there.
+    chrome.tabs.sendMessage(tab.id, { event: 'toggle_tab' });
 });
 
 
@@ -84,7 +151,7 @@ function oneTimeUpgradeWork() {
 chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason === 'install' || details.reason === 'update') {
         chrome.storage.sync.get('one_click_toggle', function (result) {
-            chrome.browserAction.setPopup({ popup: (result?.one_click_toggle === true) ? '' : '../popup.html' });
+            chrome.action.setPopup({ popup: (result?.one_click_toggle === true) ? '' : '../popup.html' });
         });
         oneTimeUpgradeWork();
         getUpdatedDefinitions(true);
