@@ -3,10 +3,10 @@
 <head>
     <title>Options</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/toastr.min.css" />
+    <link rel="stylesheet" href="css/toastr.css" />
+    <link rel="stylesheet" href="css/font-awesome/css/all.css">
     <link rel="stylesheet" href="css/options.css" />
-    <link rel="stylesheet" href="css/font-awesome-6.0.0/css/all.css">
-    <script src="js/third-party/jquery-3.6.0.min.js"></script>
+    <script src="js/third-party/jquery.min.js"></script>
     <script src="js/third-party/toastr.min.js"></script>
     <script src="js/shared.js"></script>
     <script src="js/options.js"></script>
@@ -63,6 +63,9 @@
 
         <div id="filters" class="pane-title"><i class="fa fa-filter" aria-hidden="true"></i>Filters</div>
         <div>
+            <p>
+                <b>If you just clicked 'Custom Allow' or 'Custom Block' in the popup window, and you don't see the site listed below, refresh this page.</b>
+            </p>
             <p>
                 Specify a list of URLs (one per line) that comments should <em>never</em> be blocked on.
                 <a id="filters-help-hint-1" style="cursor:pointer">See examples.</a>
@@ -266,7 +269,7 @@
             </li>
         </ul>
 
-        <div id="caution" class="pane-title"><i class="fa fa-triangle-exclamation" aria-hidden="true"></i>Danger Zone</div>
+        <div id="caution" class="pane-title" style="margin-top: -10px"><i class="fa fa-triangle-exclamation" aria-hidden="true"></i>Danger Zone</div>
         <p style="margin: 0px">
             If, for some reason, you need or want to clear out the various data stored for this addon, you can do so here.
             You'll be prompted to confirm (with a description of exactly what each does) by typing "YES" into a field. After that, the data is gone.

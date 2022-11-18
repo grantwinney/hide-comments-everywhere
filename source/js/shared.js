@@ -1,13 +1,16 @@
 let invalidProtocols = ['chrome-extension', 'edge', 'moz-extension', 'about'];
 const STARTER_SELECTOR = '#place_your_selectors_here';
 const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
-
 const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json';
 const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
 
-// Write an error to the console, prepended with the addon name.
-function logError(errorMessage) {
-    console.error(`[${chrome.runtime.getManifest().name}]: ${errorMessage}`);
+// Write a message to the console, prepended with the addon name.
+function log(message, isError = false) {
+    if (isError) {
+        console.error(`[${chrome.runtime.getManifest().name}]: ${message}`);
+    } else {
+        console.info(`[${chrome.runtime.getManifest().name}]: ${message}`);
+    }
 }
 
 function getCurrentSeconds() {
@@ -43,7 +46,7 @@ function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdate
                                     }
                                 })
                                 .catch(function (error) {
-                                    logError(JSON.stringify(error));
+                                    log(JSON.stringify(error), true);
                                 });
                         } else {
                             chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });

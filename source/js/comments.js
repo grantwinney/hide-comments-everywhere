@@ -16,54 +16,72 @@ function insertStylesIntoPage() {
         return;
     }
 
-    let elementsToHide = '';
-
     // Load global site definitions
     chrome.storage.local.get('global_definitions', function (def_result) {
         let globalDefinitions = JSON.parse(def_result.global_definitions ?? '{}');
 
         if (!globalDefinitions?.sites) {
-            logError("Missing site patterns.");
+            log("Site patterns missing. Retrieving now.");
+            getUpdatedDefinitions(true,
+                (_) => {
+                    chrome.storage.local.get('global_definitions', function (def_result) {
+                        let globalDefinitions = JSON.parse(def_result.global_definitions ?? '{}');
+                        if (globalDefinitions?.sites) {
+                            insertStylesIntoPageContinue(globalDefinitions);
+                        } else {
+                            log("Site patterns missing. Retrieval failed. (1)", true);
+                            return;
+                        }
+                    });
+                },
+                (_) => { log("Site patterns missing. Retrieval failed. (2)", true); }
+            );
             return;
         }
-
-        if (globalDefinitions.sites) {
-            // Apply site-specific selectors if any exist
-            for (let site of Object.keys(globalDefinitions.sites)) {
-                if (site === location.hostname) {
-                    elementsToHide = globalDefinitions.sites[site];
-                    break;
-                }
-            }
-            // If site not found, apply the global catchall selectors
-            if (!elementsToHide) {
-                elementsToHide = globalDefinitions.catchall_selectors;
-            }
-        }
-
-        // Apply selectors from user blacklist if any (trumps site definitions)
-        chrome.storage.sync.get('user_blacklist', function (bl_result) {
-            let blacklistedElementsToHide = bl_result.user_blacklist !== undefined && getBlacklistedElementsToHide(location.href, bl_result.user_blacklist);
-            if (blacklistedElementsToHide) {
-                elementsToHide = blacklistedElementsToHide;
-            }
-
-            // Finally, inject the styles into the page
-            let style = document.createElement('style');
-            style.title = "hide_comments_everywhere";
-            style.textContent = elementsToHide ? `${elementsToHide} { display: none !important; visibility: hidden !important } ${globalDefinitions.excluded_selectors} { display: unset; visibility: unset }` : '';
-
-            var header = document.querySelector('head');
-            if (header) {
-                header.appendChild(style);
-            } else {
-                document.documentElement.prepend(style);
-            }
-
-            adjustCommentsVisibility();
-        });
+        
+        insertStylesIntoPageContinue(globalDefinitions);
     });
 };
+
+function insertStylesIntoPageContinue(globalDefinitions) {
+    let elementsToHide = '';
+    
+    if (globalDefinitions.sites) {
+        // Apply site-specific selectors if any exist
+        for (let site of Object.keys(globalDefinitions.sites)) {
+            if (site === location.hostname) {
+                elementsToHide = globalDefinitions.sites[site];
+                break;
+            }
+        }
+        // If site not found, apply the global catchall selectors
+        if (!elementsToHide) {
+            elementsToHide = globalDefinitions.catchall_selectors;
+        }
+    }
+
+    // Apply selectors from user blacklist if any (trumps site definitions)
+    chrome.storage.sync.get('user_blacklist', function (bl_result) {
+        let blacklistedElementsToHide = bl_result.user_blacklist !== undefined && getBlacklistedElementsToHide(location.href, bl_result.user_blacklist);
+        if (blacklistedElementsToHide) {
+            elementsToHide = blacklistedElementsToHide;
+        }
+
+        // Finally, inject the styles into the page
+        let style = document.createElement('style');
+        style.title = "hide_comments_everywhere";
+        style.textContent = elementsToHide ? `${elementsToHide} { display: none !important; visibility: hidden !important } ${globalDefinitions.excluded_selectors} { display: unset; visibility: unset }` : '';
+
+        var header = document.querySelector('head');
+        if (header) {
+            header.appendChild(style);
+        } else {
+            document.documentElement.prepend(style);
+        }
+
+        adjustCommentsVisibility();
+    });
+}
 
 function adjustCommentsVisibility() {
     performActionBasedOnCommentVisibility(location, function (isCommentsHidden, overrideReason) {
@@ -111,7 +129,7 @@ function toggleCommentVisibility() {
 
 // Listens for messages from background script.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/Runtime/onMessage
-chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
+chrome.runtime.onMessage.addListener(function (message, _sender, _sendResponse) {
     switch (message.event) {
         case 'update_tab':
             adjustCommentsVisibility();
@@ -120,7 +138,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
             toggleCommentVisibility()
             break;
         default:
-            logError(`content script: ${message.event}`);
+            log(`content script received unexpected event: ${message.event}`, true);
     }
 });
 

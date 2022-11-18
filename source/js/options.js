@@ -106,7 +106,7 @@ function submitBlacklist() {
         .catch(error => function () {
             window.open("https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=Blacklisted sites to consider adding&body=Here's my list of blacklisted sites to consider blocking by default.%0A%0A```%0A(Copy them from the Options page, and paste them here replacing this line.)%0A```%0A", '_blank');
             toastr.warning("Copying the blacklist to your clipboard failed, so you'll have to copy and paste them into the GitHub issue manually.", "Submit Blacklist", { timeOut: 120000 });
-            logError(error.message)
+            log(error.message, true)
         });
 }
 
@@ -174,9 +174,9 @@ function showVersion() {
 window.addEventListener('DOMContentLoaded', function load(_event) {
     // Settings
     loadAllSettings();
-    document.getElementById('one_click_toggle').addEventListener('click', function () { saveOneClickSetting(); });
-    document.getElementById('remember_toggle').addEventListener('click', function () { saveRememberToggleSetting(); });
-    // document.getElementById('show_placeholder').addEventListener('click', function () { saveShowPlaceholderSetting(); });
+    $('#one_click_toggle').click(function () { saveOneClickSetting(); });
+    $('#remember_toggle').click(function () { saveRememberToggleSetting(); });
+    // $('#show_placeholder').click(function () { saveShowPlaceholderSetting(); });
 
     // Filters
     loadWhitelist();

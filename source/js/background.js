@@ -1,19 +1,22 @@
-// A background page is loaded when it is needed, and unloaded when it goes idle. Some examples of events include:
+// A background service worker is loaded when it is needed, and unloaded when it goes idle. Some examples include:
 // - The extension is first installed or updated to a new version.
 // - The background page was listening for an event, and the event is dispatched.
 // - A content script or other extension sends a message.
 // - Another view in the extension, such as a popup, calls runtime.getBackgroundPage.
-// https://developer.chrome.com/extensions/background_pages
+// https://developer.chrome.com/docs/extensions/mv3/service_workers/
 
 let invalidProtocols = ['chrome-extension', 'edge', 'moz-extension', 'about'];
 const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
 const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json';
 const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
 
-
-// Write an error to the console, prepended with the addon name.
-function logError(errorMessage) {
-    console.error(`[${chrome.runtime.getManifest().name}]: ${errorMessage}`);
+// Write a message to the console, prepended with the addon name.
+function log(message, isError = false) {
+    if (isError) {
+        console.error(`[${chrome.runtime.getManifest().name}]: ${message}`);
+    } else {
+        console.info(`[${chrome.runtime.getManifest().name}]: ${message}`);
+    }
 }
 
 function getCurrentSeconds() {
@@ -49,7 +52,7 @@ function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdate
                                     }
                                 })
                                 .catch(function (error) {
-                                    logError(JSON.stringify(error));
+                                    log(JSON.stringify(error));
                                 });
                         } else {
                             chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
@@ -113,7 +116,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
                 });
                 break;
             default:
-                logError(`background script not configured to run for message event: '${message.event}'`);
+                log(`background script not configured to run for message event: '${message.event}'`);
         }
     });
 });
