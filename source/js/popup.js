@@ -46,7 +46,7 @@ function displayCorrectToggleIconForCurrentSite(tabUrl) {
                 // By default, the 'comments hidden' image and title are displayed, so if comments
                 // are actually being displayed, adjust the image and title as needed.
                 toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment');
-                updatedTitle = 'Comments currently allowed for this site. Hide?';
+                updatedTitle = 'Comments currently allowed for this site. (click to hide)';
             }
             if (updatedTitle) {
                 document.getElementById('toggle_hide').title = updatedTitle;

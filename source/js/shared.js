@@ -1,13 +1,16 @@
 let invalidProtocols = ['chrome-extension', 'edge', 'moz-extension', 'about'];
 const STARTER_SELECTOR = '#place_your_selectors_here';
 const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
-
 const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json';
 const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
 
-// Write an error to the console, prepended with the addon name.
-function logError(errorMessage) {
-    console.error(`[${chrome.runtime.getManifest().name}]: ${errorMessage}`);
+// Write a message to the console, prepended with the addon name.
+function log(message, isError = false) {
+    if (isError) {
+        console.error(`[${chrome.runtime.getManifest().name}]: ${message}`);
+    } else {
+        console.info(`[${chrome.runtime.getManifest().name}]: ${message}`);
+    }
 }
 
 function getCurrentSeconds() {
@@ -24,24 +27,26 @@ function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdate
                 || getCurrentSeconds() - lastCheckResult.definition_version_last_check > GLOBAL_DEFINITION_EXPIRATION_SEC
                 || forceUpdate) {
 
-                axios.get(VERSION_JSON)
-                    .then(function (cloudVersionResult) {
+                fetch(VERSION_JSON)
+                    .then((response) => response.json())
+                    .then((verData) => {
                         // Even if forcing an update, if the definition version is available locally and matches what's
                         // on GitHub, there's no point in wasting the bandwidth to get the definitions again.
                         if (localVersionResult?.definition_version === undefined
                             || !Number.isInteger(localVersionResult.definition_version)
-                            || localVersionResult.definition_version < cloudVersionResult.data.version) {
-                            axios.get(SITES_JSON)
-                                .then(function (cloudSitesResult) {
-                                    chrome.storage.local.set({ 'global_definitions': JSON.stringify(cloudSitesResult.data) });
-                                    chrome.storage.local.set({ 'definition_version': cloudVersionResult.data.version });
+                            || localVersionResult.definition_version < verData.version) {
+                            fetch(SITES_JSON)
+                                .then((response) => response.json())
+                                .then((sitesData) => {
+                                    chrome.storage.local.set({ 'global_definitions': JSON.stringify(sitesData) });
+                                    chrome.storage.local.set({ 'definition_version': verData.version });
                                     chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
                                     if (updatedAction) {
-                                        updatedAction(cloudVersionResult.data.version);
+                                        updatedAction(verData.version);
                                     }
                                 })
                                 .catch(function (error) {
-                                    logError(JSON.stringify(error));
+                                    log(JSON.stringify(error), true);
                                 });
                         } else {
                             chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });

@@ -1,21 +1,23 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "author": "Grant Winney",
     "homepage_url": "https://github.com/grantwinney/chrome-extension-block-comments",
     "name": "Hide Comments Everywhere",
     "description": "Block comments across the web. Show the ones you want. You're in control!",
-    "version": "1.6.7",
+    "version": "1.6.8",
     "options_ui": {
         "page": "options.html",
         "open_in_tab": true
     },
     "permissions": [
         "activeTab",
-        "storage",
+        "storage"
+    ],
+    "host_permissions": [
         "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json",
         "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json"
     ],
-    "browser_action": {
+    "action": {
         "default_icon": {
             "16": "images/hide-comments-16.png",
             "32": "images/hide-comments-32.png",
@@ -27,19 +29,11 @@
         "default_popup": "popup.html"
     },
     "background": {
-        "scripts": [
-            "js/third-party/jquery-3.6.0.min.js",
-            "js/third-party/axios.min.js",
-            "js/third-party/toastr.min.js",
-            "js/shared.js",
-            "js/background.js"
-        ],
-        "persistent": false
+        "service_worker": "js/background.js"
     },
     "content_scripts": [
         {
             "js": [
-                "js/third-party/axios.min.js",
                 "js/shared.js",
                 "js/comments.js"
             ],
