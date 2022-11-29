@@ -46,6 +46,7 @@
         "www.reddit.com": "[data-testid='post-container']~div, .icon-comment, .icon-comment~span",
         "old.reddit.com": ".commentarea, a[data-event-action='comments']",
         "slickdeals.net": "#commentsBox, #joinTheConversationBox, .add-comment, .add-comment + span, a[href='#commentsBox']",
+        "soundcloud.com": "div.commentForm, div.commentsList, li[title$='comments']",
         "stackexchange.com": ".comments, .comments-link, .js-link-separator",
         "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
         "superuser.com": ".comments, .comments-link, .js-link-separator",
