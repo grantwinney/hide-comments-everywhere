@@ -70,6 +70,12 @@ function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdate
     });
 }
 
+function setIconBehavior() {
+    chrome.storage.sync.get('one_click_toggle', function (result) {
+        chrome.action.setPopup({ popup: (result?.one_click_toggle === true) ? '' : '../popup.html' });
+    });
+}
+
 // Listens for messages from content script.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/Runtime/onMessage
 chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
@@ -153,10 +159,12 @@ function oneTimeUpgradeWork() {
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/onInstalled
 chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason === 'install' || details.reason === 'update') {
-        chrome.storage.sync.get('one_click_toggle', function (result) {
-            chrome.action.setPopup({ popup: (result?.one_click_toggle === true) ? '' : '../popup.html' });
-        });
+        setIconBehavior();
         oneTimeUpgradeWork();
         getUpdatedDefinitions(true);
     }
+});
+
+chrome.runtime.onStartup.addListener(function () {
+    setIconBehavior();
 });
