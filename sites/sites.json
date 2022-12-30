@@ -41,7 +41,7 @@
         "n4g.com": ".comments-container-outer, .sd-commentcount",
         "www.namecheap.com": ".sds-blog-card__info-comments, .sds-blog-post__comments, #comments, #toggle-comments",
         "news.ycombinator.com": ".comment-tree",
-        "nypost.com": "#nypost-openweb-conversation",
+        "nypost.com": "#nypost-openweb-conversation, .comments-inline-cta",
         "www.o2.pl": "div[data-st-area='st-article-reactions'] > div:nth-child(1) > div:nth-child(1) > div:nth-child(1), div[data-st-area='st-article'] > div:nth-child(3) > div:nth-child(1) > div:nth-child(2)",
         "www.pinterest.com": "[data-test-id='canonical-card']",
         "www.reddit.com": "[data-testid='post-container']~div, .icon-comment, .icon-comment~span",
