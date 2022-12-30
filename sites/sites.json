@@ -7,7 +7,7 @@
         "developercommunity2.visualstudio.com"
     ],
     "excluded_selectors": "code .comment, pre .comment, textarea.comments",
-    "catchall_selectors": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comment_area, .comments_area, .comment-area, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #add_comment, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper, #hyvor-talk-view, #spotim-specific, #spotIm-conversations-module-wrapper, .guestbook, #guestbook, #replybox, #comment-thread, .comment-thread",
+    "catchall_selectors": ".fb-comments, .o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #disqus_thread, .commentlist, .comments, .comment, .commenting, .comment_area, .comments_area, .comment-area, .comments-area, .comments-title, .comments-link, .respond, #comments, #comment, #commenting, #comments-section, #add_comment, #respond, #comment-wrapper, #comment-form, .comment-form, #discourse-comments, #commentform, #postcomment, .feedback, #disqus_thread > iframe, .responsesStreamWrapper, #hyvor-talk-view, #spotim-specific, #spotIm-conversations-module-wrapper, .spot-im-comments, .guestbook, #guestbook, #replybox, #comment-thread, .comment-thread",
     "sites": {
         "abcnews.go.com": ".CommentButton",
         "www.abola.pt": "#body_Ver_Comentarios_comentariosMobile, .comentarios",
@@ -41,6 +41,7 @@
         "n4g.com": ".comments-container-outer, .sd-commentcount",
         "www.namecheap.com": ".sds-blog-card__info-comments, .sds-blog-post__comments, #comments, #toggle-comments",
         "news.ycombinator.com": ".comment-tree",
+        "nypost.com": "#nypost-openweb-conversation",
         "www.o2.pl": "div[data-st-area='st-article-reactions'] > div:nth-child(1) > div:nth-child(1) > div:nth-child(1), div[data-st-area='st-article'] > div:nth-child(3) > div:nth-child(1) > div:nth-child(2)",
         "www.pinterest.com": "[data-test-id='canonical-card']",
         "www.reddit.com": "[data-testid='post-container']~div, .icon-comment, .icon-comment~span",
@@ -51,6 +52,7 @@
         "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
         "superuser.com": ".comments, .comments-link, .js-link-separator",
         "www.techdirt.com": ".storylinks, .comments",
+        "www.thewrap.com": ".comment-box-input",
         "www.tiktok.com": "[data-e2e$='comment-icon'], [data-e2e$='comment-count'], [class*='DivCommentListContainer'], [class*='DivBottomCommentContainer']",
         "tweakers.net": "#reacties, #articleMeta .commentCount",
         "twitter.com": "[data-testid='reply'], [aria-label='Timeline: Conversation'] > div > div > div:not(:first-child), [aria-label='Timeline: Conversation'] > div > div:not(:first-child)",
@@ -58,6 +60,7 @@
         "vk.com": ".replies, .post_replies_header, .wl_replies_wrap, .wl_reply_form_wrap, #pv_comments",
         "www.washingtonpost.com": ".comments-btn, .comments, a[href='#comments-wrapper'], #comments-wrapper",
         "www.watson.ch": ".comments_count, .share-go-to-discussion, [class^='watson-discussion'], .standard.comments",
+        "www.wdwmagic.com": "#Body_Panel_Conversation, div[id^='Body_RepeaterForumPosts_Panel_ForumPost_']",
         "www.wykop.pl": "div.grid-main div.fix-b-border, div.grid-main > ul.comments-stream, div.grid-main > div:not(:first-child)",
         "wiadomosci.gazeta.pl": "#commentsApp",
         "www.yahoo.com": "div[id$='Comments'], div.caas-share-buttons > a:nth-child(1), #spotIm-conversations-module-wrapper, div[id$='spotim-wrapper']",
