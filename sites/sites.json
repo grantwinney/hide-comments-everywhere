@@ -25,6 +25,7 @@
         "www.fmkorea.com": ".fdb_lst_wrp, .btm_area > div:nth-child(2) > span:nth-child(3)",
         "folha.uol.com.br": "#comentarios",
         "gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]'], #replies",
+        "gogoanime.llc": ".anime_video_body_comment",
         "gogoanime.sh": ".anime_video_body_comment",
         "www.google.com": "[data-tab_type='LIVE_COMMENTS']",
         "www.haaretz.co.il": "a[href='#commentsSection'], #commentsSection, div[data-test='commentsContainer'], form[data-test='newCommentForm'], form[data-test='newCommentForm'] ~ div",
@@ -32,7 +33,7 @@
         "www.houzz.com": "[scopeid='comments-content'], [data-compid='comment'], [compid='comment'], .hz-editorial-gallery-related-combined__item__comment",
         "www.hwupgrade.it": "#commenti, .commenti",
         "ijr.com": ".author-info ~ div, .article-icons > .ff-comment, #comment-btn",
-        "www.instagram.com": "ul._abpo > li:nth-child(2), div._aat6 ul._a9ym, ._aaoe._aaso, [aria-label='Comment'], [aria-label='Load more comments']",
+        "www.instagram.com": "ul._abpo > li:nth-child(2), [aria-label='Comment'], [aria-label='Load more comments'], div._ae5q, ._aaoe",
         "www.kickstarter.com": "#react-project-comments, #comments-emoji",
         "kotaku.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]'], #replies",
         "www.lefigaro.fr": "#commentsTitle, #commentsTitle + ul, #commentsTitle ~ span",
@@ -62,11 +63,13 @@
         "www.washingtonpost.com": ".comments-btn, .comments, a[href='#comments-wrapper'], #comments-wrapper",
         "www.watson.ch": ".comments_count, .share-go-to-discussion, [class^='watson-discussion'], .standard.comments",
         "www.wdwmagic.com": "#Body_Panel_Conversation, div[id^='Body_RepeaterForumPosts_Panel_ForumPost_'], a[id^='Body_HyperLink_ViewComments']",
-        "www.wykop.pl": "div.grid-main div.fix-b-border, div.grid-main > ul.comments-stream, div.grid-main > div:not(:first-child)",
+        "weibo.com": ".subinfo_box .ficon_repeat, .subinfo_box .ficon_repeat~em, div[class*='toolbar_main'] > div[class*='toolbar_item']:nth-child(2), div[class^='Detail_box']",
         "wiadomosci.gazeta.pl": "#commentsApp",
+        "www.wykop.pl": "div.grid-main div.fix-b-border, div.grid-main > ul.comments-stream, div.grid-main > div:not(:first-child)",
         "www.yahoo.com": "div[id$='Comments'], div.caas-share-buttons > a:nth-child(1), #spotIm-conversations-module-wrapper, div[id$='spotim-wrapper']",
         "news.yahoo.com": "div[id$='Comments'], div.caas-share-buttons > a:nth-child(1), #spotIm-conversations-module-wrapper, div[id$='spotim-wrapper']",
         "www.youtube.com": "#comment-teaser, #comments",
-        "wydarzenia.interia.pl": "a.is-comment, #commentsZoneList, div.comments-placeholder"
+        "wydarzenia.interia.pl": "a.is-comment, #commentsZoneList, div.comments-placeholder",
+        "www.zhihu.com": ".ContentItem-actions > button:nth-child(2), .Comments-container"
     }
 }
