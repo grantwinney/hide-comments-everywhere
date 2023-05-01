@@ -4,7 +4,8 @@
         "github.com",
         "help.republicwireless.com",
         "talk.hyvor.com",
-        "developercommunity2.visualstudio.com"
+        "developercommunity2.visualstudio.com",
+        "www.python.org"
     ],
     "excluded_selectors": "code .comment, pre .comment, textarea.comments",
     "catchall_selectors": ".o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #discourse-comments, #disqus_thread, #disqus_thread > iframe, .fb-comments, #hyvor-talk-view, .commentlist, .responsesStreamWrapper, #spotim-specific, #spotIm-conversations-module-wrapper, .spot-im-comments, [data-spotim-module='conversation'], #vuukle-comments, #add_comment, #comment, #commentform, #comment-form, #comment-thread, #comment-wrapper, #commenting, #comments, #comments-section, #guestbook, #postcomment, #replybox, #respond, .comment, .comments, .commenting, .comment_area, .comments_area, .comment-area, .comment-form, .comment-thread, .comments-area, .comments-link, .comments-section, .comments-title, .feedback, .guestbook, .respond",
