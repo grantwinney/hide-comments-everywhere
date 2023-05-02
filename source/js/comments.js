@@ -1,18 +1,8 @@
-function findStylesheet() {
-    for (let i = 0; i < document.styleSheets.length; i++) {
-        let stylesheet = document.styleSheets.item(i);
-        if (stylesheet.title === 'hide_comments_everywhere') {
-            return stylesheet;
-        }
-    }
-    return undefined;
-}
-
 // Figure out which selectors apply to the current site and insert them into the page, without
 // worrying about whether or not they'll be disabled later (either by the user via toggling
 // or a whitelist, or by the global whitelist).
 function insertStylesIntoPage() {
-    if (findStylesheet()) {
+    if (document.getElementById('hide_comments_everywhere')) {
         return;
     }
 
@@ -69,7 +59,7 @@ function insertStylesIntoPageContinue(globalDefinitions) {
 
         // Finally, inject the styles into the page
         let style = document.createElement('style');
-        style.title = "hide_comments_everywhere";
+        style.id = "hide_comments_everywhere";
         style.textContent = elementsToHide ? `${elementsToHide} { display: none !important; visibility: hidden !important } ${globalDefinitions.excluded_selectors} { display: unset; visibility: unset }` : '';
 
         var header = document.querySelector('head');
@@ -86,7 +76,7 @@ function insertStylesIntoPageContinue(globalDefinitions) {
 function adjustCommentsVisibility() {
     performActionBasedOnCommentVisibility(location, function (isCommentsHidden, overrideReason) {
         // Enable or disable the injected style sheet as appropriate.
-        let stylesheet = findStylesheet();
+        let stylesheet = document.getElementById('hide_comments_everywhere');
         if (stylesheet) {
             stylesheet.disabled = !isCommentsHidden;
         }
@@ -99,7 +89,7 @@ function adjustCommentsVisibility() {
 }
 
 function toggleCommentVisibility() {
-    let stylesheet = findStylesheet();
+    let stylesheet = document.getElementById('hide_comments_everywhere');
     if (stylesheet) {
         stylesheet.disabled = !stylesheet.disabled;
 
