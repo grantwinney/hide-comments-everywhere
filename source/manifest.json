@@ -4,7 +4,7 @@
     "homepage_url": "https://github.com/grantwinney/chrome-extension-block-comments",
     "name": "Hide Comments Everywhere",
     "description": "Block comments across the web. Show the ones you want. You're in control!",
-    "version": "1.6.9",
+    "version": "1.6.10",
     "options_ui": {
         "page": "options.html",
         "open_in_tab": true
