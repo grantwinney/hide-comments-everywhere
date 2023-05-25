@@ -74,7 +74,7 @@
         "news.ycombinator.com": ".comment-tree",
         "www.yahoo.com": "div[id$='Comments'], div.caas-share-buttons > a:nth-child(1), #spotIm-conversations-module-wrapper, div[id$='spotim-wrapper']",
         "news.yahoo.com": "div[id$='Comments'], div.caas-share-buttons > a:nth-child(1), #spotIm-conversations-module-wrapper, div[id$='spotim-wrapper']",
-        "www.youtube.com": "#comment-teaser, #comments",
+        "www.youtube.com": "#comment-teaser, #comments, #comments-button, #watch-while-engagement-panel",
         "wydarzenia.interia.pl": "a.is-comment, #commentsZoneList, div.comments-placeholder",
         "www.zhihu.com": ".ContentItem-actions > button:nth-child(2), .Comments-container"
     }
