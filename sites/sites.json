@@ -27,6 +27,7 @@
         "www.fmkorea.com": ".fdb_lst_wrp, .btm_area > div:nth-child(2) > span:nth-child(3)",
         "folha.uol.com.br": "#comentarios",
         "gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]'], #replies",
+        "www.gocomics.com": "#comments, .js-comments-thread-container, .gc-comment-toggle",
         "gogoanime.llc": ".anime_video_body_comment",
         "gogoanime.sh": ".anime_video_body_comment",
         "www.google.com": "[data-tab_type='LIVE_COMMENTS']",
