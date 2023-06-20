@@ -62,6 +62,7 @@
         "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
         "superuser.com": ".comments, .comments-link, .js-link-separator",
         "www.techdirt.com": ".storylinks, .comments",
+        "www.theepochtimes.com": "#sidebar_comments",
         "www.tiktok.com": "[data-e2e$='comment-icon'], [data-e2e$='comment-count'], [class*='DivCommentListContainer'], [class*='DivBottomCommentContainer']",
         "tweakers.net": "#reacties, #articleMeta .commentCount",
         "twitter.com": "[aria-label$='Replies. Reply'], [aria-label='Timeline: Conversation'] > div > div:not(:first-child), [aria-label='Timeline: Conversation'] > div > div > div:not(:first-child), [aria-label='Timeline: Conversation'] > div > div > div > div:not(:first-child)",
