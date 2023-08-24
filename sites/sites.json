@@ -15,7 +15,7 @@
         "www.avclub.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]'], #replies",
         "www.boredpanda.com": ".comments-count, #post-comments-area",
         "www.buzzfeed.com": ".contributions, #mod-defer-user-contributions-1, #mod-defer-user-contributions-2",
-        "www.crunchyroll.com": ".comment-more, div.comments, .commenting-wrapper",
+        "www.crunchyroll.com": ".comment-more, div.comments, .commenting-wrapper, .erc-commenting-section",
         "www.dailykos.com": "#react-comments, .dk-social-count, .comment-counts-btn, .stories-grid__story__inner__comment-count.story-associations__comment-count",
         "www.dailymail.co.uk": ".comments-count, .share-count, .comments-link, #reader-comments",
         "entertain.daum.net": "#commentWrap",
