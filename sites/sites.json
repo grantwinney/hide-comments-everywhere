@@ -7,7 +7,7 @@
         "developercommunity2.visualstudio.com"
     ],
     "excluded_selectors": "code .comment, pre .comment, textarea.comments",
-    "catchall_selectors": ".o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #discourse-comments, #disqus_thread, #disqus_thread > iframe, .fb-comments, #hyvor-talk-view, [href$='hyvor-talk-view'], .commentlist, .responsesStreamWrapper, #spotim-specific, #spotIm-conversations-module-wrapper, .spot-im-comments, [data-spotim-module='conversation'], #vuukle-comments, #add_comment, #comment, #commentform, #comment-form, #comment-thread, #comment-wrapper, #commenting, #comments, #comments-section, #guestbook, #postcomment, #replybox, #respond, .comment, .comments, .commenting, .comment_area, .comments_area, .comment-area, .comment-form, .comment-thread, .comments-area, .comments-link, .comments-section, .comments-title, .feedback, .guestbook, .respond",
+    "catchall_selectors": ".o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #discourse-comments, #disqus_thread, #disqus_thread > iframe, .fb-comments, #hyvor-talk-view, [href$='hyvor-talk-view'], .commentlist, .responsesStreamWrapper, #spotim-specific, #spotIm-conversations-module-wrapper, .spot-im-comments, [data-spotim-module='conversation'], #vuukle-comments, #add_comment, #comment, #Comment, #commentform, #comment-form, #comment-thread, #comment-wrapper, #commenting, #comments, #Comments, #comments-section, #guestbook, #postcomment, #replybox, #respond, .comment, .Comment, .comments, .Comments, .commenting, .comment_area, .comments_area, .comment-area, .comment-form, .comment-thread, .comments-area, .comments-link, .comments-section, .comments-title, .feedback, .guestbook, .respond",
     "sites": {
         "abcnews.go.com": ".CommentButton",
         "www.abola.pt": "#body_Ver_Comentarios_comentariosMobile, .comentarios",
@@ -46,6 +46,7 @@
         "www.lefigaro.fr": "#commentsTitle, #commentsTitle + ul, #commentsTitle ~ span",
         "www.lesswrong.com": ".PostsItem2-commentsIcon, .PostsPagePostHeader-commentsLink, .PostsPage-commentsSection, .RecentDiscussionThread-content",
         "www.linkedin.com": "[data-control-name='comments_count'], .feed-shared-update__comments-container, .feed-shared-update-v2__comments-container, .feed-shared-first-prompt-block, .comment, li.social-details-social-counts__comments",
+        "lwn.net": "a[href$='#Comments'], .CommentBox, .Comment",
         "www.msn.com": "i[aria-label='Open replies'], [class*='commentContainer'], [class*='commentOverlayContainer'], [aria-label^='Comments'], .comments-count-button, a[part='comments-count-button']",
         "myanimelist.net": "div.information > p.info > a:nth-child(2), .news-info-block .comment, .comment-list, .comment-list + .mt16",
         "n4g.com": ".comments-container-outer, .sd-commentcount",
