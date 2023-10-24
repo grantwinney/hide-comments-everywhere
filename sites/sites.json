@@ -6,7 +6,7 @@
         "talk.hyvor.com",
         "developercommunity2.visualstudio.com"
     ],
-    "excluded_selectors": "code, pre, textarea.comments",
+    "excluded_selectors": "code .comment, pre .comment, textarea.comments",
     "catchall_selectors": ".o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #discourse-comments, #disqus_thread, #disqus_thread > iframe, .fb-comments, #hyvor-talk-view, [href$='hyvor-talk-view'], .commentlist, .responsesStreamWrapper, #spotim-specific, #spotIm-conversations-module-wrapper, .spot-im-comments, [data-spotim-module='conversation'], #vuukle-comments, #add_comment, #comment, #Comment, #commentform, #comment-form, #comment-thread, #comment-wrapper, #commenting, #comments, #Comments, #comments-section, #guestbook, #postcomment, #replybox, #respond, .comment, .Comment, .comments, .Comments, .commenting, .comment_area, .comments_area, .comment-area, .comment-form, .comment-thread, .comments-area, .comments-link, .comments-section, .comments-title, .feedback, .guestbook, .respond",
     "sites": {
         "abcnews.go.com": ".CommentButton",
@@ -39,7 +39,7 @@
         "www.hwupgrade.it": "#commenti, .commenti",
         "ijr.com": ".author-info ~ div, .article-icons > .ff-comment, #comment-btn",
         "www.index.hr": "#comments-container",
-        "www.instagram.com": "[aria-label='Comment'], [aria-label='Load more comments'], div._ae5q > ul ul, div._ae5q > ul ul + div, ._aaoe",
+        "www.instagram.com": "ul._abpo > li:nth-child(2), [aria-label='Comment'], [aria-label='Load more comments'], div._ae5q, ._aaoe",
         "together.kakao.com": "comments",
         "www.kickstarter.com": "#react-project-comments, #comments-emoji",
         "kotaku.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]'], #replies",
