@@ -56,6 +56,7 @@
         "nypost.com": "#nypost-openweb-conversation, .comments-inline-cta, button[aria-label='Comments']",
         "www.o2.pl": "div[data-st-area='st-article-reactions'] > div:nth-child(1) > div:nth-child(1) > div:nth-child(1), div[data-st-area='st-article'] > div:nth-child(3) > div:nth-child(1) > div:nth-child(2)",
         "www.pinterest.com": "[data-test-id='canonical-card'], div[data-test-id='commentThread-comment'], div[data-test-id='aggregated-comment-list']",
+        "www.pinterest.fr": "[data-test-id='canonical-card'], div[data-test-id='commentThread-comment'], div[data-test-id='aggregated-comment-list']",
         "www.reddit.com": "[data-testid='post-container']~div, .icon-comment, .icon-comment~span, ._2ulKn_zs7Y3LWsOqoFLHPo, ._2M2wOqmeoPVvcSsJ6Po9-V",
         "old.reddit.com": ".commentarea, a[data-event-action='comments']",
         "rumble.com": "[data-type='comments'], #video-comments, .media-page-chat-aside-chat, .video-item--comments",
