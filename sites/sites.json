@@ -86,6 +86,7 @@
         "news.yahoo.com": "div[id$='Comments'], div.caas-share-buttons > a:nth-child(1), #spotIm-conversations-module-wrapper, div[id$='spotim-wrapper']",
         "www.youtube.com": "#comment-teaser, #comments, #comments-button, #watch-while-engagement-panel",
         "wydarzenia.interia.pl": "a.is-comment, #commentsZoneList, div.comments-placeholder",
-        "www.zhihu.com": ".ContentItem-actions > button:nth-child(2), .Comments-container"
+        "www.zhihu.com": ".ContentItem-actions > button:nth-child(2), .Comments-container",
+        "www.bankier.pl": "section.o-comments-box"
     }
 }
