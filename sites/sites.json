@@ -14,6 +14,7 @@
         "askubuntu.com": ".comments, .comments-link, .js-link-separator",
         "www.avclub.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]'], #replies",
         "www.backloggd.com": "#game-reviews, .game-page-sidecard",
+        "www.bankier.pl": "section.o-comments-box",
         "www.boredpanda.com": ".comments-count, #post-comments-area",
         "www.buzzfeed.com": ".contributions, #mod-defer-user-contributions-1, #mod-defer-user-contributions-2",
         "cohost.org": ".co-comment-box, .co-comment-box+div, a[href$=comments]",
