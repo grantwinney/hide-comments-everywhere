@@ -52,6 +52,7 @@
         "lwn.net": "a[href$='#Comments'], .CommentBox, .Comment",
         "www.msn.com": "i[aria-label='Open replies'], [class*='commentContainer'], [class*='commentOverlayContainer'], [aria-label^='Comments'], .comments-count-button, a[part='comments-count-button'], .comments-count-content, social-comment-wc",
         "myanimelist.net": "div.information > p.info > a:nth-child(2), .news-info-block .comment, .comment-list, .comment-list + .mt16",
+        "n1info.rs": ".total-comments, .post-comments-no, .uc-all-comments, .comments-call-to-action",
         "n4g.com": ".comments-container-outer, .sd-commentcount",
         "www.namecheap.com": ".sds-blog-card__info-comments, .sds-blog-post__comments, #comments, #toggle-comments",
         "n.news.naver.com": "#cbox_module, .media_end_head_info_variety_cmtcount",
