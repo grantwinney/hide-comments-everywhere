@@ -43,7 +43,6 @@
         "www.hwupgrade.it": "#commenti, .commenti",
         "ijr.com": ".author-info ~ div, .article-icons > .ff-comment, #comment-btn",
         "www.index.hr": "#comments-container",
-        "www.instagram.com": "ul._abpo > li:nth-child(2), [aria-label='Comment'], [aria-label='Load more comments'], [data-test-id='aggregated-comment-list'], div._ae5q, ._aaoe",
         "together.kakao.com": "comments",
         "www.kickstarter.com": "#react-project-comments, #comments-emoji",
         "kotaku.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]'], #replies",
