@@ -29,6 +29,7 @@
         "einthusan.tv": "#UIDiscussionCompact, .stats > p:nth-child(3), a[data-blink='#UIDiscussionCompact']",
         "www.fmkorea.com": ".fdb_lst_wrp, .btm_area > div:nth-child(2) > span:nth-child(3)",
         "folha.uol.com.br": "#comentarios",
+        "garagesalefinder.com": ".comments-wrap",
         "gettr.com": "#virtuoso, div[title$='Comment'], div[title$='Comments']",
         "gizmodo.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]'], #replies",
         "www.gocomics.com": "#comments, .js-comments-thread-container, .gc-comment-toggle",
