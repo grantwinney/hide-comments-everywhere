@@ -78,7 +78,7 @@
         "www.tiktok.com": "[data-e2e$='comment-icon'], [data-e2e$='comment-count'], [class*='DivCommentListContainer'], [class*='DivBottomCommentContainer']",
         "tweakers.net": "#reacties, #articleMeta .commentCount",
         "www.vijesti.me": ".dataComments, .artViews > span:nth-child(3), .commWrap",
-        "vk.com": ".replies, .post_replies_header, .wl_replies_wrap, .wl_reply_form_wrap, #pv_comments",
+        "vk.com": ".replies, .post_replies_header, .wl_replies_wrap, .wl_reply_form_wrap, #pv_comments, #mv_comments_wrap",
         "www.washingtonpost.com": ".comments-btn, .comments, a[href='#comments-wrapper'], #comments-wrapper",
         "www.watson.ch": ".comments_count, .share-go-to-discussion, [class^='watson-discussion'], .standard.comments",
         "www.wdwmagic.com": "#Body_Panel_Conversation, div[id^='Body_RepeaterForumPosts_Panel_ForumPost_'], a[id^='Body_HyperLink_ViewComments']",
