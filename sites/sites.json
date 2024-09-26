@@ -45,7 +45,7 @@
         "www.hwupgrade.it": "#commenti, .commenti",
         "ijr.com": ".author-info ~ div, .article-icons > .ff-comment, #comment-btn",
         "www.index.hr": "#comments-container",
-        "www.instagram.com": ".x5yr21d  > .x78zum5.xdt5ytf.x1iyjqo2",
+        "www.instagram.com": "article .x5yr21d  > .x78zum5.xdt5ytf.x1iyjqo2",
         "together.kakao.com": "comments",
         "www.kickstarter.com": "#react-project-comments, #comments-emoji",
         "kotaku.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]'], #replies",
