@@ -74,6 +74,7 @@
         "soundcloud.com": "div.commentForm, div.commentsList, li[title$='comments']",
         "stackexchange.com": ".comments, .comments-link, .js-link-separator",
         "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
+        "steamcommunity.com": ".comments, .commentthread_area, .commentthread_area+a[class='modalFullItemLink'], .apphub_CardCommentCount",
         "superuser.com": ".comments, .comments-link, .js-link-separator",
         "www.techdirt.com": ".storylinks, .comments",
         "theathletic.com": ".goledo",
