@@ -47,6 +47,7 @@
         "www.hoyolab.com": ".mhy-hightlight-comment-card, .mhy-article-card__data > .mhy-article-card__data-item:nth-child(2), .mhy-article-page-reply, .mhy-article-page-stats > .mhy-article-page-stats__item:nth-child(1)",
         "www.hwupgrade.it": "#commenti, .commenti",
         "ijr.com": ".author-info ~ div, .article-icons > .ff-comment, #comment-btn",
+        "imgur.com": ".Post-item-info > div:nth-child(2), .CommentsList, .Gallery-CommentsCounter",
         "www.index.hr": "#comments-container",
         "economictimes.indiatimes.com": ".commentBoxContainer, .cmnts_wrapper",
         "timesofindia.indiatimes.com": "div[id^='comment-sidebar'], .authorComment",
