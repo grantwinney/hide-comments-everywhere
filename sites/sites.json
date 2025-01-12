@@ -97,6 +97,7 @@
         "www.wykop.pl": "div.grid-main div.fix-b-border, div.grid-main > ul.comments-stream, div.grid-main > div:not(:first-child)",
         "news.ycombinator.com": ".comment-tree",
         "www.yahoo.com": "[data-icon^='comment'], span[aria-label$='comments'], span[aria-label$='comment'], span[aria-label$='comments'] + span, span[aria-label$='comment'] + span, .view-cmts-cta-wrapper, [id^='spotim-wrapper'], .caas-comment",
+        "finance.yahoo.com": ".byline-comments-desktop, div[data-testid='view-comments'], #spot-im-comments",
         "news.yahoo.com": "[data-icon^='comment'], span[aria-label$='comments'], span[aria-label$='comment'], span[aria-label$='comments'] + span, span[aria-label$='comment'] + span, .view-cmts-cta-wrapper, [id^='spotim-wrapper'], .caas-comment",
         "www.youtube.com": "#comment-teaser, #comments, #comments-button, #watch-while-engagement-panel",
         "wydarzenia.interia.pl": "a.is-comment, #commentsZoneList, div.comments-placeholder",
