@@ -56,6 +56,7 @@
         "together.kakao.com": "comments",
         "www.kickstarter.com": "#react-project-comments, #comments-emoji",
         "kotaku.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]'], #replies",
+        "www.ksl.com": "#comment_bubble, #commentsContainer",
         "www.lefigaro.fr": "#commentsTitle, #commentsTitle + ul, #commentsTitle ~ span",
         "www.lesswrong.com": ".PostsItem2-commentsIcon, .PostsPagePostHeader-commentsLink, .PostsPage-commentsSection, .RecentDiscussionThread-content",
         "www.linkedin.com": "[data-control-name='comments_count'], .feed-shared-update__comments-container, .feed-shared-update-v2__comments-container, .feed-shared-first-prompt-block, .comment, li.social-details-social-counts__comments",
