@@ -84,6 +84,7 @@
         "singlelogin.re": ".book-comments-info, z-comments",
         "slickdeals.net": "#commentsBox, #joinTheConversationBox, .add-comment, .add-comment + span, a[href='#commentsBox']",
         "soundcloud.com": "div.commentForm, div.commentsList, li[title$='comments']",
+        "open.spotify.com" : "div[data-comment-id]",
         "stackexchange.com": ".comments, .comments-link, .js-link-separator",
         "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
         "steamcommunity.com": "div[class*='CardCommentCount'], ._16xC0mtOWoLbvSQbmo_ycv, .commentthread_area, .forumtopic_comments, .forum_topic_reply_count",
