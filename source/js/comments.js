@@ -37,9 +37,9 @@ function insertStylesIntoPageContinue(globalDefinitions) {
     let elementsToHide = '';
     
     if (globalDefinitions.sites) {
-        // Apply site-specific selectors if any exist
+        // Apply site-specific selectors if any exist, trying the entire hostname first and then sans subdomains
         for (let site of Object.keys(globalDefinitions.sites)) {
-            if (site === location.hostname) {
+            if (site === location.hostname || site === location.hostname.split('.').slice(-2).join('.')) {
                 elementsToHide = globalDefinitions.sites[site];
                 break;
             }
