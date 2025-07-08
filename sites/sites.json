@@ -24,6 +24,7 @@
         "www.crunchyroll.com": ".comment-more, div.comments, .commenting-wrapper, .erc-commenting-section",
         "www.dailykos.com": "#react-comments, .dk-social-count, .comment-counts-btn, .stories-grid__story__inner__comment-count.story-associations__comment-count",
         "www.dailymail.co.uk": ".comments-count, .share-count, .comments-link, #reader-comments",
+        "www.dailywire.com": "div:has(+ .cmt-ads), .cmt-ads, .insticator-product-group",
         "www.deviantart.com": "a[href$='#comments'], button[title='Comments'], ._1e_xC._1ujMm:nth-child(2), #comments, #comments + div",
         "entertain.daum.net": "#commentWrap",
         "v.daum.net": ".box_cmt, .btn_cmt",
