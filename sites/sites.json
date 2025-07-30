@@ -92,7 +92,7 @@
         "stackexchange.com": ".comments, .comments-link, .js-link-separator",
         "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
         "steamcommunity.com": "div[class*='CardCommentCount'], ._16xC0mtOWoLbvSQbmo_ycv, .commentthread_area, .forumtopic_comments, .forum_topic_reply_count",
-        "substack.com": "[aria-label='Comment'], .flex-fill-uYLRqz > .feedItem-ONDKv3:nth-child(1), [aria-label^='View comments'], #discussion",
+        "substack.com": "[aria-label='Comment'], .feedItem-ONDKv3, [aria-label^='View comments'], #discussion",
         "superuser.com": ".comments, .comments-link, .js-link-separator",
         "www.techdirt.com": ".storylinks, .comments",
         "theathletic.com": ".goledo",
