@@ -80,6 +80,7 @@
         "nypost.com": "#nypost-openweb-conversation, .comments-inline-cta, button[aria-label='Comments']",
         "www.nytimes.com": "[data-testid^='comments']",
         "www.o2.pl": "div[data-st-area='st-article-reactions'] > div:nth-child(1) > div:nth-child(1) > div:nth-child(1), div[data-st-area='st-article'] > div:nth-child(3) > div:nth-child(1) > div:nth-child(2)",
+        "www.patreon.com": "button[data-tag='comment-post-icon'], #content-card-comment-thread-container",
         "www.pinterest.com": "[data-test-id='canonical-card'], div[data-test-id='commentThread-comment'], div[data-test-id='aggregated-comment-list']",
         "www.pinterest.fr": "[data-test-id='canonical-card'], div[data-test-id='commentThread-comment'], div[data-test-id='aggregated-comment-list']",
         "www.reddit.com": ".icon-comment, .icon-comment~span, [bundlename='comment_body_header'], div[id^='comment-tree-content-anchor']",
