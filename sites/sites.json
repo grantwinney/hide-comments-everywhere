@@ -32,6 +32,7 @@
         "devblogs.microsoft.com": ".post-comment-count, .post-comments, .dpr-wrap, #comments",
         "dev.to": ".crayons-story__details > a:nth-child(2), #comments",
         "einthusan.tv": "#UIDiscussionCompact, .stats > p:nth-child(3), a[data-blink='#UIDiscussionCompact']",
+        "ew.com": "div[id^='ew-click-to-comment'], div[id^='ew-comments']",
         "www.fmkorea.com": ".fdb_lst_wrp, .btm_area > div:nth-child(2) > span:nth-child(3)",
         "folha.uol.com.br": "#comentarios",
         "gamebanana.com": ".Stats > .Stat:nth-child(2), #PostsListModule",
