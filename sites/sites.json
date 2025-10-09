@@ -99,7 +99,7 @@
         "www.techdirt.com": ".storylinks, .comments",
         "theathletic.com": ".goledo",
         "www.theepochtimes.com": "#sidebar_comments",
-        "www.theverge.com": "span:has(> .duet--article--comments-link), .duet--article--comments-link, #coral-drawer-scroll, #comments-drawer",
+        "www.theverge.com": "span:has(> .duet--article--comments-link), .duet--article--comments-link, #coral-drawer",
         "www.tiktok.com": "[data-e2e$='comment-icon'], [data-e2e$='comment-count'], [class*='DivCommentListContainer'], [class*='DivBottomCommentContainer']",
         "tweakers.net": "#reacties, #articleMeta .commentCount",
         "www.vijesti.me": ".dataComments, .artViews > span:nth-child(3), .commWrap",
