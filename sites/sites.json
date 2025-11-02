@@ -51,6 +51,7 @@
         "www.houzz.com": "[scopeid='comments-content'], [data-compid='comment'], [compid='comment'], .hz-editorial-gallery-related-combined__item__comment",
         "www.hoyolab.com": ".mhy-hightlight-comment-card, .mhy-article-card__data > .mhy-article-card__data-item:nth-child(2), .mhy-article-page-reply, .mhy-article-page-stats > .mhy-article-page-stats__item:nth-child(1)",
         "www.hwupgrade.it": "#commenti, .commenti",
+        "ijr.com": ".jeg_meta_comment, div[data-spotim-module='conversation']",
         "imgur.com": ".Post-item-info > div:nth-child(2), .CommentsList, .Gallery-CommentsCounter",
         "www.index.hr": "#comments-container",
         "economictimes.indiatimes.com": ".commentBoxContainer, .cmnts_wrapper",
