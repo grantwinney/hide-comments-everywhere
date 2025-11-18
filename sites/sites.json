@@ -17,7 +17,7 @@
         "www.backloggd.com": "#game-reviews, .game-page-sidecard",
         "www.bankier.pl": "section.o-comments-box",
         "v1.bestsolaris.com": ".ChatSohbet",
-        "www.boredpanda.com": ".comments-count, #post-comments-area",
+        "www.boredpanda.com": ".comments-count, #post-comments-area, .comment-feature",
         "bsky.app": "[aria-label^='Reply'], [data-testid^='postThreadItem']:not(:first-child)",
         "www.buzzfeed.com": ".contributions, #mod-defer-user-contributions-1, #mod-defer-user-contributions-2",
         "cohost.org": ".co-comment-box, .co-comment-box+div, a[href$=comments]",
