@@ -16,6 +16,7 @@
         "babylonbee.com": "#comments, div[id^='commentList']",
         "www.backloggd.com": "#game-reviews, .game-page-sidecard",
         "www.bankier.pl": "section.o-comments-box",
+        "www.bbc.com": "a[href='#comments'], #comments, #comp-comments-button, section[data-testid='comments-container']",
         "v1.bestsolaris.com": ".ChatSohbet",
         "www.boredpanda.com": ".comments-count, #post-comments-area, .comment-feature",
         "bsky.app": "[aria-label^='Reply'], [data-testid^='postThreadItem']:not(:first-child)",
