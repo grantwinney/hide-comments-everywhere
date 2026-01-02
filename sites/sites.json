@@ -101,7 +101,7 @@
         "theathletic.com": ".goledo",
         "www.theepochtimes.com": "#sidebar_comments",
         "www.theverge.com": "span:has(> .duet--article--comments-link), .duet--article--comments-link, #coral-drawer",
-        "www.tiktok.com": "[data-e2e$='comment-icon'], [data-e2e$='comment-count'], [class*='DivCommentListContainer'], [class*='DivBottomCommentContainer']",
+        "www.tiktok.com": "button[aria-label^='Read or add comments'], button:has(span[data-e2e='browse-comment-icon']), div[class*='--DivTabMenuContainer'] > div:first-child, div[class*='--DivCommentItemContainer'], div[class*='--DivEmpty'], #comments, div[class*='DivBottomCommentContainer']",
         "tweakers.net": "#reacties, #articleMeta .commentCount",
         "www.vijesti.me": ".dataComments, .artViews > span:nth-child(3), .commWrap",
         "vk.com": ".replies, .post_replies_header, .wl_replies_wrap, .wl_reply_form_wrap, #pv_comments, #mv_comments_wrap",
