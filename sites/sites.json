@@ -117,7 +117,7 @@
         "www.yahoo.com": "[data-icon^='comment'], span[aria-label$='comments'], span[aria-label$='comment'], span[aria-label$='comments'] + span, span[aria-label$='comment'] + span, .view-cmts-cta-wrapper, .view-cmts-container, button[data-ylk*='view-cmnts-cta'], [id^='spotim-wrapper'], .caas-comment",
         "finance.yahoo.com": ".byline-comments-desktop, div[data-testid='view-comments'], #spot-im-comments",
         "news.yahoo.com": "[data-icon^='comment'], span[aria-label$='comments'], span[aria-label$='comment'], span[aria-label$='comments'] + span, span[aria-label$='comment'] + span, .view-cmts-cta-wrapper, [id^='spotim-wrapper'], .caas-comment",
-        "www.youtube.com": "#comment-teaser, #comments, #comments-button, #watch-while-engagement-panel, .ytShortsSuggestedActionViewModelDynamicHostCollapsedLeadingSection, .ytShortsSuggestedActionViewModelStaticHostTextSection",
+        "www.youtube.com": "#comment-teaser, #comments, #comments-button, #watch-while-engagement-panel, .ytShortsSuggestedActionViewModelDynamicHostCollapsedLeadingSection, .ytShortsSuggestedActionViewModelStaticHostTextSection, #button-bar:has(button[aria-label$='comments']), #anchored-panel:has(ytd-engagement-panel-section-list-renderer[target-id='engagement-panel-comments-section'])",
         "wydarzenia.interia.pl": "a.is-comment, #commentsZoneList, div.comments-placeholder",
         "www.zhihu.com": ".ContentItem-actions > button:nth-child(2), .Comments-container"
     }
