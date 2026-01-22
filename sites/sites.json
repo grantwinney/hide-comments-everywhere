@@ -76,6 +76,7 @@
         "www.namecheap.com": ".sds-blog-card__info-comments, .sds-blog-post__comments, #comments, #toggle-comments",
         "n.news.naver.com": "#cbox_module, .media_end_head_info_variety_cmtcount",
         "www.newgrounds.com": "div[id^='review']",
+        "ngs.ru": "[data-test='header-comments-button'], section.articleCommentsBlock_qkWh4, a.comments_eiDCU",
         "nova.rs": ".comments-badge, .comments-badge-text, .badge-wrapper-link, .uc-all-comments, .comments-call-to-action",
         "nypost.com": "#nypost-openweb-conversation, .comments-inline-cta, button[aria-label='Comments']",
         "www.nytimes.com": "[data-testid^='comments']",
