@@ -41,7 +41,7 @@
     ],
     "web_accessible_resources": [{
         "matches": ["<all_urls>"],
-        "resources": ["js/comments.js"]
+        "resources": ["js/content-main.js"]
     }],
     "icons": {
         "16": "images/hide-comments-16.png",

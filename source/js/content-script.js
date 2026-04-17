@@ -2,7 +2,7 @@
 // https://stackoverflow.com/a/53033388
 
 (async () => {
-  const src = chrome.runtime.getURL('js/comments.js');
+  const src = chrome.runtime.getURL('js/content-main.js');
   const contentScript = await import(src);
   contentScript.main();
 })();
