@@ -1,6 +1,8 @@
+import * as utils from './shared-utils.js';
+
 function alertIfNewerDefinitions() {
     chrome.storage.local.get('definition_version', function (localVersionResult) {
-        fetch(VERSION_JSON)
+        fetch(utils.VERSION_JSON)
             .then((response) => response.json())
             .then((data) => {
                 document.getElementById('definitions-newest-version').innerText = data.version;
@@ -73,7 +75,7 @@ function loadBlacklist() {
 
 function saveUrlList(urlTextAreaId, savedItem) {
     let urls = document.getElementById(urlTextAreaId).value;
-    if (validateCustomUrls(urls.split(/\r?\n/))) {
+    if (utils.validateCustomUrls(urls.split(/\r?\n/))) {
         let urlJson = {};
         urlJson[urlTextAreaId] = urls;
         chrome.storage.sync.set(urlJson, function () {

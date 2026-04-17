@@ -1,3 +1,11 @@
+//***********
+// This file runs in the context of the popup dialog that opens when a user clicks the addon icon in the toolbar
+// and the "Press the icon in the toolbar to toggle comment visibility..." is NOT selected.
+// Certain actions may use chrome.tabs.sendMessage() to call comments.js, which runs in the context of the current tab.
+//  */
+
+import * as utils from './shared-utils.js';
+
 function disableFieldsForUnsupportedUrl() {
     let addToWhitelistButton = document.getElementById('add_to_whitelist');
     let addToBlacklistButton = document.getElementById('add_to_blacklist');
@@ -22,7 +30,7 @@ function disableFieldsForUnsupportedUrl() {
 }
 
 function displayCorrectToggleIconForCurrentSite(tabUrl) {
-    performActionBasedOnCommentVisibility(tabUrl, function (isCommentsHidden, overrideReason) {
+    utils.performActionBasedOnCommentVisibility(tabUrl, function (isCommentsHidden, overrideReason) {
         chrome.storage.sync.get('remember_toggle', function (rememberToggleResult) {
             let toggleHideIcon = document.getElementById('toggle_hide_icon');
             let updatedTitle = '';
@@ -89,7 +97,7 @@ function addUrlToUserBlacklist(tabUrl) {
 }
 
 function requestAdditionToGlobalBlacklist(tabUrl) {
-    if (!isCurrentUrlSupported(tabUrl)) {
+    if (!utils.isCurrentUrlSupported(tabUrl)) {
         return;
     }
     let title = "Here's a new site I'd like you to consider blocking";
@@ -100,7 +108,7 @@ function requestAdditionToGlobalBlacklist(tabUrl) {
 
 function wireUpNavBarButtons(tabId, tabUrl) {
     document.getElementById('toggle_hide').addEventListener('click', function () {
-        toggleCommentsOnCurrentUrl(tabId, tabUrl);
+        utils.toggleCommentsOnCurrentUrl(tabId, tabUrl);
     });
 
     document.getElementById('options').addEventListener('click', function () {
@@ -151,7 +159,7 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
 
         displayCorrectToggleIconForCurrentSite(tabUrl);
 
-        if (isCurrentUrlSupported(tabUrl)) {
+        if (utils.isCurrentUrlSupported(tabUrl)) {
             document.getElementById('currentHostname').value = tabUrl.hostname;
         } else {
             disableFieldsForUnsupportedUrl();

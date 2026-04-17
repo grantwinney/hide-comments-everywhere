@@ -1,24 +1,30 @@
-let invalidProtocols = ['chrome-extension', 'edge', 'moz-extension', 'about'];
-const STARTER_SELECTOR = '#place_your_selectors_here';
-const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
-const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json';
-const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
+export const INVALID_PROTOCOLS = ['brave', 'chrome-extension', 'edge', 'moz-extension', 'about'];
+export const STARTER_SELECTOR = '#place_your_selectors_here';
+export const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
+export const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json';
+export const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
 
-// Write a message to the console, prepended with the addon name.
-function log(message, isError = false) {
-    if (isError) {
-        console.error(`[${chrome.runtime.getManifest().name}]: ${message}`);
-    } else {
-        console.info(`[${chrome.runtime.getManifest().name}]: ${message}`);
+// Test whether a given URL matches any entries in the user's personal blacklist, and return the elements to hide, if any.
+export function getBlacklistedElementsToHide(url, patterns) {
+    let patternsArray = patterns.split(/\r?\n/);
+    for (let i = 0; i < patternsArray.length; i++) {
+        if (patternsArray[i] === '') {
+            continue;
+        }
+        let parts = patternsArray[i].split(";");
+        let urlPart = parts[0];
+        let selectorPart = parts[1];
+        if (!selectorPart || selectorPart.trim() === '' || selectorPart.trim() === STARTER_SELECTOR) {
+            continue;
+        } else if (urlMatchesPattern(url, urlPart)) {
+            return selectorPart;
+        }
     }
-}
-
-function getCurrentSeconds() {
-    return new Date().getTime() / 1000 | 0;
-}
+    return undefined;
+};
 
 // Get the latest site definitions.
-function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdatedAction = undefined) {
+export function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdatedAction = undefined) {
     chrome.storage.local.get('definition_version', function (localVersionResult) {
         chrome.storage.local.get('definition_version_last_check', function (lastCheckResult) {
             // If the definition version or last update time is missing, or we're forcing an update, check for new definitions
@@ -64,76 +70,20 @@ function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdate
     });
 }
 
-function isCurrentUrlSupported(tabUrl) {
-    return !invalidProtocols.some(p => tabUrl.protocol.startsWith(p))
+export function isCurrentUrlSupported(tabUrl) {
+    return !INVALID_PROTOCOLS.some(p => tabUrl.protocol.startsWith(p))
 }
 
-// User chose to toggle comments on the current page, so adjust the addon icon/title,
-//  the setting in storage, and send a message to the content script to show/hide.
-function toggleCommentsOnCurrentUrl(tabId, tabUrl) {
-    if (!isCurrentUrlSupported(tabUrl)) {
-        return;
-    }
-    // The value of the toggle setting is stored from the toggleCommentVisibility
-    // method in the content script, after the comments are displayed/hidden, to
-    // avoid a buggy situation described in more detail in there.
-    chrome.tabs.sendMessage(tabId, { event: 'toggle_tab' });
-    window.close();
-}
-
-// Check that all custom URLs are valid regex patterns
-function validateCustomUrls(urls) {
-    try {
-        for (let i = 0; i < urls.length; i++) {
-            new RegExp(urls[i]);
-        }
-        return true;
-    }
-    catch (e) {
-        return false;
+// Write a message to the console, prepended with the addon name.
+export function log(message, isError = false) {
+    if (isError) {
+        console.error(`[${chrome.runtime.getManifest().name}]: ${message}`);
+    } else {
+        console.info(`[${chrome.runtime.getManifest().name}]: ${message}`);
     }
 }
 
-// Determines whether a URL matches a given regex pattern.
-function urlMatchesPattern(url, pattern) {
-    let re = new RegExp(pattern);
-    return re.test(url);
-}
-
-// Test whether a given URL matches any entries in the whitelist.
-function urlMatchesAnyWhitelistPattern(url, patterns) {
-    let patternsArray = patterns.split(/\r?\n/);
-    for (let i = 0; i < patternsArray.length; i++) {
-        if (patternsArray[i] === '') {
-            continue;
-        }
-        if (urlMatchesPattern(url, patternsArray[i])) {
-            return true;
-        }
-    }
-    return false;
-};
-
-// Test whether a given URL matches any entries in the blacklist, and return the elements to hide, if any.
-function getBlacklistedElementsToHide(url, patterns) {
-    let patternsArray = patterns.split(/\r?\n/);
-    for (let i = 0; i < patternsArray.length; i++) {
-        if (patternsArray[i] === '') {
-            continue;
-        }
-        let parts = patternsArray[i].split(";");
-        let urlPart = parts[0];
-        let selectorPart = parts[1];
-        if (!selectorPart || selectorPart.trim() === '' || selectorPart.trim() === STARTER_SELECTOR) {
-            continue;
-        } else if (urlMatchesPattern(url, urlPart)) {
-            return selectorPart;
-        }
-    }
-    return undefined;
-};
-
-function performActionBasedOnCommentVisibility(url, action) {
+export function performActionBasedOnCommentVisibility(url, action) {
     let isCommentsHidden = true;
     let overrideReason = '';
 
@@ -181,3 +131,53 @@ function performActionBasedOnCommentVisibility(url, action) {
         });
     });
 }
+
+// User chose to toggle comments on the current page, so adjust the addon icon/title,
+//  the setting in storage, and send a message to the content script to show/hide.
+export function toggleCommentsOnCurrentUrl(tabId, tabUrl) {
+    if (!isCurrentUrlSupported(tabUrl)) {
+        return;
+    }
+    // The value of the toggle setting is stored from the toggleCommentVisibility
+    // method in the content script, after the comments are displayed/hidden, to
+    // avoid a buggy situation described in more detail in there.
+    chrome.tabs.sendMessage(tabId, { event: 'toggle_tab' });
+    window.close();
+}
+
+// Check that all custom URLs are valid regex patterns
+export function validateCustomUrls(urls) {
+    try {
+        for (let i = 0; i < urls.length; i++) {
+            new RegExp(urls[i]);
+        }
+        return true;
+    }
+    catch (e) {
+        return false;
+    }
+}
+
+function getCurrentSeconds() {
+    return new Date().getTime() / 1000 | 0;
+}
+
+// Determines whether a URL matches a given regex pattern.
+function urlMatchesPattern(url, pattern) {
+    let re = new RegExp(pattern);
+    return re.test(url);
+}
+
+// Test whether a given URL matches any entries in the whitelist.
+function urlMatchesAnyWhitelistPattern(url, patterns) {
+    let patternsArray = patterns.split(/\r?\n/);
+    for (let i = 0; i < patternsArray.length; i++) {
+        if (patternsArray[i] === '') {
+            continue;
+        }
+        if (urlMatchesPattern(url, patternsArray[i])) {
+            return true;
+        }
+    }
+    return false;
+};

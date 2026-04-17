@@ -5,70 +5,7 @@
 // - Another view in the extension, such as a popup, calls runtime.getBackgroundPage.
 // https://developer.chrome.com/docs/extensions/mv3/service_workers/
 
-let invalidProtocols = ['chrome-extension', 'edge', 'moz-extension', 'about'];
-const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
-const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json';
-const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
-
-// Write a message to the console, prepended with the addon name.
-function log(message, isError = false) {
-    if (isError) {
-        console.error(`[${chrome.runtime.getManifest().name}]: ${message}`);
-    } else {
-        console.info(`[${chrome.runtime.getManifest().name}]: ${message}`);
-    }
-}
-
-function getCurrentSeconds() {
-    return new Date().getTime() / 1000 | 0;
-}
-
-// Get the latest site definitions.
-function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdatedAction = undefined) {
-    chrome.storage.local.get('definition_version', function (localVersionResult) {
-        chrome.storage.local.get('definition_version_last_check', function (lastCheckResult) {
-            // If the definition version or last update time is missing, or we're forcing an update, check for new definitions
-            if (!Number.isInteger(localVersionResult?.definition_version)
-                || !Number.isInteger(lastCheckResult?.definition_version_last_check)
-                || getCurrentSeconds() - lastCheckResult.definition_version_last_check > GLOBAL_DEFINITION_EXPIRATION_SEC
-                || forceUpdate) {
-
-                fetch(VERSION_JSON)
-                    .then((response) => response.json())
-                    .then((verData) => {
-                        // Even if forcing an update, if the definition version is available locally and matches what's
-                        // on GitHub, there's no point in wasting the bandwidth to get the definitions again.
-                        if (localVersionResult?.definition_version === undefined
-                            || !Number.isInteger(localVersionResult.definition_version)
-                            || localVersionResult.definition_version < verData.version) {
-                            fetch(SITES_JSON)
-                                .then((response) => response.json())
-                                .then((sitesData) => {
-                                    chrome.storage.local.set({ 'global_definitions': JSON.stringify(sitesData) });
-                                    chrome.storage.local.set({ 'definition_version': verData.version });
-                                    chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
-                                    if (updatedAction) {
-                                        updatedAction(verData.version);
-                                    }
-                                })
-                                .catch(function (error) {
-                                    log(JSON.stringify(error));
-                                });
-                        } else {
-                            chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
-                            if (notUpdatedAction) {
-                                notUpdatedAction(localVersionResult.definition_version);
-                            }
-                        }
-                    });
-            } else {
-                if (notUpdatedAction) {
-                    notUpdatedAction(localVersionResult.definition_version);
-                }
-            }
-        });
-    });
-}
+import * as utils from './shared-utils.js';
 
 function setIconBehavior() {
     chrome.storage.sync.get('one_click_toggle', function (result) {
@@ -122,7 +59,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
                 });
                 break;
             default:
-                log(`background script not configured to run for message event: '${message.event}'`);
+                utils.log(`background script not configured to run for message event: '${message.event}'`);
         }
     });
 });
@@ -131,7 +68,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
 // Fires when user clicks the addon icon in the browser toolbar, and the popup is disabled.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction/onClicked
 chrome.action.onClicked.addListener(function (tab) {
-    if (invalidProtocols.some(p => new URL(tab.url).protocol.startsWith(p))) {
+    if (utils.INVALID_PROTOCOLS.some(p => new URL(tab.url).protocol.startsWith(p))) {
         return;
     }
     // The value of the toggle setting is stored from the toggleCommentVisibility
@@ -145,7 +82,7 @@ chrome.action.onClicked.addListener(function (tab) {
 // If it's time to check for new definitions, and there's an update available, retrieve them.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/onCreated
 chrome.tabs.onCreated.addListener(function () {
-    getUpdatedDefinitions(false);
+    utils.getUpdatedDefinitions(false);
 });
 
 
@@ -153,15 +90,24 @@ chrome.tabs.onCreated.addListener(function () {
 function oneTimeUpgradeWork() {
 }
 
+// On installation, set default option values
+function setInitialOptionValues() {
+    chrome.storage.sync.set({ 'one_click_toggle': false });
+    chrome.storage.sync.set({ 'remember_toggle': true });
+}
+
 
 // Fires when addon is installed or updated.
 // Gets latest definitions.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/onInstalled
 chrome.runtime.onInstalled.addListener(function (details) {
+    if (details.reason === 'install') {
+        setInitialOptionValues();
+    }
     if (details.reason === 'install' || details.reason === 'update') {
         setIconBehavior();
         oneTimeUpgradeWork();
-        getUpdatedDefinitions(true);
+        utils.getUpdatedDefinitions(true);
     }
 });
 
