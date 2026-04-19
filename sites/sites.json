@@ -1,6 +1,5 @@
 {
     "excluded_sites": [
-        "www.bbb.org",
         "github.com",
         "talk.hyvor.com",
         "developercommunity2.visualstudio.com"
@@ -11,7 +10,7 @@
         "abcnews.go.com": ".CommentButton",
         "www.abola.pt": "#body_Ver_Comentarios_comentariosMobile, .comentarios",
         "apnews.com": "#scrollToComments, .comment-icon, #vf-conversations-count, #ap-comments, #vf-conversations",
-        "askubuntu.com": ".comments, .comments-link, .js-link-separator",
+        "askubuntu.com": "span[itemprop='commentCount'], div.js-post-comments-component",
         "avclub.com": ".comment-count-go-to, #disqus-comment-count-wrapper-top-article, #show-comments",
         "www.avclub.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]'], #replies",
         "babylonbee.com": "#comments, div[id^='commentList']",
@@ -95,11 +94,11 @@
         "soundcloud.com": "div.commentForm, div.commentsList, li[title$='comments']",
         "open.spotify.com": ".qH2Mpq2icGtfNZfwIhiW.W4580vs00yDqFNs7363B",
         "www.sauceplus.com": "section[aria-label='New comment'], section[aria-label='Comments'], section[aria-label='Comments'] ~ div[class^='_container_']",
-        "stackexchange.com": ".comments, .comments-link, .js-link-separator",
-        "stackoverflow.com": ".comments, .comments-link, .js-link-separator",
+        "stackexchange.com": "span[itemprop='commentCount'], div.js-post-comments-component",
+        "stackoverflow.com": "div[id^='follow-ups-container']",
         "steamcommunity.com": "div[class*='CardCommentCount'], ._16xC0mtOWoLbvSQbmo_ycv, .commentthread_area, .forumtopic_comments, .forum_topic_reply_count",
         "substack.com": "[aria-label='Comment'], .feedItem-ONDKv3, [aria-label^='View comments'], #discussion",
-        "superuser.com": ".comments, .comments-link, .js-link-separator",
+        "superuser.com": "span[itemprop='commentCount'], div.js-post-comments-component",
         "www.techdirt.com": ".storylinks, .comments",
         "theathletic.com": ".goledo",
         "www.theepochtimes.com": "#sidebar_comments",
