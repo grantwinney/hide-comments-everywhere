@@ -4,7 +4,13 @@ export const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
 export const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json';
 export const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
 
-// Test whether a given URL matches any entries in the user's personal blacklist, and return the elements to hide, if any.
+/**
+ * Get the personal blacklist entry for the given URL, if any.
+ * 
+ * @param {string} url - The entire URL (i.e. location.href) to look for in the user's blacklist entries.
+ * @param {string} patterns - The personal blacklist entries, if any.
+ * @returns {string | undefined} - The selector for the URL, or undefined if none found.
+ */
 export function getBlacklistedElementsToHide(url, patterns) {
     let patternsArray = patterns.split(/\r?\n/);
     for (let i = 0; i < patternsArray.length; i++) {
@@ -23,7 +29,13 @@ export function getBlacklistedElementsToHide(url, patterns) {
     return undefined;
 };
 
-// Get the latest site definitions.
+/**
+ * Check if updated definitions are available, and cache them in local storage
+ * 
+ * @param {boolean} forceUpdate - If true, then check for new updates even if it's not time to yet
+ * @param {function(string)} updatedAction - Additional code to execute after a successful update
+ * @param {function(string)} notUpdatedAction - Additional code to execute after 
+ */
 export function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdatedAction = undefined) {
     chrome.storage.local.get('definition_version', function (localVersionResult) {
         chrome.storage.local.get('definition_version_last_check', function (lastCheckResult) {
@@ -70,11 +82,22 @@ export function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, no
     });
 }
 
+/**
+ * Check if the addon can run for a given URL based on its protocol.
+ * 
+ * @param {URL} tabUrl - The URL for which to check the protocol.
+ * @returns {boolean} - True if the current URL is supported; otherwise false.
+ */
 export function isCurrentUrlSupported(tabUrl) {
     return !INVALID_PROTOCOLS.some(p => tabUrl.protocol.startsWith(p))
 }
 
-// Write a message to the console, prepended with the addon name.
+/**
+ * Write a message to the console, prepended with the addon name.
+ * 
+ * @param {string} message - The message to write to the console.
+ * @param {boolean} isError - If true, write to console as an error; otherwise, write as informational.
+ */
 export function log(message, isError = false) {
     if (isError) {
         console.error(`[${chrome.runtime.getManifest().name}]: ${message}`);
@@ -83,7 +106,13 @@ export function log(message, isError = false) {
     }
 }
 
-export function performActionBasedOnCommentVisibility(url, action) {
+/**
+ * Determine if comments are hidden and why, then run code that acts on the result.
+ * 
+ * @param {Location} url - The URL.
+ * @param {function(boolean, string)} action - Extra code to execute.
+ */
+export function getCommentVisibilityReason(url, action) {
     let isCommentsHidden = true;
     let overrideReason = '';
 
@@ -98,7 +127,8 @@ export function performActionBasedOnCommentVisibility(url, action) {
 
         // Check user whitelist; show comments if match found
         chrome.storage.sync.get('user_whitelist', function (wh_result) {
-            if (wh_result?.user_whitelist !== undefined && urlMatchesAnyWhitelistPattern(url.href, wh_result.user_whitelist)) {
+            let urls = wh_result.user_whitelist.split(/\r?\n/);
+            if (wh_result?.user_whitelist !== undefined && urlMatchesAnyPattern(url.href, urls)) {
                 isCommentsHidden = false;
                 overrideReason = 'user_whitelist';
             }
@@ -110,9 +140,10 @@ export function performActionBasedOnCommentVisibility(url, action) {
                 // Check global whitelist for current site; show comments if match found
                 if (globalDefinitions?.excluded_sites) {
                     for (let i = 0; i < globalDefinitions.excluded_sites.length; i++) {
-                        if (urlMatchesPattern(url.hostname, globalDefinitions.excluded_sites[i])) {
+                        if (url.hostname === globalDefinitions.excluded_sites[i]) {
                             isCommentsHidden = false;
                             overrideReason = 'global_whitelist';
+                            break;
                         }
                     }
                 }
@@ -132,8 +163,13 @@ export function performActionBasedOnCommentVisibility(url, action) {
     });
 }
 
-// User chose to toggle comments on the current page, so adjust the addon icon/title,
-//  the setting in storage, and send a message to the content script to show/hide.
+/**
+ * User chose to toggle comments on the current page, so adjust the addon icon/title,
+ * the setting in storage, and send a message to the content script to show/hide.
+ * 
+ * @param {number} tabId - The tab id to toggle comments on.
+ * @param {URL} tabUrl - The URL on the current tab.
+ */
 export function toggleCommentsOnCurrentUrl(tabId, tabUrl) {
     if (!isCurrentUrlSupported(tabUrl)) {
         return;
@@ -145,7 +181,12 @@ export function toggleCommentsOnCurrentUrl(tabId, tabUrl) {
     window.close();
 }
 
-// Check that all custom URLs are valid regex patterns
+/**
+ * Check that all custom URLs are valid regex patterns.
+ * 
+ * @param {string[]} urls - List of URLs to validate.
+ * @returns True if all regex patterns are valid; otherwise false.
+ */
 export function validateCustomUrls(urls) {
     try {
         for (let i = 0; i < urls.length; i++) {
@@ -158,24 +199,40 @@ export function validateCustomUrls(urls) {
     }
 }
 
+/**
+ * Get whole seconds since epoch.
+ * 
+ * @returns Seconds since epoch.
+ */
 function getCurrentSeconds() {
     return new Date().getTime() / 1000 | 0;
 }
 
-// Determines whether a URL matches a given regex pattern.
+/**
+ * Test whether a URL matches a given regex pattern.
+ * 
+ * @param {string} url - The entire URL. (i.e. location.href)
+ * @param {string} pattern - Regex pattern
+ * @returns True if URL matches the pattern; otherwise false
+ */
 function urlMatchesPattern(url, pattern) {
     let re = new RegExp(pattern);
     return re.test(url);
 }
 
-// Test whether a given URL matches any entries in the whitelist.
-function urlMatchesAnyWhitelistPattern(url, patterns) {
-    let patternsArray = patterns.split(/\r?\n/);
-    for (let i = 0; i < patternsArray.length; i++) {
-        if (patternsArray[i] === '') {
+/**
+ * Test whether a URL matches any pattern in a list.
+ * 
+ * @param {string} url - The entire URL. (i.e. location.href)
+ * @param {string[]} patterns - The patterns 
+ * @returns True if URL matches any pattern; otherwise false
+ */
+function urlMatchesAnyPattern(url, patterns) {
+    for (let i = 0; i < patterns.length; i++) {
+        if (patterns[i] === '') {
             continue;
         }
-        if (urlMatchesPattern(url, patternsArray[i])) {
+        if (urlMatchesPattern(url, patterns[i])) {
             return true;
         }
     }

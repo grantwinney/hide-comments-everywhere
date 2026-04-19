@@ -73,11 +73,10 @@ function loadBlacklist() {
     });
 }
 
-function saveUrlList(urlTextAreaId, savedItem) {
-    let urls = document.getElementById(urlTextAreaId).value;
-    if (utils.validateCustomUrls(urls.split(/\r?\n/))) {
+function saveUrlList(urlTextAreaId, savedItem, urls) {
+    if (utils.validateCustomUrls(urls)) {
         let urlJson = {};
-        urlJson[urlTextAreaId] = urls;
+        urlJson[urlTextAreaId] = document.getElementById(urlTextAreaId).value;
         chrome.storage.sync.set(urlJson, function () {
             if (chrome.runtime.lastError) {
                 toastr.error(chrome.runtime.lastError.message, `${savedItem} Save Failed`);
@@ -91,11 +90,15 @@ function saveUrlList(urlTextAreaId, savedItem) {
 }
 
 function saveWhitelist() {
-    saveUrlList('user_whitelist', 'Whitelist');
+    let whitelist = document.getElementById('user_whitelist').value;
+    let urls = whitelist.split(/\r?\n/);
+    saveUrlList('user_whitelist', 'Whitelist', urls);
 }
 
 function saveBlacklist() {
-    saveUrlList('user_blacklist', 'Blacklist');
+    let blacklist = document.getElementById('user_blacklist').value;
+    let urls = blacklist.split(/\r?\n/).map(l => l.split(';')[0]);
+    saveUrlList('user_blacklist', 'Blacklist', urls);
 }
 
 function submitBlacklist() {
@@ -195,7 +198,7 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
     // Updates
     alertIfNewerDefinitions();
     $('#update-definitions').click(function () {
-        getUpdatedDefinitions(true,
+        utils.getUpdatedDefinitions(true,
             (version) => { toastr.info(`Updated site definitions (#${version}) were found and have been applied.`, "Updated Sites Available"); },
             (version) => { toastr.info(`The latest site definitions (#${version}) are already applied.`, "No Updates Available"); }
         );

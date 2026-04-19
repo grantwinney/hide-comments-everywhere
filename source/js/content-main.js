@@ -7,9 +7,10 @@
 import * as utils from './shared-utils.js';
 
 
-// Insert applicable selectors into the current page, without concern for whether or not
-// they'll be disabled (by either manual toggling or personal/global whitelist) later.
+// Insert applicable selectors into the current page, without worrying about whether they'll
+// ultimately be disabled later (by either manual toggling or personal/global whitelist).
 function insertStylesIntoPage() {
+    // Don't inject the styles twice
     if (document.getElementById('hide_comments_everywhere')) {
         return;
     }
@@ -41,6 +42,8 @@ function insertStylesIntoPage() {
     });
 };
 
+// Given that the site definitions have already been retrieved, continue the work of inserting
+// them into the current page.
 function insertStylesIntoPageContinue(allDefinitions) {
     let elementsToHide = '';
     
@@ -82,7 +85,7 @@ function insertStylesIntoPageContinue(allDefinitions) {
 }
 
 function adjustCommentsVisibility() {
-    utils.performActionBasedOnCommentVisibility(location, function (isCommentsHidden, overrideReason) {
+    utils.getCommentVisibilityReason(location, function (isCommentsHidden, overrideReason) {
         // Enable or disable the injected style sheet as appropriate.
         let stylesheet = document.getElementById('hide_comments_everywhere');
         if (stylesheet) {
@@ -102,7 +105,7 @@ function toggleCommentVisibility() {
         stylesheet.disabled = !stylesheet.disabled;
 
         // Adjust the toolbar icon to show the correct image and title.
-        utils.performActionBasedOnCommentVisibility(location, function (_isCommentsHidden, overrideReason) {
+        utils.getCommentVisibilityReason(location, function (_isCommentsHidden, overrideReason) {
             chrome.runtime.sendMessage({
                 event: stylesheet.disabled ? 'comments_shown' : 'comments_hidden',
                 overrideReason: overrideReason

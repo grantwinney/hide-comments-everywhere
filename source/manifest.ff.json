@@ -50,6 +50,13 @@
         "64": "images/hide-comments-64.png",
         "128": "images/hide-comments-128.png"
     },
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+H"
+            }
+        }
+    },
     "browser_specific_settings": {
         "gecko": {
             "id": "{c39bcadb-15e8-46e0-b853-780e4bb0de6e}"

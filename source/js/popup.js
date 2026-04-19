@@ -21,16 +21,19 @@ function disableFieldsForUnsupportedUrl() {
     let toggleHideButton = document.getElementById('toggle_hide');
     toggleHideButton.classList.add('disabled_button');
     toggleHideButton.disabled = true;
-    toggleHideButton.title = "This URL is not supported.";
+    toggleHideButton.title = "This URL is not supported";
+
+    let toggleHideIcon = document.getElementById('toggle_hide_icon');
+    toggleHideIcon.style.color = '#999';
 
     let currentHostname = document.getElementById('currentHostname');
     currentHostname.style.color = '#999';
     currentHostname.style.fontStyle = 'italic';
-    currentHostname.value = 'This URL is not supported.';
+    currentHostname.value = 'This URL is not supported';
 }
 
 function displayCorrectToggleIconForCurrentSite(tabUrl) {
-    utils.performActionBasedOnCommentVisibility(tabUrl, function (isCommentsHidden, overrideReason) {
+    utils.getCommentVisibilityReason(tabUrl, function (isCommentsHidden, overrideReason) {
         chrome.storage.sync.get('remember_toggle', function (rememberToggleResult) {
             let toggleHideIcon = document.getElementById('toggle_hide_icon');
             let updatedTitle = '';
@@ -54,7 +57,7 @@ function displayCorrectToggleIconForCurrentSite(tabUrl) {
                 // By default, the 'comments hidden' image and title are displayed, so if comments
                 // are actually being displayed, adjust the image and title as needed.
                 toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment');
-                updatedTitle = 'Comments currently allowed for this site. (click to hide)';
+                updatedTitle = 'Comments allowed on this site';
             }
             if (updatedTitle) {
                 document.getElementById('toggle_hide').title = updatedTitle;
@@ -157,9 +160,8 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
         let tabId = tabs[0].id;
         let tabUrl = new URL(tabs[0].url);
 
-        displayCorrectToggleIconForCurrentSite(tabUrl);
-
         if (utils.isCurrentUrlSupported(tabUrl)) {
+            displayCorrectToggleIconForCurrentSite(tabUrl);
             document.getElementById('currentHostname').value = tabUrl.hostname;
         } else {
             disableFieldsForUnsupportedUrl();
