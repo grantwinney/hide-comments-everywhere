@@ -1,7 +1,6 @@
 {
     "excluded_sites": [
-        "github.com",
-        "developercommunity2.visualstudio.com"
+        "github.com"
     ],
     "excluded_selectors": "code .comment, pre .comment, textarea.comments",
     "catchall_selectors": ".o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #discourse-comments, #disqus_thread, #disqus_thread > iframe, .fb-comments, hyvor-talk-comments, #hyvor-talk-view, [href$='hyvor-talk-view'], hyvor-talk-comment-count, #commentarea, .commentlist, .responsesStreamWrapper, #spotim-specific, #spotIm-conversations-module-wrapper, .spot-im-comments, [data-spotim-module='conversation'], #vuukle-comments, #add_comment, #comment, #Comment, #commentform, #comment-form, #comment-thread, #comment-wrapper, #commenting, #comments, #Comments, #comments-section, #guestbook, #postcomment, #replybox, #respond, .comment, .Comment, .comments, .Comments, .commenting, .comment_area, .comments_area, .comment-area, .comment-form, .comment-thread, .comments-area, .comments-link, .comments-section, .comments-title, .feedback, .guestbook, .respond, .gsc-comments, .giscus-frame",
@@ -105,6 +104,7 @@
         "www.tiktok.com": "button[aria-label^='Read or add comments'], button:has(span[data-e2e='browse-comment-icon']), div[class*='--DivTabMenuContainer'] > div:first-child, div[class*='--DivCommentItemContainer'], div[class*='--DivEmpty'], #comments, div[class*='DivBottomCommentContainer']",
         "tweakers.net": "#reacties, #articleMeta .commentCount",
         "www.vijesti.me": ".dataComments, .artViews > span:nth-child(3), .commWrap",
+        "developercommunity.visualstudio.com": "div[class*='RichPostDetail__TimelineComponentWrapper']",
         "vk.com": ".replies, .post_replies_header, .wl_replies_wrap, .wl_reply_form_wrap, #pv_comments, #mv_comments_wrap",
         "www.washingtonpost.com": ".comments-btn, .comments, a[href='#comments-wrapper'], #comments-wrapper",
         "www.watson.ch": ".comments_count, .share-go-to-discussion, [class^='watson-discussion'], .standard.comments",
