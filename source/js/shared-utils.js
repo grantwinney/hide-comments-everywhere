@@ -1,4 +1,4 @@
-export const INVALID_PROTOCOLS = ['brave', 'chrome-extension', 'edge', 'moz-extension', 'about'];
+export const INVALID_PROTOCOLS = ['brave', 'chrome', 'chrome-extension', 'edge', 'moz-extension', 'about'];
 export const STARTER_SELECTOR = '#place_your_selectors_here';
 const DEFINITION_CACHE_EXPIRATION = 86400;  // seconds
 const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
