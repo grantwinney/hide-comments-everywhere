@@ -21,8 +21,8 @@ function insertStylesIntoPage() {
 
         if (!allDefinitions?.sites) {
             utils.log("Site patterns missing. Retrieving now.");
-            utils.getUpdatedDefinitions(true,
-                (_) => {
+            utils.getUpdatedDefinitions(
+                () => {
                     chrome.storage.local.get('global_definitions', function (def_result) {
                         let allDefinitions = JSON.parse(def_result.global_definitions ?? '{}');
                         if (allDefinitions?.sites) {
@@ -33,7 +33,7 @@ function insertStylesIntoPage() {
                         }
                     });
                 },
-                (_) => { utils.log("Site patterns missing. Retrieval failed. (2)", true); }
+                () => { utils.log("Site patterns missing. Retrieval failed. (2)", true); }
             );
             return;
         }

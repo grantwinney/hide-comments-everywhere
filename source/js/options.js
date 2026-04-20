@@ -1,19 +1,5 @@
 import * as utils from './shared-utils.js';
 
-function alertIfNewerDefinitions() {
-    chrome.storage.local.get('definition_version', function (localVersionResult) {
-        fetch(utils.VERSION_JSON)
-            .then((response) => response.json())
-            .then((data) => {
-                document.getElementById('definitions-newest-version').innerText = data.version;
-                if (!Number.isInteger(localVersionResult?.definition_version)
-                    || localVersionResult.definition_version < data.version) {
-                    toastr.info(`New definitions (#${data.version}) are available.<br>Click <a href="#updates" style="font-weight:bold">Update Definitions</a> to get them.`, "Updated Sites Available", { timeOut: 10000 });
-                };
-            });
-    });
-}
-
 // SETTINGS
 
 function loadAllSettings() {
@@ -23,9 +9,6 @@ function loadAllSettings() {
     chrome.storage.sync.get('remember_toggle', function (result) {
         document.getElementById('remember_toggle').checked = (result?.remember_toggle !== false);
     });
-    // chrome.storage.sync.get('show_placeholder', function (result) {
-    //     document.getElementById('show_placeholder').checked = (result?.show_placeholder === true);
-    // });
 }
 
 function saveOneClickSetting() {
@@ -47,12 +30,6 @@ function saveRememberToggleSetting() {
             chrome.storage.sync.set({ 'remember_toggle': false });
         }
     }
-}
-
-// TODO: Implement this to show a placeholder image
-function saveShowPlaceholderSetting() {
-    let showPlaceholderEnabled = document.getElementById('show_placeholder').checked;
-    chrome.storage.sync.set({ 'show_placeholder': showPlaceholderEnabled });
 }
 
 // FILTERS
@@ -172,6 +149,9 @@ function showVersion() {
     chrome.storage.local.get('definition_version_last_check', function (result) {
         document.getElementById('definitions-last-check').innerText = result?.definition_version_last_check === undefined ? "N/A" : new Date(result.definition_version_last_check * 1000);
     });
+    chrome.storage.local.get('etag', function (result) {
+        document.getElementById('etag').innerText = result?.etag ?? "N/A";
+    });
     document.getElementById('user-agent').innerText = navigator.userAgent;
     document.getElementById('platform').innerText = navigator.userAgentData?.platform ?? navigator.platform;
 }
@@ -181,7 +161,6 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
     loadAllSettings();
     $('#one_click_toggle').click(function () { saveOneClickSetting(); });
     $('#remember_toggle').click(function () { saveRememberToggleSetting(); });
-    // $('#show_placeholder').click(function () { saveShowPlaceholderSetting(); });
 
     // Filters
     loadWhitelist();
@@ -196,11 +175,10 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
     wireUpSaveButtonsToTextAreas();
 
     // Updates
-    alertIfNewerDefinitions();
     $('#update-definitions').click(function () {
-        utils.getUpdatedDefinitions(true,
-            (version) => { toastr.info(`Updated site definitions (#${version}) were found and have been applied.`, "Updated Sites Available"); },
-            (version) => { toastr.info(`The latest site definitions (#${version}) are already applied.`, "No Updates Available"); }
+        utils.getUpdatedDefinitions(
+            () => { toastr.info(`Updated site definitions were found and have been applied.`, "Updated Sites Available"); },
+            () => { toastr.info(`The latest site definitions were already applied.`, "No Updates Available"); }
         );
     });
 

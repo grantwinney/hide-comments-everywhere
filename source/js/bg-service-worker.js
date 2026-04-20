@@ -72,7 +72,7 @@ chrome.action.onClicked.addListener(function (tab) {
 // If it's time to check for new definitions, and there's an update available, retrieve them.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/onCreated
 chrome.tabs.onCreated.addListener(function () {
-    utils.getUpdatedDefinitions(false);
+    utils.getUpdatedDefinitions();
 });
 
 
@@ -97,7 +97,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason === 'install' || details.reason === 'update') {
         setIconBehavior();
         oneTimeUpgradeWork();
-        utils.getUpdatedDefinitions(true);
+        utils.getUpdatedDefinitions();
     }
 });
 

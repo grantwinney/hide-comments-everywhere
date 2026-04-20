@@ -1,8 +1,7 @@
 export const INVALID_PROTOCOLS = ['brave', 'chrome-extension', 'edge', 'moz-extension', 'about'];
 export const STARTER_SELECTOR = '#place_your_selectors_here';
 export const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
-export const VERSION_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json';
-export const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
+const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
 
 /**
  * Get the personal blacklist entry for the given URL, if any.
@@ -32,53 +31,33 @@ export function getBlacklistedElementsToHide(url, patterns) {
 /**
  * Check if updated definitions are available, and cache them in local storage
  * 
- * @param {boolean} forceUpdate - If true, then check for new updates even if it's not time to yet
- * @param {function(string)} updatedAction - Additional code to execute after a successful update
- * @param {function(string)} notUpdatedAction - Additional code to execute after 
+ * @param {function()} updatedAction - Additional code to execute after a successful update
+ * @param {function()} notUpdatedAction - Additional code to execute after 
  */
-export function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdatedAction = undefined) {
-    chrome.storage.local.get('definition_version', function (localVersionResult) {
-        chrome.storage.local.get('definition_version_last_check', function (lastCheckResult) {
-            // If the definition version or last update time is missing, or we're forcing an update, check for new definitions
-            if (!Number.isInteger(localVersionResult?.definition_version)
-                || !Number.isInteger(lastCheckResult?.definition_version_last_check)
-                || getCurrentSeconds() - lastCheckResult.definition_version_last_check > GLOBAL_DEFINITION_EXPIRATION_SEC
-                || forceUpdate) {
-
-                fetch(VERSION_JSON)
-                    .then((response) => response.json())
-                    .then((verData) => {
-                        // Even if forcing an update, if the definition version is available locally and matches what's
-                        // on GitHub, there's no point in wasting the bandwidth to get the definitions again.
-                        if (localVersionResult?.definition_version === undefined
-                            || !Number.isInteger(localVersionResult.definition_version)
-                            || localVersionResult.definition_version < verData.version) {
-                            fetch(SITES_JSON)
-                                .then((response) => response.json())
-                                .then((sitesData) => {
-                                    chrome.storage.local.set({ 'global_definitions': JSON.stringify(sitesData) });
-                                    chrome.storage.local.set({ 'definition_version': verData.version });
-                                    chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
-                                    if (updatedAction) {
-                                        updatedAction(verData.version);
-                                    }
-                                })
-                                .catch(function (error) {
-                                    log(JSON.stringify(error), true);
-                                });
-                        } else {
-                            chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
-                            if (notUpdatedAction) {
-                                notUpdatedAction(localVersionResult.definition_version);
-                            }
-                        }
-                    });
-            } else {
+export function getUpdatedDefinitions(updatedAction = undefined, notUpdatedAction = undefined) {
+    chrome.storage.local.get('etag', function (result) {
+        let eTag = result?.etag;
+                log(eTag);
+        fetch(SITES_JSON, {
+            headers: eTag  ? { 'If-None-Match': eTag  } : {}
+        })
+        .then((response) => {
+            if (response.status === 304) {
                 if (notUpdatedAction) {
-                    notUpdatedAction(localVersionResult.definition_version);
+                    notUpdatedAction();
+                }
+            } else {
+                let newEtag = response.headers.get("ETag");
+                if (newEtag) {
+                    chrome.storage.local.set({ etag: newEtag });
+                    chrome.storage.local.set({ 'global_definitions': JSON.stringify(response.json()) });
+                    if (updatedAction) {
+                        updatedAction();
+                    }
                 }
             }
-        });
+            chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
+        })
     });
 }
 

@@ -14,8 +14,7 @@
         "storage"
     ],
     "host_permissions": [
-        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json",
-        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json"
+        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json"
     ],
     "action": {
         "default_icon": {
