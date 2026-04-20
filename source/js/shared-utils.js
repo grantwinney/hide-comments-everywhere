@@ -1,6 +1,6 @@
 export const INVALID_PROTOCOLS = ['brave', 'chrome-extension', 'edge', 'moz-extension', 'about'];
 export const STARTER_SELECTOR = '#place_your_selectors_here';
-export const GLOBAL_DEFINITION_EXPIRATION_SEC = 86400;
+const DEFINITION_CACHE_EXPIRATION = 86400;  // seconds
 const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
 
 /**
@@ -31,34 +31,43 @@ export function getBlacklistedElementsToHide(url, patterns) {
 /**
  * Check if updated definitions are available, and cache them in local storage
  * 
+ * @param {boolean} forceUpdate - If true, then check for new updates even if it's not time to yet
  * @param {function()} updatedAction - Additional code to execute after a successful update
  * @param {function()} notUpdatedAction - Additional code to execute after 
  */
-export function getUpdatedDefinitions(updatedAction = undefined, notUpdatedAction = undefined) {
-    chrome.storage.local.get('etag', function (result) {
-        let eTag = result?.etag;
-                log(eTag);
-        fetch(SITES_JSON, {
+export async function getUpdatedDefinitions(forceUpdate, updatedAction = undefined, notUpdatedAction = undefined) {
+    const lastCheckResult = await chrome.storage.local.get('definition_version_last_check');
+
+    if (!Number.isInteger(lastCheckResult?.definition_version_last_check)
+        || getCurrentSeconds() - lastCheckResult.definition_version_last_check > DEFINITION_CACHE_EXPIRATION
+        || forceUpdate) {
+
+        const eTagData = await chrome.storage.local.get('etag');
+        const eTag = eTagData.etag;
+        const response = await fetch(SITES_JSON, {
             headers: eTag  ? { 'If-None-Match': eTag  } : {}
-        })
-        .then((response) => {
-            if (response.status === 304) {
-                if (notUpdatedAction) {
-                    notUpdatedAction();
-                }
-            } else {
-                let newEtag = response.headers.get("ETag");
-                if (newEtag) {
-                    chrome.storage.local.set({ etag: newEtag });
-                    chrome.storage.local.set({ 'global_definitions': JSON.stringify(response.json()) });
-                    if (updatedAction) {
-                        updatedAction();
-                    }
+        });
+
+        if (response.status === 304) {
+            await chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
+            if (notUpdatedAction) {
+                notUpdatedAction();
+            }
+        } else if (response.status === 200) {
+            await chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
+            let newEtag = response.headers.get("ETag");
+            if (newEtag) {
+                await chrome.storage.local.set({ 'etag': newEtag });
+                let data = await response.json();
+                await chrome.storage.local.set({ 'global_definitions': JSON.stringify(data) });
+                if (updatedAction) {
+                    updatedAction();
                 }
             }
-            chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
-        })
-    });
+        } else {
+            log(`Unable to retrieve the latest definitions: (${response.status}) ${response.statusText}`, true);
+        }
+    }
 }
 
 /**

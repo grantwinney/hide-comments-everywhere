@@ -37,7 +37,7 @@ function saveRememberToggleSetting() {
 function loadWhitelist() {
     chrome.storage.sync.get('user_whitelist', function (result) {
         if (result?.user_whitelist != undefined) {
-            document.getElementById('user_whitelist').value = result.user_whitelist;
+            document.getElementById('user_whitelist').value = result?.user_whitelist;
         }
     });
 }
@@ -45,7 +45,7 @@ function loadWhitelist() {
 function loadBlacklist() {
     chrome.storage.sync.get('user_blacklist', function (result) {
         if (result?.user_blacklist != undefined) {
-            document.getElementById('user_blacklist').value = result.user_blacklist;
+            document.getElementById('user_blacklist').value = result?.user_blacklist;
         }
     });
 }
@@ -138,20 +138,14 @@ function showUsedStorage() {
     chrome.storage.sync.getBytesInUse('user_blacklist', function (bytes) {
         document.getElementById('sync-storage-used-personal-blacklist').innerText = bytes;
     });
+    chrome.storage.local.get('definition_version_last_check', function (result) {
+        document.getElementById('definitions-last-check').innerText = result?.definition_version_last_check === undefined ? "N/A" : new Date(result.definition_version_last_check * 1000);
+    });
 }
 
 function showVersion() {
     let manifest = chrome.runtime.getManifest();
     document.getElementById('addon-version').innerText = manifest.version;
-    chrome.storage.local.get('definition_version', function (result) {
-        document.getElementById('definitions-local-version').innerText = result?.definition_version ?? "N/A";
-    });
-    chrome.storage.local.get('definition_version_last_check', function (result) {
-        document.getElementById('definitions-last-check').innerText = result?.definition_version_last_check === undefined ? "N/A" : new Date(result.definition_version_last_check * 1000);
-    });
-    chrome.storage.local.get('etag', function (result) {
-        document.getElementById('etag').innerText = result?.etag ?? "N/A";
-    });
     document.getElementById('user-agent').innerText = navigator.userAgent;
     document.getElementById('platform').innerText = navigator.userAgentData?.platform ?? navigator.platform;
 }
@@ -176,30 +170,42 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
 
     // Updates
     $('#update-definitions').click(function () {
-        utils.getUpdatedDefinitions(
-            () => { toastr.info(`Updated site definitions were found and have been applied.`, "Updated Sites Available"); },
-            () => { toastr.info(`The latest site definitions were already applied.`, "No Updates Available"); }
+        utils.getUpdatedDefinitions(true,
+            () => {
+                toastr.info(`Updated site definitions were found and have been applied.`, "Updated Sites Available");
+                showUsedStorage();
+            },
+            () => {
+                toastr.info(`The latest site definitions were already applied.`, "No Updates Available");
+                showUsedStorage();
+            }
         );
     });
 
     // Danger Zone
     $('#delete-definitions').click(function() {
         if (prompt("This will clear out the downloaded site definitions. Afterwards, they'll need to be downloaded again.\r\n\r\nType YES to continue...") === "YES") {
-            chrome.storage.local.remove([ 'global_definitions', 'definition_version', 'definition_version_last_check' ]);
+            chrome.storage.local.remove([ 'global_definitions', 'etag', 'definition_version_last_check' ], function() {
+                showUsedStorage();
+            });
         }
     })
     $('#reset-options').click(function() {
         if (prompt("This will reset all of your selected options to the default values (unchecked boxes, cleared out whitelist/blacklist, etc).\r\n\r\nType YES to continue...") === "YES") {
-            chrome.storage.sync.remove([ 'one_click_toggle', 'show_placeholder', 'user_whitelist', 'user_blacklist' ], function() {
+            chrome.storage.sync.remove([ 'one_click_toggle', 'user_whitelist', 'user_blacklist' ], function() {
                 chrome.storage.sync.set({ 'remember_toggle': true }, function() {
-                    location.reload();
+                    loadAllSettings();
+                    document.getElementById('user_whitelist').value = '';
+                    document.getElementById('user_blacklist').value = '';
                 });
             });
         }
     })
     $('#delete-site-settings').click(function() {
         if (prompt("This will clear out all of your site-specific selections. Afterwards, comments will be hidden everywhere again, and you'll have to decide which sites you want to show them on.\r\n\r\nType YES to continue...") === "YES") {
-            chrome.storage.local.remove([ 'user_whitelist_flags' ]);
+            chrome.storage.local.remove([ 'user_whitelist_flags' ], function() {
+                showUsedStorage();
+            });
         }
     })
 

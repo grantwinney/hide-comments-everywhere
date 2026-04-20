@@ -21,7 +21,7 @@ function insertStylesIntoPage() {
 
         if (!allDefinitions?.sites) {
             utils.log("Site patterns missing. Retrieving now.");
-            utils.getUpdatedDefinitions(
+            utils.getUpdatedDefinitions(false,
                 () => {
                     chrome.storage.local.get('global_definitions', function (def_result) {
                         let allDefinitions = JSON.parse(def_result.global_definitions ?? '{}');
