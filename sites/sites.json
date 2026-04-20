@@ -1,8 +1,5 @@
 {
     "excluded_sites": [
-        "github.com",
-        "talk.hyvor.com",
-        "developercommunity2.visualstudio.com"
     ],
     "excluded_selectors": "code .comment, pre .comment, textarea.comments",
     "catchall_selectors": ".o2-display-comments-toggle, .o2-post-comments, .o2-post-comment-controls, #discourse-comments, #disqus_thread, #disqus_thread > iframe, .fb-comments, hyvor-talk-comments, #hyvor-talk-view, [href$='hyvor-talk-view'], hyvor-talk-comment-count, #commentarea, .commentlist, .responsesStreamWrapper, #spotim-specific, #spotIm-conversations-module-wrapper, .spot-im-comments, [data-spotim-module='conversation'], #vuukle-comments, #add_comment, #comment, #Comment, #commentform, #comment-form, #comment-thread, #comment-wrapper, #commenting, #comments, #Comments, #comments-section, #guestbook, #postcomment, #replybox, #respond, .comment, .Comment, .comments, .Comments, .commenting, .comment_area, .comments_area, .comment-area, .comment-form, .comment-thread, .comments-area, .comments-link, .comments-section, .comments-title, .feedback, .guestbook, .respond, .gsc-comments, .giscus-frame",
@@ -31,7 +28,7 @@
         "entertain.daum.net": "#commentWrap",
         "fandom.com": "#articleComments",
         "gall.dcinside.com": ".view_comment",
-        "devblogs.microsoft.com": ".post-comment-count, .post-comments, .dpr-wrap, #comments",
+        "github.com": "div[data-testid='issue-viewer-comments-container']",
         "dev.to": ".crayons-story__details > a:nth-child(2), #comments",
         "einthusan.tv": "#UIDiscussionCompact, .stats > p:nth-child(3), a[data-blink='#UIDiscussionCompact']",
         "ew.com": "div[id^='ew-click-to-comment'], div[id^='ew-comments'], .mntl-comment-counter",
@@ -71,6 +68,7 @@
         "lwn.net": "a[href$='#Comments'], .CommentBox, .Comment",
         "mangago.me": ".mg_comments, #raws_tab",
         "blog.medium.com": "button[aria-label='responses'], div > .ul.um.un.uo.up.l",
+        "devblogs.microsoft.com": ".post-comment-count, .post-comments, .dpr-wrap, #comments",
         "www.msn.com": "i[aria-label='Open replies'], [class*='commentContainer'], [class*='commentOverlayContainer'], [aria-label^='Comments'], .comments-count-button, a[part='comments-count-button'], .comments-count-content, social-comment-wc",
         "myanimelist.net": "div.information > p.info > a:nth-child(2), .news-info-block .comment, .comment-list, .comment-list + .mt16",
         "n1info.rs": ".total-comments, .post-comments-no, .uc-all-comments, .comments-call-to-action",
@@ -106,6 +104,7 @@
         "www.tiktok.com": "button[aria-label^='Read or add comments'], button:has(span[data-e2e='browse-comment-icon']), div[class*='--DivTabMenuContainer'] > div:first-child, div[class*='--DivCommentItemContainer'], div[class*='--DivEmpty'], #comments, div[class*='DivBottomCommentContainer']",
         "tweakers.net": "#reacties, #articleMeta .commentCount",
         "www.vijesti.me": ".dataComments, .artViews > span:nth-child(3), .commWrap",
+        "developercommunity.visualstudio.com": "div[class*='RichPostDetail__TimelineComponentWrapper'], span.metric-container",
         "vk.com": ".replies, .post_replies_header, .wl_replies_wrap, .wl_reply_form_wrap, #pv_comments, #mv_comments_wrap",
         "www.washingtonpost.com": ".comments-btn, .comments, a[href='#comments-wrapper'], #comments-wrapper",
         "www.watson.ch": ".comments_count, .share-go-to-discussion, [class^='watson-discussion'], .standard.comments",
