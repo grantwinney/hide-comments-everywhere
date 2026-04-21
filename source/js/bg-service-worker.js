@@ -30,22 +30,20 @@ chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
     // they try to override anything by clicking toggle that it's only temporary (because the next
     // time they reload the page and all this logic runs (again), their toggle setting will be overridden (again)).
     chrome.storage.sync.get('remember_toggle', function (rememberToggleResult) {
-        let title = chrome.runtime.getManifest().name;
+        let title = 'Comments ';
         if (message.overrideReason && message.overrideReason !== 'user_whitelist_flag') {
             if (message.overrideReason === 'user_whitelist') {
-                title = `${title} (Site in your whitelist.`;
+                title += 'allowed by your whitelist';
             } else if (message.overrideReason === 'user_blacklist') {
-                title = `${title} (Site in your blacklist.`;
+                title += 'blocked by your blacklist';
             } else if (message.overrideReason === 'global_whitelist') {
-                title = `${title} (Site in global whitelist.`;
+                title += `allowed by global whitelist`;
             }
             if (rememberToggleResult?.remember_toggle === true) {
-                title += ' Toggle is temporary.)';
-            } else {
-                title += ')';
+                title += ' (toggling is temporary)';
             }
         } else {
-            title = `Comments ${message.event === 'comments_hidden' ? 'blocked' : 'allowed'} on this site`;
+            title += `${message.event === 'comments_hidden' ? 'blocked' : 'allowed'} on this site`;
         }
 
         chrome.action.setIcon({ path: `../images/${message.event === 'comments_hidden' ? 'hide' : 'show'}-comments-32.png`, tabId: sender.tab.id }, function () {

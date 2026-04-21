@@ -44,14 +44,14 @@ function displayCorrectToggleIconForCurrentSite(tabUrl) {
             if (overrideReason && overrideReason !== 'user_whitelist_flag') {
                 toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment-dots');
                 if (overrideReason === 'user_whitelist') {
-                    updatedTitle = 'Comments always allowed, per your custom whitelist.';
+                    updatedTitle = 'Comments allowed by your whitelist';
                 } else if (overrideReason === 'user_blacklist') {
-                    updatedTitle = 'Comments always blocked, per your custom blacklist.';
+                    updatedTitle = 'Comments blocked by your blacklist';
                 } else if (overrideReason === 'global_whitelist') {
-                    updatedTitle = 'Comments always allowed, per the global whitelist.';
+                    updatedTitle = 'Comments allowed by global whitelist';
                 }
                 if (rememberToggleResult?.remember_toggle === true) {
-                    updatedTitle += ' Toggle is temporary.';
+                    updatedTitle += ' (toggling is temporary)';
                 }
             } else if (!isCommentsHidden) {
                 // By default, the 'comments hidden' image and title are displayed, so if comments
