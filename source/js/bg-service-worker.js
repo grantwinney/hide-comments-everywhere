@@ -16,7 +16,7 @@ function setIconBehavior() {
 
 // Listens for messages from content script.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/Runtime/onMessage
-chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if (!sender.tab) {
         return;
     }
@@ -53,7 +53,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, _sendResponse) {
 });
 
 
-// Fires when user clicks the addon icon in the browser toolbar, and the popup is disabled.
+// Fires when clicking the addon icon in the browser toolbar while the popup is disabled.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction/onClicked
 chrome.action.onClicked.addListener(function (tab) {
     if (utils.INVALID_PROTOCOLS.some(p => new URL(tab.url).protocol.startsWith(p))) {
@@ -66,11 +66,10 @@ chrome.action.onClicked.addListener(function (tab) {
 });
 
 
-// Fires when a new browser tab is opened.
-// If it's time to check for new definitions, and there's an update available, retrieve them.
+// Fires when a new browser tab is opened. If it's time to check for new definitions, do so.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/onCreated
-chrome.tabs.onCreated.addListener(function () {
-    utils.getUpdatedDefinitions(false);
+chrome.tabs.onCreated.addListener(async (tab) => {
+    await utils.getUpdatedDefinitions(false);
 });
 
 

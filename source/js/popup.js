@@ -69,12 +69,12 @@ function displayCorrectToggleIconForCurrentSite(tabUrl) {
 function addUrlToUserWhitelist(tabId, tabUrl) {
     chrome.storage.sync.get('user_whitelist', function (result) {
         let userWhitelist = result?.user_whitelist;
-        let regexUrl = tabUrl.hostname.replace(/\./g, '\\.');
         if (userWhitelist) {
-            userWhitelist += `\r\n${regexUrl}`;
-        } else {
-            userWhitelist += regexUrl;
+            userWhitelist += '\r\n';
         }
+
+        let regexUrl = tabUrl.hostname.replace(/\./g, '\\.');
+        userWhitelist += regexUrl;
         chrome.storage.sync.set({ 'user_whitelist': userWhitelist }, function () {
             chrome.tabs.sendMessage(tabId, { event: 'update_tab' }, function () {
                 chrome.runtime.openOptionsPage();
@@ -92,7 +92,7 @@ function addUrlToUserBlacklist(tabUrl) {
         } else {
             userBlacklist += regexUrl;
         }
-        userBlacklist += `; ${STARTER_SELECTOR}`;
+        userBlacklist += `; ${utils.STARTER_SELECTOR}`;
         chrome.storage.sync.set({ 'user_blacklist': userBlacklist }, function () {
             chrome.runtime.openOptionsPage();
         });

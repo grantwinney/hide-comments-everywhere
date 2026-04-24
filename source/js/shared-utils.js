@@ -209,10 +209,10 @@ function urlMatchesPattern(url, pattern) {
 }
 
 /**
- * Test whether a URL matches any pattern in a list.
+ * Test whether a URL matches any regex pattern in a list.
  * 
  * @param {string} url - The entire URL. (i.e. location.href)
- * @param {string[]} patterns - The patterns 
+ * @param {string[]} patterns - The regex patterns
  * @returns True if URL matches any pattern; otherwise false
  */
 function urlMatchesAnyPattern(url, patterns) {

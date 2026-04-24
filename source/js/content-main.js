@@ -49,6 +49,8 @@ function insertStylesIntoPageContinue(allDefinitions) {
     
     if (allDefinitions.sites) {
         // Apply site-specific selectors if any exist, matching on either entire hostname (including subdomain) or just the domain
+        // This is to handle sites, like substack or medium back in the day, where every user has a subdomain that uses the same selectors,
+        // but retains flexibility to handle a one-off subdomain that has its own set of selectors for some reason
         for (let site of Object.keys(allDefinitions.sites)) {
             if (site === location.hostname || site === location.hostname.split('.').slice(-2).join('.')) {
                 elementsToHide = allDefinitions.sites[site];
