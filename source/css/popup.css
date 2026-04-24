@@ -104,7 +104,7 @@ input[type=submit]:hover, button[type=submit]:hover {
     color: #ccc !important;
 }
 
-.fa-comment {
+.fa-comment, #add_to_whitelist > .fa-screwdriver-wrench {
     color: green;
 }
 
@@ -112,8 +112,8 @@ input[type=submit]:hover, button[type=submit]:hover {
     color: purple;
 }
 
-.fa-comment-slash {
-    color: #c00;
+.fa-comment-slash, #add_to_blacklist > .fa-screwdriver-wrench {
+    color: #a00;
 }
 
 /* Share box */
