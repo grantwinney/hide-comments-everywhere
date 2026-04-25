@@ -1,4 +1,5 @@
-export const INVALID_PROTOCOLS = ['brave', 'chrome', 'chrome-extension', 'edge', 'moz-extension', 'about'];
+const INVALID_PROTOCOLS = ['brave', 'chrome', 'chrome-extension', 'edge', 'moz-extension', 'about'];
+const INVALID_SITES = ['chrome.google.com'];
 export const STARTER_SELECTOR = '#place_your_selectors_here';
 const DEFINITION_CACHE_EXPIRATION = 86400;  // seconds
 const SITES_JSON = 'https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json';
@@ -78,6 +79,7 @@ export async function getUpdatedDefinitions(forceUpdate, updatedAction = undefin
  */
 export function isCurrentUrlSupported(tabUrl) {
     return !INVALID_PROTOCOLS.some(p => tabUrl.protocol.startsWith(p))
+        && !INVALID_SITES.some(p => tabUrl.hostname.startsWith(p));
 }
 
 /**
@@ -149,42 +151,6 @@ export function getCommentVisibilityReason(url, action) {
             });
         });
     });
-}
-
-/**
- * User chose to toggle comments on the current page, so adjust the addon icon/title,
- * the setting in storage, and send a message to the content script to show/hide.
- * 
- * @param {number} tabId - The tab id to toggle comments on.
- * @param {URL} tabUrl - The URL on the current tab.
- */
-export function toggleCommentsOnCurrentUrl(tabId, tabUrl) {
-    if (!isCurrentUrlSupported(tabUrl)) {
-        return;
-    }
-    // The value of the toggle setting is stored from the toggleCommentVisibility
-    // method in the content script, after the comments are displayed/hidden, to
-    // avoid a buggy situation described in more detail in there.
-    chrome.tabs.sendMessage(tabId, { event: 'toggle_tab' });
-    window.close();
-}
-
-/**
- * Check that all custom URLs are valid regex patterns.
- * 
- * @param {string[]} urls - List of URLs to validate.
- * @returns True if all regex patterns are valid; otherwise false.
- */
-export function validateCustomUrls(urls) {
-    try {
-        for (let i = 0; i < urls.length; i++) {
-            new RegExp(urls[i]);
-        }
-        return true;
-    }
-    catch (e) {
-        return false;
-    }
 }
 
 /**

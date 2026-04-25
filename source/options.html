@@ -48,17 +48,15 @@
             </label>
         </div>
         <div>
-            If you want to change or disable the shortcut associated with this addon in:
-            <ul>
-                <li>Firefox: Open the <a href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox" target="_blank">Manage Extension Shortcuts</a> page</li>
-                <li>Chrome, Edge, Brave, Opera: Go to "chrome://extensions/shortcuts"</li>
-            </ul> 
+            If you want to change or disable the shortcut for this addon, visit the
+            <a href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox" target="_blank">Manage Extension Shortcuts</a> page in Firefox,
+            or the "chrome://extensions/shortcuts" page for Chrome, Edge, Brave, Opera, etc.
         </div>
 
         <div id="filters" class="pane-title"><i class="fa fa-filter" aria-hidden="true"></i>Filters</div>
         <div>
             <p>
-                <b>If you just clicked 'Custom Allow' or 'Custom Block' in the popup window, and you don't see the site listed below, refresh this page.</b>
+                <b style="font-style:italic; font-size: smaller">If you just clicked 'Custom Allow' or 'Custom Block' in the popup window, and you don't see the site listed below, refresh this page.</b>
             </p>
             <p>
                 Specify a list of URLs (one per line) that comments should <em>never</em> be blocked on.
@@ -189,17 +187,14 @@
             <input id="submit-blacklist" type="submit" value="Submit Blacklist">
         </div>
         <div>
-            <p>
-                Note that the "submit blacklist" functionality is pretty low-tech. I don't have a better way of
-                submitting them yet, so pressing the above button will copy the list to your clipboard, and then a
-                separate tab will open GitHub, where you can paste the list and submit it to me as a new "issue". You
-                do need to have a (free) GitHub account for this to work.
-            </p>
+            The "submit blacklist" button just copies the blacklist to your clipboard, and then opens a
+            new GitHub issue page in a separate tab, where you can paste the list and submit it to me. You
+            need to have a (free) GitHub account for this to work.
         </div>
 
         <div id="updates" class="pane-title"><i class="fa fa-cloud-download" aria-hidden="true"></i>Updates</div>
         <p style="margin: 0px">A check is performed daily for any updates to the
-            <a href="https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json" target="_blank">list of blocked sites</a>,
+            <a href="https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json" target="_blank">list of blocked sites</a>,
             or you can press the button below to check now.
         </p>
         <div>
@@ -227,9 +222,11 @@
                 or <a href="mailto:browser-extensions@grantwinney.com">send me an email</a>.</li>
             <li>Lastly, feel free to leave a comment <a href="https://grantwinney.com/hide-comments-everywhere#comments" target="_blank">on my blog</a>.</li>
         </ul>
-        <p>If you've been using this extension for awhile and enjoy it, please leave a rating for
+        <div>
+            If you've been using this extension for awhile and enjoy it, please leave a rating for
             <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/reviews" target="_blank">Chrome</a>
             or <a href="https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere/reviews" target="_blank">Firefox</a>. Thanks!
+        </div>
 
         <div id="info" class="pane-title"><i class="fa fa-info-circle" aria-hidden="true"></i>Info</div>
         <p>If you run into a problem, the following information might be helpful to include, depending on what you're experiencing.</p>

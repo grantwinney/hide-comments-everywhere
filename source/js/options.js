@@ -50,8 +50,26 @@ function loadBlacklist() {
     });
 }
 
+/**
+ * Check that all custom URLs are valid regex patterns.
+ * 
+ * @param {string[]} urls - List of URLs to validate.
+ * @returns True if all regex patterns are valid; otherwise false.
+ */
+function validateCustomUrls(urls) {
+    try {
+        for (let i = 0; i < urls.length; i++) {
+            new RegExp(urls[i]);
+        }
+        return true;
+    }
+    catch (e) {
+        return false;
+    }
+}
+
 function saveUrlList(urlTextAreaId, savedItem, urls) {
-    if (utils.validateCustomUrls(urls)) {
+    if (validateCustomUrls(urls)) {
         let urlJson = {};
         urlJson[urlTextAreaId] = document.getElementById(urlTextAreaId).value;
         chrome.storage.sync.set(urlJson, function () {

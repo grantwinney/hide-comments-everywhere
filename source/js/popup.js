@@ -109,9 +109,27 @@ function requestAdditionToGlobalBlacklist(tabUrl) {
     window.open(url, '_blank')
 }
 
+/**
+ * User chose to toggle comments on the current page, so adjust the addon icon/title,
+ * the setting in storage, and send a message to the content script to show/hide.
+ * 
+ * @param {number} tabId - The tab id to toggle comments on.
+ * @param {URL} tabUrl - The URL on the current tab.
+ */
+function toggleCommentsOnCurrentUrl(tabId, tabUrl) {
+    if (!utils.isCurrentUrlSupported(tabUrl)) {
+        return;
+    }
+    // The value of the toggle setting is stored from the toggleCommentVisibility
+    // method in the content script, after the comments are displayed/hidden, to
+    // avoid a buggy situation described in more detail in there.
+    chrome.tabs.sendMessage(tabId, { event: 'toggle_tab' });
+    window.close();
+}
+
 function wireUpNavBarButtons(tabId, tabUrl) {
     document.getElementById('toggle_hide').addEventListener('click', function () {
-        utils.toggleCommentsOnCurrentUrl(tabId, tabUrl);
+        toggleCommentsOnCurrentUrl(tabId, tabUrl);
     });
 
     document.getElementById('options').addEventListener('click', function () {

@@ -56,12 +56,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 // Fires when clicking the addon icon in the browser toolbar while the popup is disabled.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction/onClicked
 chrome.action.onClicked.addListener(function (tab) {
-    if (utils.INVALID_PROTOCOLS.some(p => new URL(tab.url).protocol.startsWith(p))) {
+    if (isCurrentUrlSupported(tab.url)) {
         return;
     }
-    // The value of the toggle setting is stored from the toggleCommentVisibility
-    // method in the content script, after the comments are displayed/hidden, to
-    // avoid a buggy situation described in more detail in there.
     chrome.tabs.sendMessage(tab.id, { event: 'toggle_tab' });
 });
 
