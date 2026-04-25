@@ -117,8 +117,7 @@ export function getCommentVisibilityReason(url, action) {
 
         // Check user whitelist; show comments if match found
         chrome.storage.sync.get('user_whitelist', function (wh_result) {
-            let urls = wh_result.user_whitelist.split(/\r?\n/);
-            if (wh_result?.user_whitelist !== undefined && urlMatchesAnyPattern(url.href, urls)) {
+            if (wh_result?.user_whitelist !== undefined && urlMatchesAnyPattern(url.href, wh_result.user_whitelist.split(/\r?\n/))) {
                 isCommentsHidden = false;
                 overrideReason = 'user_whitelist';
             }
