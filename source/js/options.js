@@ -1,16 +1,4 @@
-function alertIfNewerDefinitions() {
-    chrome.storage.local.get('definition_version', function (localVersionResult) {
-        fetch(VERSION_JSON)
-            .then((response) => response.json())
-            .then((data) => {
-                document.getElementById('definitions-newest-version').innerText = data.version;
-                if (!Number.isInteger(localVersionResult?.definition_version)
-                    || localVersionResult.definition_version < data.version) {
-                    toastr.info(`New definitions (#${data.version}) are available.<br>Click <a href="#updates" style="font-weight:bold">Update Definitions</a> to get them.`, "Updated Sites Available", { timeOut: 10000 });
-                };
-            });
-    });
-}
+import * as utils from './shared-utils.js';
 
 // SETTINGS
 
@@ -21,9 +9,6 @@ function loadAllSettings() {
     chrome.storage.sync.get('remember_toggle', function (result) {
         document.getElementById('remember_toggle').checked = (result?.remember_toggle !== false);
     });
-    // chrome.storage.sync.get('show_placeholder', function (result) {
-    //     document.getElementById('show_placeholder').checked = (result?.show_placeholder === true);
-    // });
 }
 
 function saveOneClickSetting() {
@@ -47,18 +32,12 @@ function saveRememberToggleSetting() {
     }
 }
 
-// TODO: Implement this to show a placeholder image
-function saveShowPlaceholderSetting() {
-    let showPlaceholderEnabled = document.getElementById('show_placeholder').checked;
-    chrome.storage.sync.set({ 'show_placeholder': showPlaceholderEnabled });
-}
-
 // FILTERS
 
 function loadWhitelist() {
     chrome.storage.sync.get('user_whitelist', function (result) {
         if (result?.user_whitelist != undefined) {
-            document.getElementById('user_whitelist').value = result.user_whitelist;
+            document.getElementById('user_whitelist').value = result?.user_whitelist;
         }
     });
 }
@@ -66,16 +45,33 @@ function loadWhitelist() {
 function loadBlacklist() {
     chrome.storage.sync.get('user_blacklist', function (result) {
         if (result?.user_blacklist != undefined) {
-            document.getElementById('user_blacklist').value = result.user_blacklist;
+            document.getElementById('user_blacklist').value = result?.user_blacklist;
         }
     });
 }
 
-function saveUrlList(urlTextAreaId, savedItem) {
-    let urls = document.getElementById(urlTextAreaId).value;
-    if (validateCustomUrls(urls.split(/\r?\n/))) {
+/**
+ * Check that all custom URLs are valid regex patterns.
+ * 
+ * @param {string[]} urls - List of URLs to validate.
+ * @returns True if all regex patterns are valid; otherwise false.
+ */
+function validateCustomUrls(urls) {
+    try {
+        for (let i = 0; i < urls.length; i++) {
+            new RegExp(urls[i]);
+        }
+        return true;
+    }
+    catch (e) {
+        return false;
+    }
+}
+
+function saveUrlList(urlTextAreaId, savedItem, urls) {
+    if (validateCustomUrls(urls)) {
         let urlJson = {};
-        urlJson[urlTextAreaId] = urls;
+        urlJson[urlTextAreaId] = document.getElementById(urlTextAreaId).value;
         chrome.storage.sync.set(urlJson, function () {
             if (chrome.runtime.lastError) {
                 toastr.error(chrome.runtime.lastError.message, `${savedItem} Save Failed`);
@@ -89,11 +85,15 @@ function saveUrlList(urlTextAreaId, savedItem) {
 }
 
 function saveWhitelist() {
-    saveUrlList('user_whitelist', 'Whitelist');
+    let whitelist = document.getElementById('user_whitelist').value;
+    let urls = whitelist.split(/\r?\n/);
+    saveUrlList('user_whitelist', 'Whitelist', urls);
 }
 
 function saveBlacklist() {
-    saveUrlList('user_blacklist', 'Blacklist');
+    let blacklist = document.getElementById('user_blacklist').value;
+    let urls = blacklist.split(/\r?\n/).map(l => l.split(';')[0]);
+    saveUrlList('user_blacklist', 'Blacklist', urls);
 }
 
 function submitBlacklist() {
@@ -156,17 +156,14 @@ function showUsedStorage() {
     chrome.storage.sync.getBytesInUse('user_blacklist', function (bytes) {
         document.getElementById('sync-storage-used-personal-blacklist').innerText = bytes;
     });
+    chrome.storage.local.get('definition_version_last_check', function (result) {
+        document.getElementById('definitions-last-check').innerText = result?.definition_version_last_check === undefined ? "N/A" : new Date(result.definition_version_last_check * 1000);
+    });
 }
 
 function showVersion() {
     let manifest = chrome.runtime.getManifest();
     document.getElementById('addon-version').innerText = manifest.version;
-    chrome.storage.local.get('definition_version', function (result) {
-        document.getElementById('definitions-local-version').innerText = result?.definition_version ?? "N/A";
-    });
-    chrome.storage.local.get('definition_version_last_check', function (result) {
-        document.getElementById('definitions-last-check').innerText = result?.definition_version_last_check === undefined ? "N/A" : new Date(result.definition_version_last_check * 1000);
-    });
     document.getElementById('user-agent').innerText = navigator.userAgent;
     document.getElementById('platform').innerText = navigator.userAgentData?.platform ?? navigator.platform;
 }
@@ -176,7 +173,6 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
     loadAllSettings();
     $('#one_click_toggle').click(function () { saveOneClickSetting(); });
     $('#remember_toggle').click(function () { saveRememberToggleSetting(); });
-    // $('#show_placeholder').click(function () { saveShowPlaceholderSetting(); });
 
     // Filters
     loadWhitelist();
@@ -191,32 +187,43 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
     wireUpSaveButtonsToTextAreas();
 
     // Updates
-    alertIfNewerDefinitions();
     $('#update-definitions').click(function () {
-        getUpdatedDefinitions(true,
-            (version) => { toastr.info(`Updated site definitions (#${version}) were found and have been applied.`, "Updated Sites Available"); },
-            (version) => { toastr.info(`The latest site definitions (#${version}) are already applied.`, "No Updates Available"); }
+        utils.getUpdatedDefinitions(true,
+            () => {
+                toastr.info(`Updated site definitions were found and have been applied.`, "Updated Sites Available");
+                showUsedStorage();
+            },
+            () => {
+                toastr.info(`The latest site definitions were already applied.`, "No Updates Available");
+                showUsedStorage();
+            }
         );
     });
 
     // Danger Zone
     $('#delete-definitions').click(function() {
         if (prompt("This will clear out the downloaded site definitions. Afterwards, they'll need to be downloaded again.\r\n\r\nType YES to continue...") === "YES") {
-            chrome.storage.local.remove([ 'global_definitions', 'definition_version', 'definition_version_last_check' ]);
+            chrome.storage.local.remove([ 'global_definitions', 'etag', 'definition_version_last_check' ], function() {
+                showUsedStorage();
+            });
         }
     })
     $('#reset-options').click(function() {
         if (prompt("This will reset all of your selected options to the default values (unchecked boxes, cleared out whitelist/blacklist, etc).\r\n\r\nType YES to continue...") === "YES") {
-            chrome.storage.sync.remove([ 'one_click_toggle', 'show_placeholder', 'user_whitelist', 'user_blacklist' ], function() {
+            chrome.storage.sync.remove([ 'one_click_toggle', 'user_whitelist', 'user_blacklist' ], function() {
                 chrome.storage.sync.set({ 'remember_toggle': true }, function() {
-                    location.reload();
+                    loadAllSettings();
+                    document.getElementById('user_whitelist').value = '';
+                    document.getElementById('user_blacklist').value = '';
                 });
             });
         }
     })
     $('#delete-site-settings').click(function() {
         if (prompt("This will clear out all of your site-specific selections. Afterwards, comments will be hidden everywhere again, and you'll have to decide which sites you want to show them on.\r\n\r\nType YES to continue...") === "YES") {
-            chrome.storage.local.remove([ 'user_whitelist_flags' ]);
+            chrome.storage.local.remove([ 'user_whitelist_flags' ], function() {
+                showUsedStorage();
+            });
         }
     })
 

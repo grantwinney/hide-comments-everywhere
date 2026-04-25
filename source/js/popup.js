@@ -1,3 +1,11 @@
+//***********
+// This file runs in the context of the popup dialog that opens when a user clicks the addon icon in the toolbar
+// and the "Press the icon in the toolbar to toggle comment visibility..." is NOT selected.
+// Certain actions may use chrome.tabs.sendMessage() to call comments.js, which runs in the context of the current tab.
+//  */
+
+import * as utils from './shared-utils.js';
+
 function disableFieldsForUnsupportedUrl() {
     let addToWhitelistButton = document.getElementById('add_to_whitelist');
     let addToBlacklistButton = document.getElementById('add_to_blacklist');
@@ -13,16 +21,19 @@ function disableFieldsForUnsupportedUrl() {
     let toggleHideButton = document.getElementById('toggle_hide');
     toggleHideButton.classList.add('disabled_button');
     toggleHideButton.disabled = true;
-    toggleHideButton.title = "This URL is not supported.";
+    toggleHideButton.title = "This URL is not supported";
+
+    let toggleHideIcon = document.getElementById('toggle_hide_icon');
+    toggleHideIcon.style.color = '#999';
 
     let currentHostname = document.getElementById('currentHostname');
     currentHostname.style.color = '#999';
     currentHostname.style.fontStyle = 'italic';
-    currentHostname.value = 'This URL is not supported.';
+    currentHostname.value = 'This URL is not supported';
 }
 
 function displayCorrectToggleIconForCurrentSite(tabUrl) {
-    performActionBasedOnCommentVisibility(tabUrl, function (isCommentsHidden, overrideReason) {
+    utils.getCommentVisibilityReason(tabUrl, function (isCommentsHidden, overrideReason) {
         chrome.storage.sync.get('remember_toggle', function (rememberToggleResult) {
             let toggleHideIcon = document.getElementById('toggle_hide_icon');
             let updatedTitle = '';
@@ -33,20 +44,20 @@ function displayCorrectToggleIconForCurrentSite(tabUrl) {
             if (overrideReason && overrideReason !== 'user_whitelist_flag') {
                 toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment-dots');
                 if (overrideReason === 'user_whitelist') {
-                    updatedTitle = 'Comments always allowed, per your custom whitelist.';
+                    updatedTitle = 'Comments allowed by your whitelist';
                 } else if (overrideReason === 'user_blacklist') {
-                    updatedTitle = 'Comments always blocked, per your custom blacklist.';
+                    updatedTitle = 'Comments blocked by your blacklist';
                 } else if (overrideReason === 'global_whitelist') {
-                    updatedTitle = 'Comments always allowed, per the global whitelist.';
+                    updatedTitle = 'Comments allowed by global whitelist';
                 }
                 if (rememberToggleResult?.remember_toggle === true) {
-                    updatedTitle += ' Toggle is temporary.';
+                    updatedTitle += ' (toggling is temporary)';
                 }
             } else if (!isCommentsHidden) {
                 // By default, the 'comments hidden' image and title are displayed, so if comments
                 // are actually being displayed, adjust the image and title as needed.
                 toggleHideIcon.classList.replace('fa-comment-slash', 'fa-comment');
-                updatedTitle = 'Comments currently allowed for this site. (click to hide)';
+                updatedTitle = 'Comments allowed on this site';
             }
             if (updatedTitle) {
                 document.getElementById('toggle_hide').title = updatedTitle;
@@ -58,12 +69,12 @@ function displayCorrectToggleIconForCurrentSite(tabUrl) {
 function addUrlToUserWhitelist(tabId, tabUrl) {
     chrome.storage.sync.get('user_whitelist', function (result) {
         let userWhitelist = result?.user_whitelist;
-        let regexUrl = tabUrl.hostname.replace(/\./g, '\\.');
         if (userWhitelist) {
-            userWhitelist += `\r\n${regexUrl}`;
-        } else {
-            userWhitelist += regexUrl;
+            userWhitelist += '\r\n';
         }
+
+        let regexUrl = tabUrl.hostname.replace(/\./g, '\\.');
+        userWhitelist += regexUrl;
         chrome.storage.sync.set({ 'user_whitelist': userWhitelist }, function () {
             chrome.tabs.sendMessage(tabId, { event: 'update_tab' }, function () {
                 chrome.runtime.openOptionsPage();
@@ -81,7 +92,7 @@ function addUrlToUserBlacklist(tabUrl) {
         } else {
             userBlacklist += regexUrl;
         }
-        userBlacklist += `; ${STARTER_SELECTOR}`;
+        userBlacklist += `; ${utils.STARTER_SELECTOR}`;
         chrome.storage.sync.set({ 'user_blacklist': userBlacklist }, function () {
             chrome.runtime.openOptionsPage();
         });
@@ -89,13 +100,31 @@ function addUrlToUserBlacklist(tabUrl) {
 }
 
 function requestAdditionToGlobalBlacklist(tabUrl) {
-    if (!isCurrentUrlSupported(tabUrl)) {
+    if (!utils.isCurrentUrlSupported(tabUrl)) {
         return;
     }
     let title = "Here's a new site I'd like you to consider blocking";
-    let body = encodeURIComponent(title + ":\n\n" + tabUrl.hostname + '\n\n(please include any other relevant details)');
+    let body = encodeURIComponent(title + ":\n\n" + tabUrl.hostname + '\n\nInclude any other relevant details too, especially the CSS elements to hide, if you know which ones.');
     let url = `https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=${title}&body=${body}`;
     window.open(url, '_blank')
+}
+
+/**
+ * User chose to toggle comments on the current page, so adjust the addon icon/title,
+ * the setting in storage, and send a message to the content script to show/hide.
+ * 
+ * @param {number} tabId - The tab id to toggle comments on.
+ * @param {URL} tabUrl - The URL on the current tab.
+ */
+function toggleCommentsOnCurrentUrl(tabId, tabUrl) {
+    if (!utils.isCurrentUrlSupported(tabUrl)) {
+        return;
+    }
+    // The value of the toggle setting is stored from the toggleCommentVisibility
+    // method in the content script, after the comments are displayed/hidden, to
+    // avoid a buggy situation described in more detail in there.
+    chrome.tabs.sendMessage(tabId, { event: 'toggle_tab' });
+    window.close();
 }
 
 function wireUpNavBarButtons(tabId, tabUrl) {
@@ -149,9 +178,8 @@ window.addEventListener('DOMContentLoaded', function load(_event) {
         let tabId = tabs[0].id;
         let tabUrl = new URL(tabs[0].url);
 
-        displayCorrectToggleIconForCurrentSite(tabUrl);
-
-        if (isCurrentUrlSupported(tabUrl)) {
+        if (utils.isCurrentUrlSupported(tabUrl)) {
+            displayCorrectToggleIconForCurrentSite(tabUrl);
             document.getElementById('currentHostname').value = tabUrl.hostname;
         } else {
             disableFieldsForUnsupportedUrl();

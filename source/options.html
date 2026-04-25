@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="css/options.css" />
     <script src="js/third-party/jquery.min.js"></script>
     <script src="js/third-party/toastr.min.js"></script>
-    <script src="js/shared.js"></script>
-    <script src="js/options.js"></script>
+    <script type="module" src="js/options.js"></script>
 </head>
 
 <body>
@@ -43,28 +42,21 @@
                 visits.
                 <ul>
                     <li>Uncheck this to make toggling comments temporary.</li>
-                    <li>Toggling is <em>always</em> temporary (regardless of this setting) if a site is in your
-                        personal white or blacklist, or if it's in the global whitelist.</li>
+                    <li>Toggling is <em>always</em> temporary (regardless of this setting) if a site
+                        is in your personal whitelist or blacklist.</li>
                 </ul>
             </label>
         </div>
-        <!-- <div class="checkbox-container">
-            <input id="show_placeholder" type="checkbox">
-            <label for="show_placeholder">Show a placeholder image, to make it obvious where comments were
-                removed.</label>
-        </div> -->
         <div>
-            If you want to change or disable the shortcut associated with this addon in:
-            <ul>
-                <li>Chrome, Edge, <a href="https://en.wikipedia.org/wiki/Chromium_(web_browser)#Browsers_based_on_Chromium" target="_blank">etc</a>: Open in a new tab: chrome://extensions/shortcuts</li>
-                <li>Firefox: Open the <a href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox" target="_blank">Manage Extension Shortcuts</a> page</li>
-            </ul> 
+            If you want to change or disable the shortcut for this addon, visit the
+            <a href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox" target="_blank">Manage Extension Shortcuts</a> page in Firefox,
+            or the "chrome://extensions/shortcuts" page for Chrome, Edge, Brave, Opera, etc.
         </div>
 
         <div id="filters" class="pane-title"><i class="fa fa-filter" aria-hidden="true"></i>Filters</div>
         <div>
             <p>
-                <b>If you just clicked 'Custom Allow' or 'Custom Block' in the popup window, and you don't see the site listed below, refresh this page.</b>
+                <b style="font-style:italic; font-size: smaller">If you just clicked 'Custom Allow' or 'Custom Block' in the popup window, and you don't see the site listed below, refresh this page.</b>
             </p>
             <p>
                 Specify a list of URLs (one per line) that comments should <em>never</em> be blocked on.
@@ -195,19 +187,15 @@
             <input id="submit-blacklist" type="submit" value="Submit Blacklist">
         </div>
         <div>
-            <p>
-                Note that the "submit blacklist" functionality is pretty low-tech. I don't have a better way of
-                submitting them yet, so pressing the above button will copy the list to your clipboard, and then a
-                separate tab will open GitHub, where you can paste the list and submit it to me as a new "issue". You
-                do need to have a (free) GitHub account for this to work.
-            </p>
+            The "submit blacklist" button just copies the blacklist to your clipboard, and then opens a
+            new GitHub issue page in a separate tab, where you can paste the list and submit it to me. You
+            need to have a (free) GitHub account for this to work.
         </div>
 
         <div id="updates" class="pane-title"><i class="fa fa-cloud-download" aria-hidden="true"></i>Updates</div>
-        <p style="margin: 0px">The
-            <a href="https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json" target="_blank">master list of blocked sites</a>
-            is occasionally updated, and when it is, you'll see a notification on this page.
-            Updates are applied automatically once a day, or manually by clicking on the button below.
+        <p style="margin: 0px">A check is performed daily for any updates to the
+            <a href="https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json" target="_blank">list of blocked sites</a>,
+            or you can press the button below to check now.
         </p>
         <div>
             <input id="update-definitions" type="submit" value="Update Definitions">
@@ -234,9 +222,11 @@
                 or <a href="mailto:browser-extensions@grantwinney.com">send me an email</a>.</li>
             <li>Lastly, feel free to leave a comment <a href="https://grantwinney.com/hide-comments-everywhere#comments" target="_blank">on my blog</a>.</li>
         </ul>
-        <p>If you've been using this extension for awhile and enjoy it, please leave a rating for
+        <div>
+            If you've been using this extension for awhile and enjoy it, please leave a rating for
             <a href="https://chrome.google.com/webstore/detail/hide-comments-everywhere/bmhkdngdngchlneelllmdennfpmepbnc/reviews" target="_blank">Chrome</a>
             or <a href="https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere/reviews" target="_blank">Firefox</a>. Thanks!
+        </div>
 
         <div id="info" class="pane-title"><i class="fa fa-info-circle" aria-hidden="true"></i>Info</div>
         <p>If you run into a problem, the following information might be helpful to include, depending on what you're experiencing.</p>
@@ -244,8 +234,6 @@
             <li>Addon version: <span id="addon-version"></span></li>
             <li>Definitions:
                 <ul>
-                    <li>Local version: <span id="definitions-local-version"></span></li>
-                    <li>Available version: <span id="definitions-newest-version"></span></li>
                     <li>Last check: <span id="definitions-last-check"></span></li>
                 </ul>
             </li>

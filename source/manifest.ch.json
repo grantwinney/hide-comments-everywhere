@@ -4,7 +4,7 @@
     "homepage_url": "https://github.com/grantwinney/chrome-extension-block-comments",
     "name": "Hide Comments Everywhere",
     "description": "Block comments across the web. Show the ones you want. You're in control!",
-    "version": "1.6.12",
+    "version": "1.6.13",
     "options_ui": {
         "page": "options.html",
         "open_in_tab": true
@@ -14,47 +14,41 @@
         "storage"
     ],
     "host_permissions": [
-        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json",
-        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/version.json"
+        "https://raw.githubusercontent.com/grantwinney/hide-comments-everywhere/master/sites/sites.json"
     ],
     "action": {
         "default_icon": {
-            "16": "images/hide-comments-16.png",
-            "32": "images/hide-comments-32.png",
-            "48": "images/hide-comments-48.png",
-            "64": "images/hide-comments-64.png",
-            "128": "images/hide-comments-128.png"
+            "16": "images/hide-comments-bw-16.png",
+            "32": "images/hide-comments-bw-32.png",
+            "48": "images/hide-comments-bw-48.png",
+            "64": "images/hide-comments-bw-64.png",
+            "128": "images/hide-comments-bw-128.png"
         },
         "default_title": "Hide Comments Everywhere",
         "default_popup": "popup.html"
     },
     "background": {
-        "service_worker": "js/background.js"
+        "service_worker": "js/bg-service-worker.js",
+        "type": "module"
     },
     "content_scripts": [
         {
-            "js": [
-                "js/shared.js",
-                "js/comments.js"
-            ],
-            "matches": [
-                "<all_urls>"
-            ],
+            "matches": ["<all_urls>"],
+            "js": ["js/content-script.js"],
             "run_at": "document_start"
         }
     ],
-    "icons": {
-        "16": "images/hide-comments-16.png",
-        "32": "images/hide-comments-32.png",
-        "48": "images/hide-comments-48.png",
-        "64": "images/hide-comments-64.png",
-        "128": "images/hide-comments-128.png"
-    },
+    "web_accessible_resources": [{
+        "matches": ["<all_urls>"],
+        "resources": [
+            "js/shared-utils.js",
+            "js/content-main.js"
+        ]
+    }],
     "commands": {
-        "_execute_browser_action": {
+        "_execute_action": {
             "suggested_key": {
-                "default": "Ctrl+Shift+H",
-                "mac": "Command+Shift+H"
+                "default": "Ctrl+Shift+H"
             }
         }
     },

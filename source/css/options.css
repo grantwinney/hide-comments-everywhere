@@ -9,6 +9,7 @@ a:hover {
 }
 
 body {
+    font-size: 90%;
     margin: 0px;
 }
 
@@ -221,7 +222,7 @@ textarea {
 }
 
 .pane-title > i {
-    color: #aaa;
+    color: rgb(13, 14, 90);
 }
 
 .pane-subtitle {
