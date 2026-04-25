@@ -2,7 +2,7 @@
 
 Fed up with the vitriol left in comments, many sites are dumping their comment systems completely. It's just too costly to monitor them, so they tend to devolve into a cess pool. Personally, I just want the content most of the time. _YouTube anyone?_
 
-To help with my own sanity _(and maybe yours?),_ I wrote an extension that hides many comment systems - identifying them is somewhat predictable. It's available for [Chrome](https://chrome.google.com/webstore/detail/hide-comments/bmhkdngdngchlneelllmdennfpmepbnc) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere/), or [you can read more about it here](https://grantwinney.com/hide-comments-everywhere/) too.
+To help with my own sanity _(and maybe yours?),_ I wrote an extension that hides many comment systems, since identifying them is fairly predictable. It's available for [Chrome](https://chrome.google.com/webstore/detail/hide-comments/bmhkdngdngchlneelllmdennfpmepbnc) and [Firefox](https://addons.mozilla.org/en-US/firefox/addon/hide-comments-everywhere/), and you can [read more](https://grantwinney.com/hide-comments-everywhere/) about it here.
 
 ## What sites does this work on?
 
@@ -14,7 +14,9 @@ A lot, including but not limited to:
 * Disqus
 * Livefyre
 * WordPress
-* Loads of other comment systems and individual sites. If this is hiding anything unexpected, like some site that assigned the "comments" ID to the main content of their posts, then just [let me know](https://github.com/grantwinney/hide-comments-everywhere/issues/new) and I can make adjustments.
+* Loads of other comment systems and individual sites.
+
+If this is hiding anything unexpected, like some site that assigned the "comments" ID to the main content of their posts, then [let me know](https://github.com/grantwinney/hide-comments-everywhere/issues/new) so I can make adjustments. Better yet, [open a PR](https://github.com/grantwinney/hide-comments-in-chrome/pulls) with the change that's needed. Thanks!
 
 ### What doesn't it work with?
 
@@ -24,18 +26,13 @@ You might want to check out [Fluff Busting Purity](https://chrome.google.com/web
 
 ## How does it work?
 
-This extension checks whether comments should be disabled for the current URL, and is triggered when the page is first loaded or the URL changes (i.e. you click a link).
+This addon checks whether it should allow or block comments for a website, based on a combination of [sites in a list](https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json), sites you've chosen to allow comments on, as well as a personal whitelist (always allow comments) and blacklist (always block comments) that you can define on the Options page.
 
-1. First, it checks the [sites.json](https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json) file for known DOM elements that contain comments on the current URL.
-2. Then it sees if you've chosen to exclude the current URL (the whitelist on the Options page under Filters).
-3. It injects a CSS stylesheet into the page that sets display style to "none" for comments (and anything related, like comment counters).
+Click on the icon in the toolbar and press the "toggle" button to toggle enabling/disabling 
+(temporarily, if you choose) the comments on a single domain.
 
-The allowed (whitelisted) sites are ones you define on the Options page. Specify a list of URLs as [regex patterns](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions), one per line, that should display comments all the time (the extension is effectively disabled for those URLs). Your list of allowed sites uses synchronized storage, so it should be available on any machine you've installed the extension on and are logged into.
+Your personal lists and other settings use synchronized storage, so they should be available on any machine you've installed the extension on and have logged into the same account with.
 
-- You can quickly add the URL of the current page by opening the extension popup (click the icon in the toolbar), and then selecting a URL (or entering a custom one) and pressing the "Allow" button. Note that, unlike the "options" page, these URLs are entered normally and not as regular expressions.
-- **Note:** There's also a hard-coded whitelist, although I don't anticipate adding very many sites to it. One I added is GitHub, for which it's unlikely anyone would want to hide comments. There are issues with their DOM that cause legit sections of the site to be hidden.
-
-Click on the icon in the toolbar and press the large "toggle" button to temporarily toggle enabling/disabling the extension for a single tab, in order to hide or display comments. Click it again to toggle it back. Reloading the page will cause it to follow the same rules as above, looking first at blocked sites and then your personal allowed sites.
 
 ## Permissions
 
@@ -45,7 +42,10 @@ It also uses storage to save its state, but it shouldn't prompt you for that.
 
 ## I need your help!
 
-If you notice a commenting system that should be added (blocked), [open an issue](https://github.com/grantwinney/hide-comments-everywhere/issues/new) for that. Include the website where you noticed it, or [create a pull request](https://github.com/grantwinney/hide-comments-everywhere/pulls) with the necessary changes to the "[sites.json](https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json)" file, and I'll follow-up as time permits.
+If you notice a website or commenting system that should be added to the list (so that it can be blocked), feel free to [open an issue](https://github.com/grantwinney/hide-comments-everywhere/issues/new) for it. Include the URL where you noticed it, and any other details you feel would be helpful.
+
+
+Better yet, if you know which CSS elements (selectors) need to be blocked, [create a pull request](https://github.com/grantwinney/hide-comments-everywhere/pulls) with the necessary changes to the "[sites.json](https://github.com/grantwinney/hide-comments-everywhere/blob/master/sites/sites.json)" file, and I'll get the change merged in.
 
 Thanks!
 
