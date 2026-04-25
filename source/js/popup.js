@@ -104,7 +104,7 @@ function requestAdditionToGlobalBlacklist(tabUrl) {
         return;
     }
     let title = "Here's a new site I'd like you to consider blocking";
-    let body = encodeURIComponent(title + ":\n\n" + tabUrl.hostname + '\n\n(please include any other relevant details)');
+    let body = encodeURIComponent(title + ":\n\n" + tabUrl.hostname + '\n\nInclude any other relevant details too, especially the CSS elements to hide, if you know which ones.');
     let url = `https://github.com/grantwinney/hide-comments-everywhere/issues/new?title=${title}&body=${body}`;
     window.open(url, '_blank')
 }
