@@ -56,7 +56,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 // Fires when clicking the addon icon in the browser toolbar while the popup is disabled.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction/onClicked
 chrome.action.onClicked.addListener(function (tab) {
-    if (isCurrentUrlSupported(tab.url)) {
+    if (!utils.isCurrentUrlSupported(new URL(tab.url))) {
         return;
     }
     chrome.tabs.sendMessage(tab.id, { event: 'toggle_tab' });
@@ -69,6 +69,24 @@ chrome.tabs.onCreated.addListener(async (tab) => {
     await utils.getUpdatedDefinitions(false);
 });
 
+// Fires when the active tab in a window changes.
+// Make sure the correct icon/title is displayed in the toolbar, when a user switches between tabs.
+// Helps maintain consistency between tabs, when the same site is loaded into several tabs and a user toggles comments in one of them.
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/onActivated
+chrome.tabs.onActivated.addListener(function(activeInfo) {
+    chrome.tabs.sendMessage(activeInfo.tabId, { event: 'update_tab' });
+});
+
+// Fires when a tab is updated.
+// Make sure the correct icon/title is displayed in the toolbar, when the tab's url changes.
+// From the docs, tab.url contains "the tab's URL, if it has changed.". I'm checking it here
+//   to avoid running extra code unnecessarily, since this event fires for quite a few reasons.
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/onUpdated
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    if (changeInfo.status === 'complete' && tab.url !== undefined) {
+        chrome.tabs.sendMessage(tabId, { event: 'update_tab' });
+    }
+});
 
 // Anything that needs to be done during an upgrade
 function oneTimeUpgradeWork() {
@@ -79,7 +97,6 @@ function setInitialOptionValues() {
     chrome.storage.sync.set({ 'one_click_toggle': false });
     chrome.storage.sync.set({ 'remember_toggle': true });
 }
-
 
 // Fires when addon is installed or updated.
 // Gets latest definitions.

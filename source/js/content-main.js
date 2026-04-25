@@ -149,3 +149,4 @@ export function main() {
     // Insert CSS selectors into the current page; specific to the URL when available, otherwise generic catch-all ones.
     insertStylesIntoPage();
 }
+
