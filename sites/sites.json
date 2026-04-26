@@ -6,6 +6,7 @@
     "sites": {
         "www.abola.pt": "#body_Ver_Comentarios_comentariosMobile, .comentarios",
         "apnews.com": "#scrollToComments, .comment-icon, #vf-conversations-count, #ap-comments, #vf-conversations, a.PagePromo-commentCount",
+        "arstechnica.com": "a.view-comments, #comments",
         "askubuntu.com": "span[itemprop='commentCount'], div.js-post-comments-component",
         "www.avclub.com": ".js_comments-iframe, a[data-ga='[[\"Permalink meta\",\"Comment count click\"]]'], #replies",
         "avclub.com": ".comment-count-go-to, #disqus-comment-count-wrapper-top-article, #show-comments",
@@ -19,6 +20,7 @@
         "www.buzzfeed.com": ".contributions, #mod-defer-user-contributions-1, #mod-defer-user-contributions-2",
         "www.cnn.com": "a.openweb-comment-counter, div.openweb-convo, #openweb-convo",
         "cohost.org": ".co-comment-box, .co-comment-box+div, a[href$=comments]",
+        "collider.com": "#footer-threads, .footer-threads",
         "www.crunchyroll.com": ".comment-more, div.comments, .commenting-wrapper, .erc-commenting-section",
         "www.dailykos.com": "#react-comments, .dk-social-count, .comment-counts-btn, .stories-grid__story__inner__comment-count.story-associations__comment-count",
         "www.dailymail.co.uk": ".comments-count, .share-count, .comments-link, #reader-comments",
