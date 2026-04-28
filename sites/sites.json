@@ -99,7 +99,7 @@
         "soundcloud.com": "div.commentForm, div.commentsList, li[title$='comments']",
         "open.spotify.com": ".qH2Mpq2icGtfNZfwIhiW.W4580vs00yDqFNs7363B",
         "stackexchange.com": "span[itemprop='commentCount'], div.js-post-comments-component",
-        "stackoverflow.com": "div[id^='follow-ups-container']",
+        "stackoverflow.com": "div[id^='follow-ups-container'], div.js-you-can-comment-banner-anon, span[itemprop='commentCount'], div.js-post-comments-component",
         "steamcommunity.com": "div[class*='CardCommentCount'], ._16xC0mtOWoLbvSQbmo_ycv, .commentthread_area, .forumtopic_comments, .forum_topic_reply_count",
         "substack.com": "[aria-label='Comment'], .feedItem-ONDKv3, [aria-label^='View comments'], #discussion",
         "superuser.com": "span[itemprop='commentCount'], div.js-post-comments-component",
