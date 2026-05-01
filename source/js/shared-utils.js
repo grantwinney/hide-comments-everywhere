@@ -49,12 +49,12 @@ export async function getUpdatedDefinitions(forceUpdate, updatedAction = undefin
             headers: eTag  ? { 'If-None-Match': eTag  } : {}
         });
 
-        if (response.status === 304) {
+        if (response.status === 304) { /* Not modified since last check, so no need to update local definitions */
             await chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
             if (notUpdatedAction) {
                 notUpdatedAction();
             }
-        } else if (response.status === 200) {
+        } else if (response.status === 200) { /* Updated definitions retrieved successfully */
             await chrome.storage.local.set({ 'definition_version_last_check': getCurrentSeconds() });
             let newEtag = response.headers.get("ETag");
             if (newEtag) {
