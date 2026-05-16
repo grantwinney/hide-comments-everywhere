@@ -62,7 +62,7 @@
         "economictimes.indiatimes.com": ".commentBoxContainer, .cmnts_wrapper",
         "timesofindia.indiatimes.com": "div[id^='comment-sidebar'], .authorComment",
         "www.indiatoday.in": "#comment_box",
-        "www.instagram.com": "article .x5yr21d  > .x78zum5.xdt5ytf.x1iyjqo2",
+        "www.instagram.com": "article .x5yr21d  > .x78zum5.xdt5ytf.x1iyjqo2, span:has(> div > div > svg[aria-label='Comment']), span:has(> div > div > svg[aria-label='Comment']) + span",
         "wydarzenia.interia.pl": "a.is-comment, #commentsZoneList, div.comments-placeholder",
         "itch.io": ".game_comments_widget",
         "together.kakao.com": "comments",
