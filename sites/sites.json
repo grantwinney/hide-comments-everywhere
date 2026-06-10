@@ -126,7 +126,7 @@
         "news.yahoo.com": "[data-icon^='comment'], span[aria-label$='comments'], span[aria-label$='comment'], span[aria-label$='comments'] + span, span[aria-label$='comment'] + span, .view-cmts-cta-wrapper, [id^='spotim-wrapper'], .caas-comment",
         "www.yahoo.com": "[data-icon^='comment'], span[aria-label$='comments'], span[aria-label$='comment'], span[aria-label$='comments'] + span, span[aria-label$='comment'] + span, .view-cmts-cta-wrapper, .view-cmts-container, button[data-ylk*='view-cmnts-cta'], [id^='spotim-wrapper'], .caas-comment",
         "news.ycombinator.com": ".comment-tree",
-        "www.youtube.com": "#comment-teaser, #teaser-carousel, #comments, #comments-button, #watch-while-engagement-panel, button-view-model:has(button[aria-label$='comments']), #anchored-panel:has(ytd-engagement-panel-section-list-renderer[target-id='engagement-panel-comments-section'])",
+        "www.youtube.com": "#comment-teaser, #teaser-carousel, #comments, #comments-button, #watch-while-engagement-panel, button-view-model:has(button[aria-label$='comments']), #anchored-panel:has(ytd-engagement-panel-section-list-renderer[target-id='engagement-panel-comments-section']), div[id='secondary']:has(div[id='chat-container']), div[id='panels-full-bleed-container']:has(div[id='chat-container'])",
         "www.zhihu.com": ".ContentItem-actions > button:nth-child(2), .Comments-container"
     }
 }
