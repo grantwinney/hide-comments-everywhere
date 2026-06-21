@@ -36,7 +36,7 @@
         "fandom.com": "#articleComments",
         "www.fmkorea.com": ".fdb_lst_wrp, .btm_area > div:nth-child(2) > span:nth-child(3)",
         "folha.uol.com.br": "#comentarios",
-        "www.foxnews.com": "div.comment-suite, span.comment-count",
+        "www.foxnews.com": "div.hedgehog-container, hedgehog-comment-embed, span.comment-count",
         "gamebanana.com": ".Stats > .Stat:nth-child(2), #PostsListModule",
         "garagesalefinder.com": ".comments-wrap",
         "gaudiumetspes22.com": ".code-embed",
