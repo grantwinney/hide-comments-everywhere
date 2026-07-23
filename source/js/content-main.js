@@ -21,20 +21,9 @@ function insertStylesIntoPage() {
 
         if (!allDefinitions?.sites) {
             utils.log("Site patterns missing. Retrieving now.");
-            utils.getUpdatedDefinitions(false,
-                () => {
-                    chrome.storage.local.get('global_definitions', function (def_result) {
-                        let allDefinitions = JSON.parse(def_result.global_definitions ?? '{}');
-                        if (allDefinitions?.sites) {
-                            insertStylesIntoPageContinue(allDefinitions);
-                        } else {
-                            utils.log("Site patterns missing. Retrieval failed. (1)", true);
-                            return;
-                        }
-                    });
-                },
-                () => { utils.log("Site patterns missing. Retrieval failed. (2)", true); }
-            );
+            chrome.runtime.sendMessage({
+                event: 'get_definitions'
+            });
             return;
         }
         
@@ -140,6 +129,9 @@ export function main() {
                 break;
             case 'toggle_tab':
                 toggleCommentVisibility()
+                break;
+            case 'insert_styles':
+                insertStylesIntoPage();
                 break;
             default:
                 utils.log(`content script received unexpected event: ${message.event}`, true);

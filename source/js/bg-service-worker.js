@@ -20,8 +20,25 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if (!sender.tab) {
         return;
     }
+
+    if (message.event === 'get_definitions') {
+        utils.getUpdatedDefinitions(true,
+            () => {
+                chrome.tabs
+                    .sendMessage(sender.tab.id, { event: 'insert_styles' })
+                    .catch((error) => {
+                        utils.log(`Failed to send message to tab: ${error}`, true);
+                    });
+            },
+            () => {
+                utils.log("Site patterns missing. Retrieval failed.", true);
+            }
+        );
+        return;
+    }
+
     if (message.event !== 'comments_hidden' && message.event !== 'comments_shown') {
-        utils.log(`background script not configured to run for message event: '${message.event}'`);
+        utils.log(`background script not configured to run for message event: '${message.event}'`, true);
         return;
     }
 
@@ -59,7 +76,11 @@ chrome.action.onClicked.addListener(function (tab) {
     if (!utils.isCurrentUrlSupported(new URL(tab.url))) {
         return;
     }
-    chrome.tabs.sendMessage(tab.id, { event: 'toggle_tab' });
+    chrome.tabs
+        .sendMessage(tab.id, { event: 'toggle_tab' })
+        .catch((error) => {
+            utils.log(`Failed to send message to tab from onClicked listener: ${error}`, true);
+        });
 });
 
 
@@ -74,7 +95,11 @@ chrome.tabs.onCreated.addListener(async (tab) => {
 // Helps maintain consistency between tabs, when the same site is loaded into several tabs and a user toggles comments in one of them.
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/onActivated
 chrome.tabs.onActivated.addListener(function(activeInfo) {
-    chrome.tabs.sendMessage(activeInfo.tabId, { event: 'update_tab' });
+    chrome.tabs
+        .sendMessage(activeInfo.tabId, { event: 'update_tab' })
+        .catch((error) => {
+            utils.log(`Failed to send message to tab from onActivated listener: ${error}`, true);
+        });
 });
 
 // Fires when a tab is updated.
@@ -84,7 +109,11 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/onUpdated
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete' && tab.url !== undefined) {
-        chrome.tabs.sendMessage(tabId, { event: 'update_tab' });
+        chrome.tabs
+            .sendMessage(tabId, { event: 'update_tab' })
+            .catch((error) => {
+                utils.log(`Failed to send message to tab from onUpdated listener: ${error}`, true);
+            });
     }
 });
 

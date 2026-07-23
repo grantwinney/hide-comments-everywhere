@@ -1,3 +1,5 @@
+'use strict';
+
 //***********
 // This file runs in the context of the popup dialog that opens when a user clicks the addon icon in the toolbar
 // and the "Press the icon in the toolbar to toggle comment visibility..." is NOT selected.
