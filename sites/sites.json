@@ -111,7 +111,7 @@
         "www.theepochtimes.com": "#sidebar_comments",
         "www.theverge.com": "span:has(> .duet--article--comments-link), .duet--article--comments-link, #coral-drawer",
         "www.threads.com": "div:has(> div > svg[aria-label='Comment']), div[aria-label='Column body'] > div > div > div > div:not(:first-child), div[aria-label='Column body'] > div > div > div:not(:first-child)",
-        "www.tiktok.com": "div[role='button'][aria-label^='Read or add comments'], div[class*='DivCommentSidebarTransitionWrapper']",
+        "www.tiktok.com": "div[role='button'][aria-label^='Read or add comments'], div[class*='DivCommentSidebarTransitionWrapper'], div[class^='tux-tabbar__item-container'] > div:nth-child(1), div[class*='DivCommentMain'], div[class*='DivCommentFooter']",
         "tweakers.net": "#reacties, #articleMeta .commentCount",
         "www.vijesti.me": ".dataComments, .artViews > span:nth-child(3), .commWrap",
         "developercommunity.visualstudio.com": "div[class*='RichPostDetail__TimelineComponentWrapper'], span.metric-container",
