@@ -1,5 +1,6 @@
 {
     "excluded_sites": [
+        "github.com",
         "talk.hyvor.com"
     ],
     "excluded_selectors": "code .comment, pre .comment, textarea.comments",
@@ -43,7 +44,6 @@
         "gaudiumetspes22.com": ".code-embed",
         "wiadomosci.gazeta.pl": "#commentsApp",
         "gettr.com": "#virtuoso, div[title$='Comment'], div[title$='Comments']",
-        "github.com": "div[data-testid='issue-viewer-comments-container'], div[data-testid='list-row-comments']",
         "gizmodo.com": "div[data-spotim-module='conversation'], a:has(span[data-spotim-module='messages-count'])",
         "gloria.tv": "span[data-placeholder='Write a comment'], div[data-notify], a[data-post*='replies']",
         "abcnews.go.com": ".CommentButton",
