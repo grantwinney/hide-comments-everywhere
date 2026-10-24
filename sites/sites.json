@@ -38,6 +38,7 @@
         "folha.uol.com.br": "#comentarios",
         "www.foxnews.com": "div.hedgehog-container, hedgehog-comment-embed, span.comment-count",
         "gamebanana.com": ".Stats > .Stat:nth-child(2), #PostsListModule",
+        "gamejolt.com": "div.pull-right, div.pull-right + h4.section-header, div.comment-add-button, div.comment-overview",
         "garagesalefinder.com": ".comments-wrap",
         "gaudiumetspes22.com": ".code-embed",
         "wiadomosci.gazeta.pl": "#commentsApp",
@@ -110,7 +111,7 @@
         "www.theepochtimes.com": "#sidebar_comments",
         "www.theverge.com": "span:has(> .duet--article--comments-link), .duet--article--comments-link, #coral-drawer",
         "www.threads.com": "div:has(> div > svg[aria-label='Comment']), div[aria-label='Column body'] > div > div > div > div:not(:first-child), div[aria-label='Column body'] > div > div > div:not(:first-child)",
-        "www.tiktok.com": "button[aria-label^='Read or add comments'], button:has(span[data-e2e='browse-comment-icon']), div[class*='--DivTabMenuContainer'] > div:first-child, div[class*='--DivCommentItemContainer'], div[class*='--DivEmpty'], #comments, div[class*='DivBottomCommentContainer']",
+        "www.tiktok.com": "div[role='button'][aria-label^='Read or add comments'], div[class*='DivCommentSidebarTransitionWrapper']",
         "tweakers.net": "#reacties, #articleMeta .commentCount",
         "www.vijesti.me": ".dataComments, .artViews > span:nth-child(3), .commWrap",
         "developercommunity.visualstudio.com": "div[class*='RichPostDetail__TimelineComponentWrapper'], span.metric-container",
@@ -128,6 +129,7 @@
         "www.yahoo.com": "[data-icon^='comment'], span[aria-label$='comments'], span[aria-label$='comment'], span[aria-label$='comments'] + span, span[aria-label$='comment'] + span, .view-cmts-cta-wrapper, .view-cmts-container, button[data-ylk*='view-cmnts-cta'], [id^='spotim-wrapper'], .caas-comment",
         "news.ycombinator.com": ".comment-tree",
         "www.youtube.com": "#comment-teaser, #teaser-carousel, #comments, #comments-button, #watch-while-engagement-panel, button-view-model:has(button[aria-label$='comments']), #anchored-panel:has(ytd-engagement-panel-section-list-renderer[target-id='engagement-panel-comments-section']), #chat-container, #chat",
+        "ru.yummyani.me": "div[id^='comment']",
         "www.zhihu.com": ".ContentItem-actions > button:nth-child(2), .Comments-container"
     }
 }
