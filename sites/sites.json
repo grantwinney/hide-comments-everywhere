@@ -34,7 +34,7 @@
         "einthusan.tv": "#UIDiscussionCompact, .stats > p:nth-child(3), a[data-blink='#UIDiscussionCompact']",
         "entertain.daum.net": "#commentWrap",
         "ew.com": "div[id^='ew-click-to-comment'], div[id^='ew-comments'], .mntl-comment-counter",
-        "facebook.com": "div[aria-label='Leave a comment'], div[aria-label^='Comment by'], div[aria-label^='Reply by'], div[data-commentid]",
+        "www.facebook.com": "div[aria-label='Leave a comment'], div[aria-label^='Comment by'], div[aria-label^='Reply by'], div[data-commentid]",
         "fandom.com": "#articleComments",
         "www.fmkorea.com": ".fdb_lst_wrp, .btm_area > div:nth-child(2) > span:nth-child(3)",
         "folha.uol.com.br": "#comentarios",
